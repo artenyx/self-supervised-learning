@@ -91,7 +91,7 @@ class USL_Conv6_CIFAR1(nn.Module):
         super(USL_Conv6_CIFAR1, self).__init__()
         # Setting model parameters
         self.representation_dim = config['representation_dim']
-        kernel_enc, kernel_dec = 3, 2
+        kernel_enc, kernel_dec = 3, 3
 
         # Importing model configuration parameters
         self.latent_dim = config['latent_dim']
