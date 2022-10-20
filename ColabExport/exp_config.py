@@ -3,17 +3,12 @@ import torch.nn as nn
 import torchvision.transforms as T
 from ColabExport.TrainModel import load_data,networks
 
-def get_exp_config(s=0.25):
 
-    """ Retrieve configuration for the model. """
-    model_dict = {
-        "usl_model1": networks.USL_Conv6_CIFAR1,
-        "usl_model2": networks.USL_Conv6_CIFAR2,
-    }
+def get_exp_config(s=0.25):
 
     exp_config = {
         # Model Parameters
-        "model_dict": model_dict,
+        "model_type": None,
         "width": 32,
         "height": 32,
         "channels": 3,

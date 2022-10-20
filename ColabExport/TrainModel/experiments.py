@@ -80,3 +80,9 @@ def test_le_lr(config, lr_list):
         config['lr_le'] = lr_list[i]
         le_data, le_model = run_linear_evaluation(config, (emb_train_loader, emb_test_loader))
 
+
+def print_model_architecture(model_type, input_size=(3, 32, 32)):
+    config = exp_config.get_exp_config()
+    config['model_type'] = model_type
+    model = config['model_type'](config).to(config['device'])
+    summary(model, (3, 32, 32))
