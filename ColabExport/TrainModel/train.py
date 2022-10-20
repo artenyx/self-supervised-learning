@@ -85,7 +85,7 @@ def usl_train_network(model, config):
                         "type settings are ae_single, ae_parallel, and simclr.")
 
     config['optimizer'] = config['optimizer_type'](model.parameters(), lr=config['lr_usl'])
-    train_loader, test_loader = config['loaders_usl']
+    train_loader, test_loader = config['loaders']['loaders_usl']
     train_data, test_data = [np.zeros(6)], [np.zeros(6)]
     for epoch in range(config['num_epochs_usl']):
         train_data.append(usl_run_epoch(model, config, train_loader, epoch, True))
@@ -126,7 +126,7 @@ def classifier_train_network(model, config):
     if config['device'] is None:
         raise Exception("Device must be configured in exp_config.")
     config['optimizer'] = config['optimizer_type'](model.parameters(), lr=config['lr_le'])
-    train_loader, test_loader = config['loaders_le']
+    train_loader, test_loader = config['loaders']['loaders_le']
 
     train_data, test_data = [np.zeros(4)], [np.zeros(4)]
     for epoch in range(config['num_epochs_le']):

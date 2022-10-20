@@ -6,6 +6,12 @@ from ColabExport.TrainModel import load_data,networks
 
 def get_exp_config(s=0.25):
 
+    loaders_dict = {
+        "loaders_usl": None,
+        "loaders_le": None,
+        "loaders_embedded": None
+    }
+
     exp_config = {
         # Model Parameters
         "model_type": None,
@@ -22,9 +28,7 @@ def get_exp_config(s=0.25):
         "alpha": None,
         "usl_type": None,
         "layerwise_training": False,
-        "loaders_usl": None,
-        "loaders_le": None,
-        "loaders_embedded": None,
+        "loaders": loaders_dict,
         "batch_size": 512,
         "criterion_class": nn.CrossEntropyLoss,
         "criterion_emb_recon": nn.MSELoss,
@@ -62,8 +66,8 @@ def get_ae_parallel_config(denoising):
 
     config['num_epochs_usl'] = 10
     config['num_epochs_le'] = 10
-    config['loaders_usl'] = load_data.get_CIFAR100(config)
-    config['loaders_le'] = load_data.get_CIFAR10(config)
+    config['loaders']['loaders_usl'] = load_data.get_CIFAR100(config)
+    config['loaders']['loaders_le'] = load_data.get_CIFAR10(config)
 
     return config
 
