@@ -86,3 +86,25 @@ def print_model_architecture(model_type, input_size=(3, 32, 32)):
     config['model_type'] = model_type
     model = config['model_type'](config).to(config['device'])
     summary(model, (3, 32, 32))
+
+
+def ssl_experiment1(model_type):
+    config = exp_config.get_exp_config()
+    config['usl_type'] = 'ae_single'
+    config['alpha'] = 0
+    config['denoising'] = True
+    config['layerwise_training'] = False
+
+    config['num_epochs_usl'] = 1
+    config['num_epochs_le'] = 1
+    config['loaders_usl'] = load_data.get_CIFAR100(config)
+    config['loaders_le'] = load_data.get_CIFAR10(config)
+    config['print_loss_rate'] = 1
+    config['save_images'] = True
+
+    config = exp_config.reset_config_paths_colab(config)
+    print(config)
+    config['model_type'] = model_type
+    model = config['model_type'](config).to(config['device'])
+
+    experiments.run_ssl_experiment(config, 'AE-S-Den-NewArch', rep_learning_model=model)
