@@ -1,0 +1,22 @@
+Notes:
+
+> Dont need to specify USL type in model class instance, can just do encode,___ for SimCLR and use both for AE
+> Now every time ae_train is run, need a new configuration to be passed in if want to change alpha or denoising architecture
+> Embedding is required to run model with runepoch function, so if no embedding, output tuple with blank first entry
+
+
+To do:
+> Add picture saving to ColabExport
+> Make sure alphas are working
+> Run experiments
+
+Wishlist:
+> In printing function, pass in config and then distinguish depending on what type of ssl is being completed
+> Have representation dim be calculated from the previous layer instead of needing to be passed in
+> Collect and examine at batch-wise losses
+
+Hyperparameters:
+> AE's
+    > Alpha
+    > Latent "bottleneck" dimension
+    > Learning Rate
