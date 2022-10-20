@@ -104,4 +104,4 @@ def ssl_experiment1(model_type):
     config['model_type'] = model_type
     model = config['model_type'](config).to(config['device'])
 
-    experiments.run_ssl_experiment(config, 'AE-S-Den-NewArch', rep_learning_model=model)
+    experiments.run_ssl_experiment(config, 'AE-S-Den-'+str(model_type), rep_learning_model=model)
