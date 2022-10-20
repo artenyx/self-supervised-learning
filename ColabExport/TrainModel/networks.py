@@ -86,9 +86,9 @@ class Linear_Evaluation_Classifier(nn.Module):
         return output
 
 
-class USL_Conv6_CIFAR(nn.Module):
+class USL_Conv6_CIFAR1(nn.Module):
     def __init__(self, config):
-        super(USL_Conv6_CIFAR, self).__init__()
+        super(USL_Conv6_CIFAR1, self).__init__()
         # Setting model parameters
         self.representation_dim = config['representation_dim']
         kernel_enc, kernel_dec = 3, 2

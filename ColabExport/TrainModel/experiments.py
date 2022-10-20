@@ -32,7 +32,7 @@ def run_ssl_experiment(config, exp_string, rep_learning_model=None, save=True):
             rep_learning_model = networks.USL_Conv6_CIFAR_Sym(config).to(config['device'])
             print(summary(rep_learning_model, (3, 32, 32), batch_size=256))
         else:
-            rep_learning_model = networks.USL_Conv6_CIFAR(config).to(config['device'])
+            rep_learning_model = networks.USL_Conv6_CIFAR1(config).to(config['device'])
 
     usl_data, usl_model = run_representation_learning(config, rep_learning_model)
 
@@ -59,7 +59,7 @@ def test_usl_lr(config, lr_list):
             rep_learning_model = networks.USL_Conv6_CIFAR_Sym(config).to(config['device'])
             print(summary(rep_learning_model, (3, 32, 32), batch_size=256))
         else:
-            rep_learning_model = networks.USL_Conv6_CIFAR(config).to(config['device'])
+            rep_learning_model = networks.USL_Conv6_CIFAR1(config).to(config['device'])
         usl_data, usl_model = run_representation_learning(config, rep_learning_model)
 
 
@@ -71,7 +71,7 @@ def test_le_lr(config, lr_list):
         rep_learning_model = networks.USL_Conv6_CIFAR_Sym(config).to(config['device'])
         print(summary(rep_learning_model, (3, 32, 32), batch_size=256))
     else:
-        rep_learning_model = networks.USL_Conv6_CIFAR(config).to(config['device'])
+        rep_learning_model = networks.USL_Conv6_CIFAR1(config).to(config['device'])
     usl_data, usl_model = run_representation_learning(config, rep_learning_model)
     emb_train_loader = train.get_embedding_loader(usl_model, config, config['loaders_le'][0])
     emb_test_loader = train.get_embedding_loader(usl_model, config, config['loaders_le'][1])
