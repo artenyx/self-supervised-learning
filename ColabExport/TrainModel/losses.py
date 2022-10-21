@@ -51,6 +51,7 @@ def simclr_run_loss(model, img1, img2):
     encoding1, __ = model(img1)
     encoding2, __ = model(img2)
     loss_total = simclr_loss_fun(encoding1, encoding2)
+
     return None, None, None, loss_total
 
 
