@@ -86,6 +86,7 @@ def print_model_architecture(model_type, input_size=(3, 32, 32)):
 
 
 def ssl_experiment1(model_type, config=None, add_exp_str=''):
+    # This experiment compares a denoising AE with a linear projector layer to a denoising AE without the linear projector layer
     if config is None:
         config = exp_config.get_exp_config()
     config['usl_type'] = 'ae_single'
@@ -97,7 +98,7 @@ def ssl_experiment1(model_type, config=None, add_exp_str=''):
     config['num_epochs_le'] = 100
     config['loaders']['loaders_usl'] = load_data.get_CIFAR100(config)
     config['loaders']['loaders_le'] = load_data.get_CIFAR10(config)
-    config['print_loss_rate'] = 1
+    config['print_loss_rate'] = 10
     config['save_images'] = True
 
     config = exp_config.reset_config_paths_colab(config)
