@@ -117,9 +117,8 @@ def ssl_experiment2(model_type, config=None, add_exp_str=''):
     config['denoising'] = False
     config['layerwise_training'] = False
 
-
-    config['num_epochs_usl'] = 1
-    config['num_epochs_le'] = 1
+    config['num_epochs_usl'] = 150
+    config['num_epochs_le'] = 150
     config['loaders']['loaders_usl'] = load_data.get_CIFAR100(config)
     config['loaders']['loaders_le'] = load_data.get_CIFAR10(config)
     config['print_loss_rate'] = 10
