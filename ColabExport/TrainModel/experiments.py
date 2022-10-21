@@ -113,7 +113,10 @@ def ssl_experiment2(model_type, config=None, add_exp_str=''):
     if config is None:
         config = exp_config.get_exp_config()
     config['usl_type'] = 'simclr'
+    config['alpha'] = 0
+    config['denoising'] = False
     config['layerwise_training'] = False
+
 
     config['num_epochs_usl'] = 1
     config['num_epochs_le'] = 1
