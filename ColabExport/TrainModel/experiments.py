@@ -117,7 +117,7 @@ def ssl_experiment2(model_type, config=None, add_exp_str=''):
     config['denoising'] = False
     config['layerwise_training'] = False
 
-    config['num_epochs_usl'] = 150
+    config['num_epochs_usl'] = 200
     config['num_epochs_le'] = 150
     config['loaders']['loaders_usl'] = load_data.get_CIFAR100(config)
     config['loaders']['loaders_le'] = load_data.get_CIFAR10(config)
@@ -128,4 +128,4 @@ def ssl_experiment2(model_type, config=None, add_exp_str=''):
     print(config)
     config['model_type'] = model_type
     model = config['model_type'](config).to(config['device'])
-    experiments.run_ssl_experiment(config, 'SimCLR-'+str(model_type)+add_exp_str, rep_learning_model=model)
+    experiments.run_ssl_experiment(config, 'SimCLR-'+str(model)+add_exp_str, rep_learning_model=model)
