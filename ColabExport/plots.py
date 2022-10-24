@@ -1,16 +1,16 @@
 import torch
 from sklearn.decomposition import PCA
+from sklearn.manifold import TSNE
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
+import seaborn as sns
 
 
-def plot_pca(config, exp_string):
-    emb_loaders = torch.load(config['data_save_path'] + '_embloaders_' + exp_string + '.pt')
-    train_loader, test_loader = emb_loaders["embedding_train_loader"], emb_loaders["embedding_test_loader"]
-    test_loader.dataset.data.reshape((-1, 3072))
+def plot_pca(config, dataset_array, print_string):
     pca = PCA(n_components=100)
 
-    train_set_pca = pca.fit_transform(test_loader)
+    dataset_array_pca = pca.fit_transform(dataset_array)
     exp_var_pca = pca.explained_variance_ratio_
     cum_sum_eigenvalues = np.cumsum(exp_var_pca)
 
@@ -21,4 +21,20 @@ def plot_pca(config, exp_string):
     plt.legend(loc='best')
     plt.tight_layout()
     plt.show()
-    plt.savefig(config['data_save_path'] + '_emb_pcacumsum_' + exp_string + '.pt')
+    plt.savefig(config['data_save_path'] + print_string)
+
+
+def plot_tsne_embeddings(config, dataset_array, target_array, print_string):
+    tsne = TSNE(n_components=2, verbose=1, random_state=123)
+    z = tsne.fit_transform(dataset_array)
+
+    df = pd.DataFrame()
+    df["y"] = target_array
+    df["comp-1"] = z[:, 0]
+    df["comp-2"] = z[:, 1]
+
+    plot = sns.scatterplot(x="comp-1", y="comp-2", hue=df.y.tolist(), palette=sns.color_palette("hls", 10), data=df).set(title="Embedding t-SNE Projection")
+    fig = plot.get_figure()
+    fig.savefig(config['data_save_path'] + print_string)
+
+
