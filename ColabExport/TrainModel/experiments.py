@@ -38,6 +38,7 @@ def run_ssl_experiment(config, exp_string, rep_learning_model=None, save=True):
 
     emb_train_loader = train.get_embedding_loader(usl_model, config, config['loaders']['loaders_le'][0])
     emb_test_loader = train.get_embedding_loader(usl_model, config, config['loaders']['loaders_le'][1])
+    torch.save({"embedding_train_loader": emb_train_loader, "embedding_test_loader": emb_test_loader}, config['data_save_path'] + '_embloaders_' + exp_string + '.pt')
     config['loaders']['loaders_embedded'] = emb_train_loader, emb_test_loader
 
     le_data, le_model = run_linear_evaluation(config)
@@ -131,7 +132,7 @@ def ssl_experiment2(model_type, config=None, add_exp_str=''):
     experiments.run_ssl_experiment(config, 'SimCLR-'+str(model.__class__.__name__)+add_exp_str, rep_learning_model=model)
 
 def ssl_experiment3(model_type, config=None, add_exp_str=''):
-    # SimCLR experiment
+    # Non denoising single AE experiment ~15 min / 100 usl epochs
     if config is None:
         config = exp_config.get_exp_config()
     config['usl_type'] = 'ae_single'
@@ -150,4 +151,4 @@ def ssl_experiment3(model_type, config=None, add_exp_str=''):
     print(config)
     config['model_type'] = model_type
     model = config['model_type'](config).to(config['device'])
-    experiments.run_ssl_experiment(config, 'SimCLR-'+str(model.__class__.__name__)+add_exp_str, rep_learning_model=model)
+    experiments.run_ssl_experiment(config, 'AE-S-ND-'+str(model.__class__.__name__)+add_exp_str, rep_learning_model=model)
