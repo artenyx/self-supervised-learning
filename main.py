@@ -9,11 +9,16 @@ print("\n========Running network 2========")
 model_type = networks.USL_Conv6_CIFAR2
 experiments.print_model_architecture(model_type)
 experiments.ssl_experiment1(model_type)
-'''
 
 print("========Running SimCLR network 1========")
 model_type = networks.USL_Conv6_CIFAR1
 experiments.print_model_architecture(model_type)
 experiments.ssl_experiment2(model_type)
+'''
+print("========Running AE Single network 1========")
+model_type = networks.USL_Conv6_CIFAR1
+experiments.print_model_architecture(model_type)
+experiments.ssl_experiment3(model_type)
+
 
 
