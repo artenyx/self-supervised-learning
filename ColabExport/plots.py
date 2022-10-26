@@ -81,26 +81,10 @@ def produce_embedding_plots(samples_to_use=1000, config=None, load_obj=None, get
     data_arrays = emb_loader_to_array(emb_dataset_train, emb_dataset_test)
     n = samples_to_use
 
-    plot_pca(config, data_arrays[0][:n], print_string='_train')
-    plot_tsne(config, data_arrays[0][:n], data_arrays[1][:n], print_string='train')
+    plot_pca(config, data_arrays[0][:n], print_string='train_')
+    plot_tsne(config, data_arrays[0][:n], data_arrays[1][:n], print_string='train_')
 
-    plot_pca(config, data_arrays[2][:n], print_string='_test')
-    plot_tsne(config, data_arrays[2][:n], data_arrays[3][:n], print_string='test')
+    plot_pca(config, data_arrays[2][:n], print_string='test_')
+    plot_tsne(config, data_arrays[2][:n], data_arrays[3][:n], print_string='test_')
 
-
-'''  
-config = exp_config.get_exp_config()
-config = exp_config.reset_config_paths_colab(config)
-loaders = torch.load(config['data_save_path']+"_embloaders_AE-S-D-USL_Conv6_CIFAR1.pt")
-#need to create a way to extract only first element of tuples
-
-emb_dataset = loaders["embedding_train_loader"].dataset
-emb_dataset_array = np.array([tup[0].cpu().detach().numpy() for tup in emb_dataset])
-emb_dataset_array = emb_dataset_array.reshape((-1, np.prod(emb_dataset_array.shape[1:])))
-print(emb_dataset_array.shape)
-
-emb_target_array = np.array([tup[1].cpu().detach().numpy() for tup in emb_dataset])
-print(emb_target_array.shape)
-
-plot_pca(config, emb_dataset_array) #, emb_target_array) 
-'''
+#def plots_train_trajectory():
