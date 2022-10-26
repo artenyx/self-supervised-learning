@@ -90,4 +90,4 @@ def make_dir(folder_name):
     if not os.path.exists(folder_name):
         os.mkdir(folder_name)
     else:
-        print("Directory" + folder_name + "exists")
+        print("Directory " + folder_name + " exists")
