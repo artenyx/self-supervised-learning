@@ -23,7 +23,7 @@ def plot_pca(config, dataset_array, print_string=''):
     plt.xlabel('Principal component index')
     plt.legend(loc='best')
     plt.tight_layout()
-    plt.savefig(config['data_save_path'] + print_string + 'pca_fig.png')
+    plt.savefig(config['save_path'] + print_string + 'pca_fig.png')
     plt.show()
     return
 
@@ -39,10 +39,8 @@ def plot_tsne(config, dataset_array, target_array, print_string=''):
 
     plot = sns.scatterplot(x="comp-1", y="comp-2", hue=df.y.tolist(), palette=sns.color_palette("hls", 10),
                            data=df).set(title="Embedding t-SNE Projection")
-    plt.savefig(config['data_save_path'] + print_string + 'tsne_fig.png')
+    plt.savefig(config['save_path'] + print_string + 'tsne_fig.png')
     plt.show()
-    # fig = plot.get_figure()
-    # fig.savefig(config['data_save_path'] + print_string)
     return
 
 
@@ -102,7 +100,7 @@ def plot_lineval(config, le_data, to_epoch=None, print_string=""):
     plt.xlabel("Epoch")
     plt.ylabel("Error")
     plt.legend()
-    plt.savefig(config['data_save_path'] + print_string + 'LE_train_test_error.png')
+    plt.savefig(config['save_path'] + print_string + 'LE_train_test_error.png')
     plt.show()
     return
 
@@ -117,6 +115,6 @@ def plot_usl(config, usl_data, to_epoch=None, print_string=""):
     plt.xlabel("Epoch")
     plt.ylabel("Loss")
     plt.legend()
-    plt.savefig(config['data_save_path'] + print_string + 'USL_train_test_loss.png')
+    plt.savefig(config['save_path'] + print_string + 'USL_train_test_loss.png')
     plt.show()
     return

@@ -6,14 +6,7 @@ import torch
 
 
 print("========Running network 1========")
-print(torch.device("cuda:0" if torch.cuda.is_available() else "cpu"))
-model_type = networks.USL_Conv6_CIFAR1
-#experiments.print_model_architecture(model_type)
-experiments.ssl_experiment1(model_type)
-
-'''
-plots.produce_embedding_plots(samples_to_use=1000, load_obj="_embloaders_AE-S-D-USL_Conv6_CIFAR1.pt")
-'''
+experiments.ssl_experiment()
 
 '''
 config = exp_config.get_exp_config()
