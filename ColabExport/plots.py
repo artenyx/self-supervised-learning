@@ -107,7 +107,7 @@ def plot_lineval(config, le_data, to_epoch=None, print_string=""):
     return
 
 
-def plot_usl(config, le_data, to_epoch=None, print_string=""):
+def plot_usl(config, usl_data, to_epoch=None, print_string=""):
     if to_epoch is None:
         n = len(le_data["Epoch Number"][1:]) - 1
     else:
