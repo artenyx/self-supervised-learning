@@ -109,11 +109,11 @@ def plot_lineval(config, le_data, to_epoch=None, print_string=""):
 
 def plot_usl(config, usl_data, to_epoch=None, print_string=""):
     if to_epoch is None:
-        n = len(le_data["Epoch Number"][1:]) - 1
+        n = len(usl_data["Epoch Number"][1:]) - 1
     else:
         n = to_epoch
-    plt.plot(le_data["Epoch Number"][1:n], le_data["Total Train Loss"][1:n], label="Train Loss")
-    plt.plot(le_data["Epoch Number"][1:n], le_data["Total Test Loss"][1:n], label="Test Loss")
+    plt.plot(usl_data["Epoch Number"][1:n], usl_data["Total Train Loss"][1:n], label="Train Loss")
+    plt.plot(usl_data["Epoch Number"][1:n], usl_data["Total Test Loss"][1:n], label="Test Loss")
     plt.xlabel("Epoch")
     plt.ylabel("Loss")
     plt.legend()
