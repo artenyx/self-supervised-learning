@@ -22,8 +22,8 @@ def plot_pca(config, dataset_array, print_string='pca_fig.png'):
     plt.xlabel('Principal component index')
     plt.legend(loc='best')
     plt.tight_layout()
-    plt.show()
     plt.savefig(config['data_save_path'] + print_string)
+    plt.show()
 
 
 def plot_tsne(config, dataset_array, target_array, print_string='tsne_fig.png'):
