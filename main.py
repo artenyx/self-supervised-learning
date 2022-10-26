@@ -27,5 +27,4 @@ experiments.print_model_architecture(model_type)
 experiments.ssl_experiment5(model_type)
 
 '''
-config =
 plots.produce_embedding_plots(samples_to_use=1000, load_obj="_embloaders_AE-S-D-USL_Conv6_CIFAR1.pt")
