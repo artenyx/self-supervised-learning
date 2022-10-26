@@ -42,9 +42,15 @@ from ColabExport import exp_config
 config = exp_config.get_exp_config()
 config = exp_config.reset_config_paths_colab(config)
 loaders = torch.load(config['data_save_path']+"_embloaders_AE-S-D-USL_Conv6_CIFAR1.pt")
-emb_dataset = print(loaders["embedding_train_loader"].dataset[0])
-emb_dataset_array = emb_dataset.reshape((-1, np.prod(emb_dataset.shape[1:])))
+#need to create a way to extract only first element of tuples
+
+emb_dataset = loaders["embedding_train_loader"].dataset
+emb_dataset_array = np.array([tup[0].cpu().detach().numpy() for tup in emb_dataset])
+emb_dataset_array = emb_dataset_array.reshape((-1, np.prod(emb_dataset.shape[1:])))
 emb_target_array = loaders["embedding_train_loader"].dataset.targets
 
 plot_tsne_embeddings(config, emb_dataset_array, emb_target_array)
 
+list_of_tuples = [(1, 'a'), (2, 'b'), (3, 'c')]
+
+result = [tup[0] for tup in list_of_tuples]
