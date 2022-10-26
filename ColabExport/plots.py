@@ -6,6 +6,8 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 
+from ColabExport import exp_config
+
 
 def plot_pca(config, dataset_array, print_string='pca_fig.png'):
     pca = PCA(n_components=100)
@@ -24,7 +26,7 @@ def plot_pca(config, dataset_array, print_string='pca_fig.png'):
     plt.savefig(config['data_save_path'] + print_string)
 
 
-def plot_tsne_embeddings(config, dataset_array, target_array, print_string='tsne_fig.png'):
+def plot_tsne(config, dataset_array, target_array, print_string='tsne_fig.png'):
     tsne = TSNE(n_components=2, verbose=1, random_state=123)
     z = tsne.fit_transform(dataset_array)
 
@@ -37,8 +39,37 @@ def plot_tsne_embeddings(config, dataset_array, target_array, print_string='tsne
     fig = plot.get_figure()
     fig.savefig(config['data_save_path'] + print_string)
 
-from ColabExport import exp_config
 
+def emb_loader_to_array(load_path, config=None, get_loader_from_config=False):
+    if config is None:
+        config = exp_config.get_exp_config()
+        config = exp_config.reset_config_paths_colab(config)
+        loaders = torch.load(load_path)
+        emb_dataset = loaders["embedding_train_loader"].dataset
+    elif get_loader_from_config:
+        loaders = config["loaders"]["loaders_embedded"]
+        emb_dataset = loaders[0].dataset
+    else:
+        loaders = torch.load(load_path)
+        emb_dataset = loaders["embedding_train_loader"].dataset
+
+    emb_dataset_array = np.array([tup[0].cpu().detach().numpy() for tup in emb_dataset])
+    emb_dataset_array = emb_dataset_array.reshape((-1, np.prod(emb_dataset_array.shape[1:])))
+    print(emb_dataset_array.shape)
+
+    emb_target_array = np.array([tup[1].cpu().detach().numpy() for tup in emb_dataset])
+    print(emb_target_array.shape)
+    return emb_dataset_array, emb_target_array
+
+
+config1 = exp_config.get_exp_config()
+config1 = exp_config.reset_config_paths_colab(config1)
+data_arrays = emb_loader_to_array(config1['data_save_path']+"_embloaders_AE-S-D-USL_Conv6_CIFAR1.pt")
+
+plot_pca(config1, data_arrays[0])
+plot_tsne(config1, data_arrays[0], data_arrays[1])
+
+'''  
 config = exp_config.get_exp_config()
 config = exp_config.reset_config_paths_colab(config)
 loaders = torch.load(config['data_save_path']+"_embloaders_AE-S-D-USL_Conv6_CIFAR1.pt")
@@ -52,4 +83,5 @@ print(emb_dataset_array.shape)
 emb_target_array = np.array([tup[1].cpu().detach().numpy() for tup in emb_dataset])
 print(emb_target_array.shape)
 
-plot_pca(config, emb_dataset_array) #, emb_target_array)
+plot_pca(config, emb_dataset_array) #, emb_target_array) 
+'''
