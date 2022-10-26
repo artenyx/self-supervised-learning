@@ -33,6 +33,6 @@ data_arrays = plots.emb_loader_to_array(config1['data_save_path']+"_embloaders_A
 
 
 plots.plot_pca(config1, data_arrays[0][:1000])
-plots.plot_tsne(config1, data_arrays[0][:1000], data_arrays[1])
+plots.plot_tsne(config1, data_arrays[0][:1000], data_arrays[1][:1000])
 
 

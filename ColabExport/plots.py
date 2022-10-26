@@ -55,10 +55,8 @@ def emb_loader_to_array(load_path, config=None, get_loader_from_config=False):
 
     emb_dataset_array = np.array([tup[0].cpu().detach().numpy() for tup in emb_dataset])
     emb_dataset_array = emb_dataset_array.reshape((-1, np.prod(emb_dataset_array.shape[1:])))
-    print(emb_dataset_array.shape)
 
     emb_target_array = np.array([tup[1].cpu().detach().numpy() for tup in emb_dataset])
-    print(emb_target_array.shape)
     return emb_dataset_array, emb_target_array
 
 
