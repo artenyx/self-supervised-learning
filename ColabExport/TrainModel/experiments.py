@@ -117,7 +117,7 @@ def ssl_experiment_setup(model_type=networks.USL_Conv6_CIFAR1,
     print(config)
     config['model_type'] = model_type
     model = config['model_type'](config).to(config['device'])
-    date_time = datetime.now().strftime("%m/%d/%Y-%H:%M:%S")
+    date_time = datetime.now().strftime("%m.%d.%Y-%H:%M:%S")
 
     usl_data, usl_model, le_data, le_model = experiments.run_ssl_experiment(config, "-".join(exp_type) + "_" + str(date_time) + add_exp_str, rep_learning_model=model)
     if return_data:
