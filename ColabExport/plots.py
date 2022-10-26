@@ -7,7 +7,7 @@ import pandas as pd
 import seaborn as sns
 
 
-def plot_pca(config, dataset_array, print_string):
+def plot_pca(config, dataset_array, print_string='pca_fig.png'):
     pca = PCA(n_components=100)
 
     dataset_array_pca = pca.fit_transform(dataset_array)
