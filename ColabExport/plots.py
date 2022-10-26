@@ -37,6 +37,7 @@ def plot_tsne(config, dataset_array, target_array, print_string=''):
 
     plot = sns.scatterplot(x="comp-1", y="comp-2", hue=df.y.tolist(), palette=sns.color_palette("hls", 10), data=df).set(title="Embedding t-SNE Projection")
     plt.savefig(config['data_save_path'] + print_string + 'tsne_fig.png')
+    plt.show()
     #fig = plot.get_figure()
     #fig.savefig(config['data_save_path'] + print_string)
 
@@ -80,10 +81,10 @@ def produce_embedding_plots(samples_to_use=1000, config=None, load_obj=None, get
     data_arrays = emb_loader_to_array(emb_dataset_train, emb_dataset_test)
     n = samples_to_use
 
-    plot_pca(config, data_arrays[0][:n], print_string='train')
+    plot_pca(config, data_arrays[0][:n], print_string='_train')
     plot_tsne(config, data_arrays[0][:n], data_arrays[1][:n], print_string='train')
 
-    plot_pca(config, data_arrays[2][:n], print_string='test')
+    plot_pca(config, data_arrays[2][:n], print_string='_test')
     plot_tsne(config, data_arrays[2][:n], data_arrays[3][:n], print_string='test')
 
 
