@@ -67,6 +67,7 @@ def print_model_architecture(model_type, input_size=(3, 32, 32)):
 
 def ssl_experiment_setup(model_type=networks.USL_Conv6_CIFAR1,
                          exp_type=("AE-S", "D", "NL"),
+                         alpha=0.001,
                          config=None,
                          add_exp_str='',
                          num_epochs_usl=200,
@@ -82,6 +83,7 @@ def ssl_experiment_setup(model_type=networks.USL_Conv6_CIFAR1,
         config['usl_type'] = 'ae_single'
     elif exp_type[0] == "AE-P":
         config['usl_type'] = 'ae_parallel'
+        config['alpha'] = alpha
     elif exp_type[0] == "SimCLR":
         config['usl_type'] = 'ae_parallel'
     else:

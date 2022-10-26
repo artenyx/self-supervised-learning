@@ -80,8 +80,8 @@ def usl_run_epoch(model, config, loader, epoch, grad):
 
 
 def usl_train_network(model, config):
-    if config['denoising'] is None or config['alpha'] is None or config['device'] is None or config['usl_type'] is None:
-        raise Exception("Parameters denoising, alpha, device, and usl_type must all be configured. Acceptable usl_"
+    if config['denoising'] is None or config['device'] is None or config['usl_type'] is None:
+        raise Exception("Parameters denoising, device, and usl_type must all be configured. Acceptable usl_"
                         "type settings are ae_single, ae_parallel, and simclr.")
 
     config['optimizer'] = config['optimizer_type'](model.parameters(), lr=config['lr_usl'])
