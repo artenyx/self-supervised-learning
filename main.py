@@ -45,5 +45,5 @@ plots.plot_lineval(config, le_data_ae_s_nd, print_string='ae_s_nonden_')
 
 le_data_simclr = pd.read_csv(config['data_save_path']+"LE_data_SimCLR-<class 'ColabExport.TrainModel.networks.USL_Conv6_CIFAR1'>.csv")
 usl_data_simclr = pd.read_csv(config['data_save_path']+"USL_data_SimCLR-<class 'ColabExport.TrainModel.networks.USL_Conv6_CIFAR1'>.csv")
-plots.plot_usl(config, usl_data_simclr, print_string='simclr')
-plots.plot_lineval(config, le_data_simclr, print_string='simclr')
+plots.plot_usl(config, usl_data_simclr, print_string='simclr_')
+plots.plot_lineval(config, le_data_simclr, print_string='simclr_')
