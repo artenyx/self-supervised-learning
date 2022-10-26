@@ -31,7 +31,7 @@ def run_ssl_experiment(config, exp_string, rep_learning_model=None, save=True):
     exp_path = "ExperimentFiles/" + exp_string + "/"
     exp_config.make_dir(exp_path)
     config["save_path"] = exp_path
-    config_df.to_csv(config["save_path"])
+    config_df.to_csv(config["save_path"]+"exp_config")
 
     if rep_learning_model is None:
         if config['layerwise_training']:
