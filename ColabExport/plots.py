@@ -55,19 +55,19 @@ def emb_loader_to_array(emb_dataset_train, emb_dataset_test):
     return emb_dataset_array_train, emb_target_array_train, emb_dataset_array_test, emb_target_array_test
 
 
-def produce_embedding_plots(samples_to_use=1000, config=None, load_path=None, get_loader_from_config=False):
+def produce_embedding_plots(samples_to_use=1000, config=None, load_obj=None, get_loader_from_config=False):
     if config is None and get_loader_from_config:
         raise Exception("Must supply config since get_loader_from_config is True.")
-    if load_path is not None and get_loader_from_config:
+    if load_obj is not None and get_loader_from_config:
         raise Warning("Load path will not be used since get_loader_from_config is True.")
     if config is None and not get_loader_from_config:
         config = exp_config.get_exp_config()
         config = exp_config.reset_config_paths_colab(config)
-        loaders = torch.load(load_path)
+        loaders = torch.load(config['data_save_path']+load_obj)
         emb_dataset_train = loaders["embedding_train_loader"].dataset
         emb_dataset_test = loaders["embedding_test_loader"].dataset
     elif config is not None and not get_loader_from_config:
-        loaders = torch.load(load_path)
+        loaders = torch.load(config['data_save_path']+load_obj)
         emb_dataset_train = loaders["embedding_train_loader"].dataset
         emb_dataset_test = loaders["embedding_test_loader"].dataset
     elif config is not None and get_loader_from_config:
