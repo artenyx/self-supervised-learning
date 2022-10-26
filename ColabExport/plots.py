@@ -55,7 +55,7 @@ def emb_loader_to_array(emb_dataset_train, emb_dataset_test):
     return emb_dataset_array_train, emb_target_array_train, emb_dataset_array_test, emb_target_array_test
 
 
-def produce_embedding_plots(config=None, load_path=None, get_loader_from_config=False):
+def produce_embedding_plots(samples_to_use=1000, config=None, load_path=None, get_loader_from_config=False):
     if config is None and get_loader_from_config:
         raise Exception("Must supply config since get_loader_from_config is True.")
     if load_path is not None and get_loader_from_config:
@@ -78,7 +78,7 @@ def produce_embedding_plots(config=None, load_path=None, get_loader_from_config=
         raise Exception("Check function.")
 
     data_arrays = emb_loader_to_array(emb_dataset_train, emb_dataset_test)
-    n = 1000
+    n = samples_to_use
 
     plot_pca(config, data_arrays[0][:n], print_string='train')
     plot_tsne(config, data_arrays[0][:n], data_arrays[1][:n], print_string='train')
