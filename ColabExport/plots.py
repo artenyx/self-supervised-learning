@@ -16,14 +16,16 @@ def plot_pca(config, dataset_array, print_string=''):
     exp_var_pca = pca.explained_variance_ratio_
     cum_sum_eigenvalues = np.cumsum(exp_var_pca)
 
-    plt.bar(range(0,len(exp_var_pca)), exp_var_pca, alpha=0.5, align='center', label='Individual explained variance')
-    plt.step(range(0,len(cum_sum_eigenvalues)), cum_sum_eigenvalues, where='mid', label='Cumulative explained variance')
+    plt.bar(range(0, len(exp_var_pca)), exp_var_pca, alpha=0.5, align='center', label='Individual explained variance')
+    plt.step(range(0, len(cum_sum_eigenvalues)), cum_sum_eigenvalues, where='mid',
+             label='Cumulative explained variance')
     plt.ylabel('Explained variance ratio')
     plt.xlabel('Principal component index')
     plt.legend(loc='best')
     plt.tight_layout()
     plt.savefig(config['data_save_path'] + print_string + 'pca_fig.png')
     plt.show()
+    return
 
 
 def plot_tsne(config, dataset_array, target_array, print_string=''):
@@ -35,15 +37,16 @@ def plot_tsne(config, dataset_array, target_array, print_string=''):
     df["comp-1"] = z[:, 0]
     df["comp-2"] = z[:, 1]
 
-    plot = sns.scatterplot(x="comp-1", y="comp-2", hue=df.y.tolist(), palette=sns.color_palette("hls", 10), data=df).set(title="Embedding t-SNE Projection")
+    plot = sns.scatterplot(x="comp-1", y="comp-2", hue=df.y.tolist(), palette=sns.color_palette("hls", 10),
+                           data=df).set(title="Embedding t-SNE Projection")
     plt.savefig(config['data_save_path'] + print_string + 'tsne_fig.png')
     plt.show()
-    #fig = plot.get_figure()
-    #fig.savefig(config['data_save_path'] + print_string)
+    # fig = plot.get_figure()
+    # fig.savefig(config['data_save_path'] + print_string)
+    return
 
 
 def emb_loader_to_array(emb_dataset_train, emb_dataset_test):
-
     emb_dataset_array_train = np.array([tup[0].cpu().detach().numpy() for tup in emb_dataset_train])
     emb_dataset_array_train = emb_dataset_array_train.reshape((-1, np.prod(emb_dataset_array_train.shape[1:])))
 
@@ -64,11 +67,11 @@ def produce_embedding_plots(samples_to_use=1000, config=None, load_obj=None, get
     if config is None and not get_loader_from_config:
         config = exp_config.get_exp_config()
         config = exp_config.reset_config_paths_colab(config)
-        loaders = torch.load(config['data_save_path']+load_obj)
+        loaders = torch.load(config['data_save_path'] + load_obj)
         emb_dataset_train = loaders["embedding_train_loader"].dataset
         emb_dataset_test = loaders["embedding_test_loader"].dataset
     elif config is not None and not get_loader_from_config:
-        loaders = torch.load(config['data_save_path']+load_obj)
+        loaders = torch.load(config['data_save_path'] + load_obj)
         emb_dataset_train = loaders["embedding_train_loader"].dataset
         emb_dataset_test = loaders["embedding_test_loader"].dataset
     elif config is not None and get_loader_from_config:
@@ -86,5 +89,34 @@ def produce_embedding_plots(samples_to_use=1000, config=None, load_obj=None, get
 
     plot_pca(config, data_arrays[2][:n], print_string='test_')
     plot_tsne(config, data_arrays[2][:n], data_arrays[3][:n], print_string='test_')
+    return
 
-#def plots_train_trajectory():
+
+def plot_lineval(config, le_data, to_epoch=None, print_string=""):
+    if to_epoch is None:
+        n = len(le_data["Epoch Number"][1:]) - 1
+    else:
+        n = to_epoch
+    plt.plot(le_data["Epoch Number"][1:n], le_data["Train Error"][1:n], label="Train Error")
+    plt.plot(le_data["Epoch Number"][1:n], le_data["Test Error"][1:n], label="Test Error")
+    plt.xlabel("Epoch")
+    plt.ylabel("Error")
+    plt.legend()
+    plt.savefig(config['data_save_path'] + print_string + 'LE_train_test_error.png')
+    plt.show()
+    return
+
+
+def plot_usl(config, le_data, to_epoch=None, print_string=""):
+    if to_epoch is None:
+        n = len(le_data["Epoch Number"][1:]) - 1
+    else:
+        n = to_epoch
+    plt.plot(le_data["Epoch Number"][1:n], le_data["Total Train Loss"][1:n], label="Train Loss")
+    plt.plot(le_data["Epoch Number"][1:n], le_data["Total Test Loss"][1:n], label="Test Loss")
+    plt.xlabel("Epoch")
+    plt.ylabel("Loss")
+    plt.legend()
+    plt.savefig(config['data_save_path'] + print_string + 'USL_train_test_loss.png')
+    plt.show()
+    return
