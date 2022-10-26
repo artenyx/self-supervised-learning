@@ -40,7 +40,7 @@ def plot_tsne_embeddings(config, dataset_array, target_array, print_string='tsne
 from ColabExport import exp_config
 
 config = exp_config.get_exp_config()
-loaders = torch.load("_embloaders_AE-S-D-USL_Conv6_CIFAR1.pt")
+loaders = torch.load(config['data_save_path']+"_embloaders_AE-S-D-USL_Conv6_CIFAR1.pt")
 emb_dataset = loaders["embedding_train_loader"].dataset.data
 emb_dataset_array = emb_dataset.reshape((-1, np.prod(emb_dataset.shape[1:])))
 emb_target_array = loaders["embedding_train_loader"].dataset.targets
