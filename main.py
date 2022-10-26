@@ -8,7 +8,7 @@ import torch
 print("========Running network 1========")
 print(torch.device("cuda:0" if torch.cuda.is_available() else "cpu"))
 model_type = networks.USL_Conv6_CIFAR1
-experiments.print_model_architecture(model_type)
+#experiments.print_model_architecture(model_type)
 experiments.ssl_experiment1(model_type)
 
 '''
