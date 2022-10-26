@@ -31,8 +31,11 @@ config1 = exp_config.get_exp_config()
 config1 = exp_config.reset_config_paths_colab(config1)
 data_arrays = plots.emb_loader_to_array(config1['data_save_path']+"_embloaders_AE-S-D-USL_Conv6_CIFAR1.pt")
 
+n = 1000
 
-plots.plot_pca(config1, data_arrays[0][:1000])
-plots.plot_tsne(config1, data_arrays[0][:1000], data_arrays[1][:1000])
+plots.plot_pca(config1, data_arrays[0][:n], print_string='train')
+plots.plot_tsne(config1, data_arrays[0][:n], data_arrays[1][:n], print_string='train')
 
+plots.plot_pca(config1, data_arrays[2][:n], print_string='test')
+plots.plot_tsne(config1, data_arrays[2][:n], data_arrays[3][:n], print_string='test')
 

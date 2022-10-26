@@ -9,7 +9,7 @@ import seaborn as sns
 from ColabExport import exp_config
 
 
-def plot_pca(config, dataset_array, print_string='pca_fig.png'):
+def plot_pca(config, dataset_array, print_string=''):
     pca = PCA(n_components=100)
 
     dataset_array_pca = pca.fit_transform(dataset_array)
@@ -22,11 +22,11 @@ def plot_pca(config, dataset_array, print_string='pca_fig.png'):
     plt.xlabel('Principal component index')
     plt.legend(loc='best')
     plt.tight_layout()
-    plt.savefig(config['data_save_path'] + print_string)
+    plt.savefig(config['data_save_path'] + print_string + 'pca_fig.png')
     plt.show()
 
 
-def plot_tsne(config, dataset_array, target_array, print_string='tsne_fig.png'):
+def plot_tsne(config, dataset_array, target_array, print_string=''):
     tsne = TSNE(n_components=2, verbose=1, random_state=123)
     z = tsne.fit_transform(dataset_array)
 
@@ -36,7 +36,7 @@ def plot_tsne(config, dataset_array, target_array, print_string='tsne_fig.png'):
     df["comp-2"] = z[:, 1]
 
     plot = sns.scatterplot(x="comp-1", y="comp-2", hue=df.y.tolist(), palette=sns.color_palette("hls", 10), data=df).set(title="Embedding t-SNE Projection")
-    plt.savefig(config['data_save_path'] + print_string)
+    plt.savefig(config['data_save_path'] + print_string + 'tsne_fig.png')
     #fig = plot.get_figure()
     #fig.savefig(config['data_save_path'] + print_string)
 
@@ -46,19 +46,27 @@ def emb_loader_to_array(load_path, config=None, get_loader_from_config=False):
         config = exp_config.get_exp_config()
         config = exp_config.reset_config_paths_colab(config)
         loaders = torch.load(load_path)
-        emb_dataset = loaders["embedding_train_loader"].dataset
+        emb_dataset_train = loaders["embedding_train_loader"].dataset
+        emb_dataset_test = loaders["embedding_test_loader"].dataset
     elif get_loader_from_config:
         loaders = config["loaders"]["loaders_embedded"]
-        emb_dataset = loaders[0].dataset
+        emb_dataset_train = loaders[0].dataset
+        emb_dataset_test = loaders[1].dataset
     else:
         loaders = torch.load(load_path)
-        emb_dataset = loaders["embedding_train_loader"].dataset
+        emb_dataset_train = loaders["embedding_train_loader"].dataset
+        emb_dataset_test = loaders["embedding_test_loader"].dataset
 
-    emb_dataset_array = np.array([tup[0].cpu().detach().numpy() for tup in emb_dataset])
-    emb_dataset_array = emb_dataset_array.reshape((-1, np.prod(emb_dataset_array.shape[1:])))
+    emb_dataset_array_train = np.array([tup[0].cpu().detach().numpy() for tup in emb_dataset_train])
+    emb_dataset_array_train = emb_dataset_array_train.reshape((-1, np.prod(emb_dataset_array_train.shape[1:])))
 
-    emb_target_array = np.array([tup[1].cpu().detach().numpy() for tup in emb_dataset])
-    return emb_dataset_array, emb_target_array
+    emb_dataset_array_test = np.array([tup[0].cpu().detach().numpy() for tup in emb_dataset_test])
+    emb_dataset_array_test = emb_dataset_array_test.reshape((-1, np.prod(emb_dataset_array_test.shape[1:])))
+
+    emb_target_array_train = np.array([tup[1].cpu().detach().numpy() for tup in emb_dataset_train])
+    emb_target_array_test = np.array([tup[1].cpu().detach().numpy() for tup in emb_dataset_test])
+
+    return emb_dataset_array_train, emb_target_array_train, emb_dataset_array_test, emb_target_array_test
 
 
 '''  
