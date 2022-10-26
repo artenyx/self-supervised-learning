@@ -48,10 +48,8 @@ emb_dataset = loaders["embedding_train_loader"].dataset
 emb_dataset_array = np.array([tup[0].cpu().detach().numpy() for tup in emb_dataset])
 emb_dataset_array = emb_dataset_array.reshape((-1, np.prod(emb_dataset_array.shape[1:])))
 print(emb_dataset_array.shape)
-emb_target_array = loaders["embedding_train_loader"].dataset.targets
 
-plot_tsne_embeddings(config, emb_dataset_array, emb_target_array)
+emb_target_array = np.array([tup[1].cpu().detach().numpy() for tup in emb_dataset])
+print(emb_target_array.shape)
 
-list_of_tuples = [(1, 'a'), (2, 'b'), (3, 'c')]
-
-result = [tup[0] for tup in list_of_tuples]
+plot_pca(config, emb_dataset_array) #, emb_target_array)
