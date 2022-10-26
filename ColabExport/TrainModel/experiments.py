@@ -153,3 +153,48 @@ def ssl_experiment3(model_type, config=None, add_exp_str=''):
     model = config['model_type'](config).to(config['device'])
     experiments.run_ssl_experiment(config, 'AE-S-ND-'+str(model.__class__.__name__)+add_exp_str, rep_learning_model=model)
 
+
+def ssl_experiment4(model_type, config=None, add_exp_str=''):
+    # Non denoising single AE experiment ~15 min / 100 usl epochs
+    if config is None:
+        config = exp_config.get_exp_config()
+    config['usl_type'] = 'ae_parallel'
+    config['alpha'] = 0.001
+    config['denoising'] = True
+    config['layerwise_training'] = False
+
+    config['num_epochs_usl'] = 200
+    config['num_epochs_le'] = 150
+    config['loaders']['loaders_usl'] = load_data.get_CIFAR100(config)
+    config['loaders']['loaders_le'] = load_data.get_CIFAR10(config)
+    config['print_loss_rate'] = 10
+    config['save_images'] = True
+
+    config = exp_config.reset_config_paths_colab(config)
+    print(config)
+    config['model_type'] = model_type
+    model = config['model_type'](config).to(config['device'])
+    experiments.run_ssl_experiment(config, 'AE-P-D-'+str(model.__class__.__name__)+add_exp_str, rep_learning_model=model)
+
+
+def ssl_experiment5(model_type, config=None, add_exp_str=''):
+    # Non denoising single AE experiment ~15 min / 100 usl epochs
+    if config is None:
+        config = exp_config.get_exp_config()
+    config['usl_type'] = 'ae_parallel'
+    config['alpha'] = 0.001
+    config['denoising'] = False
+    config['layerwise_training'] = False
+
+    config['num_epochs_usl'] = 200
+    config['num_epochs_le'] = 150
+    config['loaders']['loaders_usl'] = load_data.get_CIFAR100(config)
+    config['loaders']['loaders_le'] = load_data.get_CIFAR10(config)
+    config['print_loss_rate'] = 10
+    config['save_images'] = True
+
+    config = exp_config.reset_config_paths_colab(config)
+    print(config)
+    config['model_type'] = model_type
+    model = config['model_type'](config).to(config['device'])
+    experiments.run_ssl_experiment(config, 'AE-P-ND-'+str(model.__class__.__name__)+add_exp_str, rep_learning_model=model)
