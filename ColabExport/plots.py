@@ -24,7 +24,7 @@ def plot_pca(config, dataset_array, print_string):
     plt.savefig(config['data_save_path'] + print_string)
 
 
-def plot_tsne_embeddings(config, dataset_array, target_array, print_string):
+def plot_tsne_embeddings(config, dataset_array, target_array, print_string='tsne_fig.png'):
     tsne = TSNE(n_components=2, verbose=1, random_state=123)
     z = tsne.fit_transform(dataset_array)
 
@@ -37,4 +37,13 @@ def plot_tsne_embeddings(config, dataset_array, target_array, print_string):
     fig = plot.get_figure()
     fig.savefig(config['data_save_path'] + print_string)
 
+from ColabExport import exp_config
+
+config = exp_config.get_exp_config()
+loaders = torch.load("_embloaders_AE-S-D-USL_Conv6_CIFAR1.pt")
+emb_dataset = loaders["embedding_train_loader"].dataset.data
+emb_dataset_array = emb_dataset.reshape((-1, np.prod(emb_dataset.shape[1:])))
+emb_target_array = loaders["embedding_train_loader"].dataset.targets
+
+plot_tsne_embeddings(config, emb_dataset_array, emb_target_array)
 
