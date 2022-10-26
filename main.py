@@ -6,7 +6,7 @@ import torch
 
 
 print("========Running network 1========")
-experiments.ssl_experiment()
+experiments.ssl_experiment_setup()
 
 '''
 config = exp_config.get_exp_config()
