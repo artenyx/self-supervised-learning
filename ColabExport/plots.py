@@ -46,7 +46,8 @@ loaders = torch.load(config['data_save_path']+"_embloaders_AE-S-D-USL_Conv6_CIFA
 
 emb_dataset = loaders["embedding_train_loader"].dataset
 emb_dataset_array = np.array([tup[0].cpu().detach().numpy() for tup in emb_dataset])
-emb_dataset_array = emb_dataset_array.reshape((-1, np.prod(emb_dataset.shape[1:])))
+emb_dataset_array = emb_dataset_array.reshape((-1, np.prod(emb_dataset_array.shape[1:])))
+print(emb_dataset_array.shape)
 emb_target_array = loaders["embedding_train_loader"].dataset.targets
 
 plot_tsne_embeddings(config, emb_dataset_array, emb_target_array)
