@@ -62,14 +62,6 @@ def emb_loader_to_array(load_path, config=None, get_loader_from_config=False):
     return emb_dataset_array, emb_target_array
 
 
-config1 = exp_config.get_exp_config()
-config1 = exp_config.reset_config_paths_colab(config1)
-data_arrays = emb_loader_to_array(config1['data_save_path']+"_embloaders_AE-S-D-USL_Conv6_CIFAR1.pt")
-
-
-plot_pca(config1, data_arrays[0])
-plot_tsne(config1, data_arrays[0], data_arrays[1])
-
 '''  
 config = exp_config.get_exp_config()
 config = exp_config.reset_config_paths_colab(config)
