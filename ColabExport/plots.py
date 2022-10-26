@@ -36,8 +36,9 @@ def plot_tsne(config, dataset_array, target_array, print_string='tsne_fig.png'):
     df["comp-2"] = z[:, 1]
 
     plot = sns.scatterplot(x="comp-1", y="comp-2", hue=df.y.tolist(), palette=sns.color_palette("hls", 10), data=df).set(title="Embedding t-SNE Projection")
-    fig = plot.get_figure()
-    fig.savefig(config['data_save_path'] + print_string)
+    plt.savefig(config['data_save_path'] + print_string)
+    #fig = plot.get_figure()
+    #fig.savefig(config['data_save_path'] + print_string)
 
 
 def emb_loader_to_array(load_path, config=None, get_loader_from_config=False):
