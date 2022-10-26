@@ -41,21 +41,7 @@ def plot_tsne(config, dataset_array, target_array, print_string=''):
     #fig.savefig(config['data_save_path'] + print_string)
 
 
-def emb_loader_to_array(load_path, config=None, get_loader_from_config=False):
-    if config is None:
-        config = exp_config.get_exp_config()
-        config = exp_config.reset_config_paths_colab(config)
-        loaders = torch.load(load_path)
-        emb_dataset_train = loaders["embedding_train_loader"].dataset
-        emb_dataset_test = loaders["embedding_test_loader"].dataset
-    elif get_loader_from_config:
-        loaders = config["loaders"]["loaders_embedded"]
-        emb_dataset_train = loaders[0].dataset
-        emb_dataset_test = loaders[1].dataset
-    else:
-        loaders = torch.load(load_path)
-        emb_dataset_train = loaders["embedding_train_loader"].dataset
-        emb_dataset_test = loaders["embedding_test_loader"].dataset
+def emb_loader_to_array(emb_dataset_train, emb_dataset_test):
 
     emb_dataset_array_train = np.array([tup[0].cpu().detach().numpy() for tup in emb_dataset_train])
     emb_dataset_array_train = emb_dataset_array_train.reshape((-1, np.prod(emb_dataset_array_train.shape[1:])))
@@ -67,6 +53,38 @@ def emb_loader_to_array(load_path, config=None, get_loader_from_config=False):
     emb_target_array_test = np.array([tup[1].cpu().detach().numpy() for tup in emb_dataset_test])
 
     return emb_dataset_array_train, emb_target_array_train, emb_dataset_array_test, emb_target_array_test
+
+
+def produce_embedding_plots(config=None, load_path=None, get_loader_from_config=False):
+    if config is None and get_loader_from_config:
+        raise Exception("Must supply config since get_loader_from_config is True.")
+    if load_path is not None and get_loader_from_config:
+        raise Warning("Load path will not be used since get_loader_from_config is True.")
+    if config is None and not get_loader_from_config:
+        config = exp_config.get_exp_config()
+        config = exp_config.reset_config_paths_colab(config)
+        loaders = torch.load(load_path)
+        emb_dataset_train = loaders["embedding_train_loader"].dataset
+        emb_dataset_test = loaders["embedding_test_loader"].dataset
+    elif config is not None and not get_loader_from_config:
+        loaders = torch.load(load_path)
+        emb_dataset_train = loaders["embedding_train_loader"].dataset
+        emb_dataset_test = loaders["embedding_test_loader"].dataset
+    elif config is not None and get_loader_from_config:
+        loaders = config["loaders"]["loaders_embedded"]
+        emb_dataset_train = loaders[0].dataset
+        emb_dataset_test = loaders[1].dataset
+    else:
+        raise Exception("Check function.")
+
+    data_arrays = emb_loader_to_array(emb_dataset_train, emb_dataset_test)
+    n = 1000
+
+    plot_pca(config, data_arrays[0][:n], print_string='train')
+    plot_tsne(config, data_arrays[0][:n], data_arrays[1][:n], print_string='train')
+
+    plot_pca(config, data_arrays[2][:n], print_string='test')
+    plot_tsne(config, data_arrays[2][:n], data_arrays[3][:n], print_string='test')
 
 
 '''  
