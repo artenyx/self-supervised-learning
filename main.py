@@ -6,6 +6,7 @@ import torch
 
 
 print("========Running network 1========")
+print(torch.device("cuda:0" if torch.cuda.is_available() else "cpu"))
 experiments.ssl_experiment_setup()
 
 '''
