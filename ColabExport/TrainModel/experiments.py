@@ -1,6 +1,6 @@
 import pandas as pd
 import torch
-from torchsummary import summary
+#from torchsummary import summary
 from datetime import datetime
 
 from ColabExport.TrainModel import train, networks, load_data, experiments
@@ -37,7 +37,7 @@ def run_ssl_experiment(config, exp_string, rep_learning_model=None, save=True):
     if rep_learning_model is None:
         if config['layerwise_training']:
             rep_learning_model = networks.USL_Conv6_CIFAR_Sym(config).to(config['device'])
-            print(summary(rep_learning_model, (3, 32, 32), batch_size=256))
+            #print(summary(rep_learning_model, (3, 32, 32), batch_size=256))
         else:
             rep_learning_model = networks.USL_Conv6_CIFAR1(config).to(config['device'])
 
@@ -63,7 +63,7 @@ def print_model_architecture(model_type, input_size=(3, 32, 32)):
     config = exp_config.get_exp_config()
     config['model_type'] = model_type
     model = config['model_type'](config).to(config['device'])
-    summary(model, (3, 32, 32))
+    #summary(model, (3, 32, 32))
 
 
 def ssl_experiment_setup(model_type=networks.USL_Conv6_CIFAR1,

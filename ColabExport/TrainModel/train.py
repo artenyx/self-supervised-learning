@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 from torchvision import transforms
-from torchsummary import summary
+#from torchsummary import summary
 import time
 import numpy as np
 import pandas as pd
@@ -177,7 +177,7 @@ def usl_train_network_layerwise(model, config):
         current_dec_layers.insert(0, decoder_layers.pop(-1))
 
         current_model = networks.USL_Conv6_CIFAR_LC(config, current_enc_layers, current_dec_layers)
-        print(summary(current_model, (3, 32, 32), batch_size=256))
+        #print(summary(current_model, (3, 32, 32), batch_size=256))
         current_data, current_model = usl_train_network(current_model, config)
         total_data = pd.concat([total_data, current_data])
         current_enc_layers, current_dec_layers = (current_model.encoder_layers + current_model.projector_layers, current_model.decoder_layers)
