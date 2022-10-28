@@ -1,13 +1,11 @@
 from ColabExport.TrainModel import experiments, networks
-from ColabExport import exp_config, plots
 
-import pandas as pd
 import torch
 
-
-print("========Running network 1========")
-print(torch.device("cuda:0" if torch.cuda.is_available() else "cpu"))
-experiments.ssl_experiment_setup()
+print("========Running Network========")
+print("Device: "+str(torch.device("cuda:0" if torch.cuda.is_available() else "cpu")))
+experiments.ssl_experiment_setup(model_type=networks.USL_Conv6_CIFAR_Sym,
+                                 exp_type=("AE-S", "D", "L"))
 
 '''
 config = exp_config.get_exp_config()
