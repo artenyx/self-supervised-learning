@@ -5,7 +5,9 @@ import torch
 print("========Running Network========")
 print("Device: "+str(torch.device("cuda:0" if torch.cuda.is_available() else "cpu")))
 experiments.ssl_experiment_setup(model_type=networks.USL_Conv6_CIFAR_Sym,
-                                 exp_type=("AE-S", "D", "L"))
+                                 exp_type=("AE-S", "D", "L"),
+                                 num_epochs_usl=40,
+                                 num_epochs_le=150)
 
 '''
 config = exp_config.get_exp_config()
