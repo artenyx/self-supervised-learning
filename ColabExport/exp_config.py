@@ -50,9 +50,10 @@ def get_exp_config(s=0.25):
         "transform_dataloader": T.Compose([T.ToTensor()]),
         "printloss_rate": 1,  # number of epochs in between printing loss/error and saving images (if USL)
         "save_path": None,
-        "data_save_path": 'SavedData/',
-        "model_save_path": 'SavedModels/',
-        "image_save_path": 'SavedImages/'
+        "num_embed_pts_plot": 1
+        #"data_save_path": 'SavedData/',
+        #"model_save_path": 'SavedModels/',
+        #"image_save_path": 'SavedImages/'
     }
     return exp_config
 
