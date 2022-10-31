@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 
-from ColabExport import exp_config, plots
+from ColabExport import exp_config
 
 
 def plot_pca(config, dataset_array, print_string=''):
@@ -89,6 +89,7 @@ def produce_embedding_plots(samples_to_use=1000,
     if config["save_embeddings"]:
         emb_train_array_save = pd.concat([pd.DataFrame(data_arrays[1]), pd.DataFrame(data_arrays[0])], axis=1)[:n]
         emb_test_array_save = pd.concat([pd.DataFrame(data_arrays[3]), pd.DataFrame(data_arrays[2])], axis=1)[:n]
+        print(type(emb_train_array_save), type(emb_test_array_save))
         emb_train_array_save.to_csv("embedding_array_train.csv")
         emb_test_array_save.to_csv("embedding_array_test.csv")
     if pca_or_tsne == "pca" or pca_or_tsne == "both":
@@ -140,6 +141,6 @@ def produce_usl_lineval_plots(config, usl_df=None, lineval_df=None, load_path=No
         usl_data = usl_df
         le_data = lineval_df
 
-    plots.plot_usl(config, usl_data)
-    plots.plot_lineval(config, le_data)
+    plot_usl(config, usl_data)
+    plot_lineval(config, le_data)
     return
