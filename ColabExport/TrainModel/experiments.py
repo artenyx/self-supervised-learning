@@ -30,12 +30,12 @@ def run_ssl_experiment(config, exp_string, rep_learning_model=None, save=True):
     exp_path = "ExperimentFiles/" + exp_string + "/"
     exp_config.make_dir(exp_path)
     config["save_path"] = exp_path
-    config_df.to_csv(config["save_path"]+"exp_config")
+    config_df.to_csv(config["save_path"] + "exp_config")
 
     if rep_learning_model is None:
         if config['layerwise_training']:
             rep_learning_model = networks.USL_Conv6_CIFAR_Sym(config).to(config['device'])
-            #print(summary(rep_learning_model, (3, 32, 32), batch_size=256))
+            # print(summary(rep_learning_model, (3, 32, 32), batch_size=256))
         else:
             rep_learning_model = networks.USL_Conv6_CIFAR1(config).to(config['device'])
 
@@ -60,7 +60,7 @@ def print_model_architecture(model_type, input_size=(3, 32, 32)):
     config = exp_config.get_exp_config()
     config['model_type'] = model_type
     model = config['model_type'](config).to(config['device'])
-    #summary(model, (3, 32, 32))
+    # summary(model, (3, 32, 32))
 
 
 def ssl_experiment_setup(model_type=networks.USL_Conv6_CIFAR1,
@@ -117,11 +117,25 @@ def ssl_experiment_setup(model_type=networks.USL_Conv6_CIFAR1,
     model = config['model_type'](config).to(config['device'])
     date_time = datetime.now().strftime("%m.%d.%Y-%H:%M:%S")
 
-    usl_data, usl_model, le_data, le_model = run_ssl_experiment(config, "-".join(exp_type) + "_" + str(date_time) + add_exp_str, rep_learning_model=model)
+    usl_data, usl_model, le_data, le_model = run_ssl_experiment(config,
+                                                                "-".join(exp_type) + "_" + str(date_time) + add_exp_str,
+                                                                rep_learning_model=model)
     if return_data:
         return usl_data, usl_model, le_data, le_model
 
 
+def test_alpha_layerwise(alpha_list=None):
+    if alpha_list is None:
+        alpha_list = [0.0001, 0.001, 0.01]
+    for alpha0 in alpha_list:
+        ssl_experiment_setup(model_type=networks.USL_Conv6_CIFAR1,
+                             exp_type=("AE-P", "D", "NL"),
+                             num_epochs_usl=200,
+                             num_epochs_le=150,
+                             save_embeddings=True,
+                             alpha=alpha0)
+    print("COMPLETE")
+    return
 
 
 '''
@@ -155,4 +169,3 @@ def test_le_lr(config, lr_list):
         config['lr_le'] = lr_list[i]
         le_data, le_model = run_linear_evaluation(config)
 '''
-
