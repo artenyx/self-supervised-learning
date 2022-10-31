@@ -100,7 +100,7 @@ def produce_embedding_plots(samples_to_use=1000,
     return
 
 
-def plot_lineval(config, le_data, to_epoch=None, print_string=str()):
+def plot_lineval(config, le_data, to_epoch=None, print_string=None):
     if to_epoch is None:
         n = len(le_data["Epoch Number"][1:]) - 1
     else:
@@ -110,12 +110,15 @@ def plot_lineval(config, le_data, to_epoch=None, print_string=str()):
     plt.xlabel("Epoch")
     plt.ylabel("Error")
     plt.legend()
-    plt.savefig(config['save_path'] + print_string + 'LE_train_test_error.png')
+    if print_string is not None:
+        plt.savefig(config['save_path'] + print_string + 'LE_train_test_error.png')
+    else:
+        plt.savefig(config['save_path'] + 'LE_train_test_error.png')
     plt.show()
     return
 
 
-def plot_usl(config, usl_data, to_epoch=None, print_string=str()):
+def plot_usl(config, usl_data, to_epoch=None, print_string=None):
     if to_epoch is None:
         n = len(usl_data["Epoch Number"][1:]) - 1
     else:
@@ -125,7 +128,10 @@ def plot_usl(config, usl_data, to_epoch=None, print_string=str()):
     plt.xlabel("Epoch")
     plt.ylabel("Loss")
     plt.legend()
-    plt.savefig(config['save_path'] + print_string + 'USL_train_test_loss.png')
+    if print_string is not None:
+        plt.savefig(config['save_path'] + print_string + 'USL_train_test_loss.png')
+    else:
+        plt.savefig(config['save_path'] + 'USL_train_test_loss.png')
     plt.show()
     return
 
