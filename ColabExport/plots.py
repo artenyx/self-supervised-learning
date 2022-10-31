@@ -89,9 +89,8 @@ def produce_embedding_plots(samples_to_use=1000,
     if config["save_embeddings"]:
         emb_train_array_save = pd.concat([pd.DataFrame(data_arrays[1]), pd.DataFrame(data_arrays[0])], axis=1)[:n]
         emb_test_array_save = pd.concat([pd.DataFrame(data_arrays[3]), pd.DataFrame(data_arrays[2])], axis=1)[:n]
-        print(type(emb_train_array_save), type(emb_test_array_save))
-        emb_train_array_save.to_csv("embedding_array_train.csv")
-        emb_test_array_save.to_csv("embedding_array_test.csv")
+        emb_train_array_save.to_csv(config["save_path"] + "embedding_array_train.csv")
+        emb_test_array_save.to_csv(config["save_path"] + "embedding_array_test.csv")
     if pca_or_tsne == "pca" or pca_or_tsne == "both":
         plot_pca(config, data_arrays[0][:n], print_string='train_')
         plot_pca(config, data_arrays[2][:n], print_string='test_')
