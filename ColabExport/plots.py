@@ -100,7 +100,7 @@ def produce_embedding_plots(samples_to_use=1000,
     return
 
 
-def plot_lineval(config, le_data, to_epoch=None, print_string=""):
+def plot_lineval(config, le_data, to_epoch=None, print_string=str()):
     if to_epoch is None:
         n = len(le_data["Epoch Number"][1:]) - 1
     else:
@@ -115,7 +115,7 @@ def plot_lineval(config, le_data, to_epoch=None, print_string=""):
     return
 
 
-def plot_usl(config, usl_data, to_epoch=None, print_string=""):
+def plot_usl(config, usl_data, to_epoch=None, print_string=str()):
     if to_epoch is None:
         n = len(usl_data["Epoch Number"][1:]) - 1
     else:
