@@ -130,16 +130,17 @@ def plot_usl(config, usl_data, to_epoch=None, print_string=""):
     return
 
 
-def produce_usl_lineval_plots(config, usl_df=None, lineval_df=None, load_path=None):
+def produce_usl_lineval_plots(config, usl_df=None, lineval_df=None, load_path=None, layerwise=True):
     if (usl_df is None or lineval_df is None) and load_path is None:
         raise Exception("If no load path supplied, must supply experiment dataframes for usl and le.")
     if load_path is not None:
         le_data = pd.read_csv("LE_" + load_path)
         usl_data = pd.read_csv("USL_" + load_path)
     else:
-        usl_data = usl_df[1:]
-        le_data = lineval_df[1:]
-
+        usl_data = usl_df
+        le_data = lineval_df
+    if layerwise:
+        usl_data = usl_data.loc[usl_data["Total Train Loss"] != 0]
     plot_usl(config, usl_data)
     plot_lineval(config, le_data)
     return
