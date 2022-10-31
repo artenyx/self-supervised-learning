@@ -121,8 +121,8 @@ def plot_usl(config, usl_data, to_epoch=None, print_string=""):
     else:
         n = to_epoch
     if config["layerwise_training"]:
+        usl_data[1:] = usl_data[1:].loc[usl_data[1:]["Total Train Loss"] != 0]
         usl_data["Epoch Number"] = range(len(usl_data))
-    print(usl_data["Epoch Number"])
     plt.plot(usl_data["Epoch Number"][1:n], usl_data["Total Train Loss"][1:n], label="Train Loss")
     plt.plot(usl_data["Epoch Number"][1:n], usl_data["Total Test Loss"][1:n], label="Test Loss")
     plt.xlabel("Epoch")
