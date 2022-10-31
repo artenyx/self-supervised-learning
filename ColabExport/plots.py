@@ -84,12 +84,13 @@ def produce_embedding_plots(samples_to_use=1000,
         raise Exception("Check function.")
 
     data_arrays = emb_loader_to_array(emb_dataset_train, emb_dataset_test)
+    n = samples_to_use
+
     if config["save_embeddings"]:
-        emb_train_array_save = pd.concat([pd.DataFrame(data_arrays[1]), pd.DataFrame(data_arrays[0])], axis=1)
-        emb_test_array_save = pd.concat([pd.DataFrame(data_arrays[3]), pd.DataFrame(data_arrays[2])], axis=1)
+        emb_train_array_save = pd.concat([pd.DataFrame(data_arrays[1]), pd.DataFrame(data_arrays[0])], axis=1)[:n]
+        emb_test_array_save = pd.concat([pd.DataFrame(data_arrays[3]), pd.DataFrame(data_arrays[2])], axis=1)[:n]
         emb_train_array_save.to_csv("embedding_array_train.csv")
         emb_test_array_save.to_csv("embedding_array_test.csv")
-    n = samples_to_use
     if pca_or_tsne == "pca" or pca_or_tsne == "both":
         plot_pca(config, data_arrays[0][:n], print_string='train_')
         plot_pca(config, data_arrays[2][:n], print_string='test_')
