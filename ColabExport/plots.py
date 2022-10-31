@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 
-from ColabExport import exp_config
+from ColabExport import exp_config, plots
 
 
 def plot_pca(config, dataset_array, print_string=''):
@@ -57,7 +57,11 @@ def emb_loader_to_array(emb_dataset_train, emb_dataset_test):
     return emb_dataset_array_train, emb_target_array_train, emb_dataset_array_test, emb_target_array_test
 
 
-def produce_embedding_plots(samples_to_use=1000, config=None, load_obj=None, get_loader_from_config=False):
+def produce_embedding_plots(samples_to_use=1000, 
+                            config=None, 
+                            load_obj=None, 
+                            get_loader_from_config=False,
+                            pca_or_tsne="both"):
     if config is None and get_loader_from_config:
         raise Exception("Must supply config since get_loader_from_config is True.")
     if load_obj is not None and get_loader_from_config:
@@ -80,13 +84,18 @@ def produce_embedding_plots(samples_to_use=1000, config=None, load_obj=None, get
         raise Exception("Check function.")
 
     data_arrays = emb_loader_to_array(emb_dataset_train, emb_dataset_test)
+    if config["save_embeddings"]:
+        emb_train_array_save = pd.concat([pd.DataFrame(data_arrays[1]), pd.DataFrame(data_arrays[0])], axis=1)
+        emb_test_array_save = pd.concat([pd.DataFrame(data_arrays[3]), pd.DataFrame(data_arrays[2])], axis=1)
+        emb_train_array_save.to_csv("embedding_array_train.csv")
+        emb_test_array_save.to_csv("embedding_array_test.csv")
     n = samples_to_use
-
-    plot_pca(config, data_arrays[0][:n], print_string='train_')
-    plot_tsne(config, data_arrays[0][:n], data_arrays[1][:n], print_string='train_')
-
-    plot_pca(config, data_arrays[2][:n], print_string='test_')
-    plot_tsne(config, data_arrays[2][:n], data_arrays[3][:n], print_string='test_')
+    if pca_or_tsne == "pca" or pca_or_tsne == "both":
+        plot_pca(config, data_arrays[0][:n], print_string='train_')
+        plot_pca(config, data_arrays[2][:n], print_string='test_')
+    if pca_or_tsne == "tsne" or pca_or_tsne == "both":
+        plot_tsne(config, data_arrays[0][:n], data_arrays[1][:n], print_string='train_')
+        plot_tsne(config, data_arrays[2][:n], data_arrays[3][:n], print_string='test_')
     return
 
 
@@ -117,4 +126,19 @@ def plot_usl(config, usl_data, to_epoch=None, print_string=""):
     plt.legend()
     plt.savefig(config['save_path'] + print_string + 'USL_train_test_loss.png')
     plt.show()
+    return
+
+
+def produce_usl_lineval_plots(config, usl_df=None, lineval_df=None, load_path=None):
+    if (usl_df is None or lineval_df is None) and load_path is None:
+        raise Exception("If no load path supplied, must supply experiment dataframes for usl and le.")
+    if load_path is not None:
+        le_data = pd.read_csv("LE_" + load_path)
+        usl_data = pd.read_csv("USL_" + load_path)
+    else:
+        usl_data = usl_df
+        le_data = lineval_df
+
+    plots.plot_usl(config, usl_data)
+    plots.plot_lineval(config, le_data)
     return
