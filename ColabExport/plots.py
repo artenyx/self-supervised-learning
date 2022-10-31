@@ -137,8 +137,8 @@ def produce_usl_lineval_plots(config, usl_df=None, lineval_df=None, load_path=No
         le_data = pd.read_csv("LE_" + load_path)
         usl_data = pd.read_csv("USL_" + load_path)
     else:
-        usl_data = usl_df
-        le_data = lineval_df
+        usl_data = usl_df[1:]
+        le_data = lineval_df[1:]
 
     plot_usl(config, usl_data)
     plot_lineval(config, le_data)
