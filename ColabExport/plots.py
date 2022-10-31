@@ -120,6 +120,8 @@ def plot_usl(config, usl_data, to_epoch=None, print_string=""):
         n = len(usl_data["Epoch Number"][1:]) - 1
     else:
         n = to_epoch
+    if config["layerwise"]:
+        usl_data["Epochs"] = range(len(usl_data))
     plt.plot(usl_data["Epoch Number"][1:n], usl_data["Total Train Loss"][1:n], label="Train Loss")
     plt.plot(usl_data["Epoch Number"][1:n], usl_data["Total Test Loss"][1:n], label="Test Loss")
     plt.xlabel("Epoch")
@@ -130,7 +132,7 @@ def plot_usl(config, usl_data, to_epoch=None, print_string=""):
     return
 
 
-def produce_usl_lineval_plots(config, usl_df=None, lineval_df=None, load_path=None, layerwise=True):
+def produce_usl_lineval_plots(config, usl_df=None, lineval_df=None, load_path=None):
     if (usl_df is None or lineval_df is None) and load_path is None:
         raise Exception("If no load path supplied, must supply experiment dataframes for usl and le.")
     if load_path is not None:
@@ -139,8 +141,6 @@ def produce_usl_lineval_plots(config, usl_df=None, lineval_df=None, load_path=No
     else:
         usl_data = usl_df
         le_data = lineval_df
-    if layerwise:
-        usl_data = usl_data.loc[usl_data["Total Train Loss"] != 0]
     plot_usl(config, usl_data)
     plot_lineval(config, le_data)
     return
