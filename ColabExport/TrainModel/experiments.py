@@ -110,6 +110,7 @@ def ssl_experiment_setup(model_type=networks.USL_Conv6_CIFAR1,
     config['save_images'] = save_images
     config['print_loss_rate'] = print_loss_rate
     config['save_embeddings'] = save_embeddings
+    config['exp_type'] = exp_type
 
     print(config)
     config['model_type'] = model_type
