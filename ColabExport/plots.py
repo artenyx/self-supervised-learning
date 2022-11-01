@@ -115,18 +115,15 @@ def plot_lineval(config, le_data, to_epoch=None, print_string=""):
     return
 
 
-def plot_usl(config, usl_data, to_epoch=None, print_string=""):
-    if to_epoch is None:
-        n = len(usl_data["Epoch Number"][1:]) - 1
-    else:
-        n = to_epoch
+def plot_usl(config, usl_data, print_string=""):
     if config["layerwise_training"]:
         usl_data = usl_data.loc[usl_data["Total Train Loss"] != 0]
         usl_data["Epoch Number"] = range(len(usl_data))
-        plt.plot(usl_data["Epoch Number"][:n], usl_data["Total Train Loss"][:n], label="Train Loss")
+        plt.plot(usl_data["Epoch Number"], usl_data["Total Train Loss"], label="Train Loss")
     else:
-        plt.plot(usl_data["Epoch Number"][1:n], usl_data["Total Train Loss"][1:n], label="Train Loss")
-    plt.plot(usl_data["Epoch Number"][1:n], usl_data["Total Test Loss"][1:n], label="Test Loss")
+        plt.plot(usl_data["Epoch Number"][1:], usl_data["Total Train Loss"][1:], label="Train Loss")
+    usl_data_test = usl_data.loc[usl_data["Total Test Loss"] != 0]
+    plt.plot(usl_data_test["Epoch Number"][1:], usl_data_test["Total Test Loss"][1:], label="Test Loss")
     plt.xlabel("Epoch")
     plt.ylabel("Loss")
     plt.legend()
