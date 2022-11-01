@@ -5,7 +5,7 @@ import torch
 print("========Running Network========")
 print(torch.device("cuda:0" if torch.cuda.is_available() else "cpu"))
 
-experiments.test_alpha_layerwise()
+experiments.test_alpha_layerwise(alpha_list=[0.001])
 
 '''
 experiments.ssl_experiment_setup(model_type=networks.USL_Conv6_CIFAR_Sym,
