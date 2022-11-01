@@ -50,7 +50,11 @@ def get_exp_config(s=0.25):
         "transform_dataloader": T.Compose([T.ToTensor()]),
         "printloss_rate": 1,  # number of epochs in between printing loss/error and saving images (if USL)
         "save_path": None,
-        "num_embed_pts_plot": 1000
+        "num_embed_pts_plot": 1000,
+
+        # Check point keys
+        "current_epoch": 0,
+        "current_folder_name": None
     }
     return exp_config
 
