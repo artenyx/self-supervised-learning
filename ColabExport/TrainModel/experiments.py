@@ -115,7 +115,7 @@ def ssl_experiment_setup(model_type=networks.USL_Conv6_CIFAR1,
     print(config)
     config['model_type'] = model_type
     model = config['model_type'](config).to(config['device'])
-    date_time = datetime.now().strftime("%m.%d.%Y-%H:%M:%S")
+    date_time = datetime.now().strftime("%m-%d-%Y_%H-%M-%S")
     if config['alpha'] is not None:
         add_exp_str = "alpha_"+str(alpha)
     exp_folder_name = "-".join(exp_type) + "_" + str(date_time) + add_exp_str
@@ -136,36 +136,3 @@ def test_alpha_layerwise(alpha_list=None):
                              alpha=alpha0)
     print("COMPLETE")
     return
-
-
-'''
-### Construction
-
-def test_usl_lr(config, lr_list):
-    for i in range(len(lr_list)):
-        config['loaders']['loaders_usl'] = load_data.get_CIFAR100(config)
-        print("\nTesting USL learning rate of", lr_list[i])
-        config['lr_usl'] = lr_list[i]
-        config = exp_config.reset_config_paths_colab(config)
-        rep_learning_model = config['model'](config).to(config['device'])
-        usl_data, usl_model = run_representation_learning(config, rep_learning_model)
-        
-        
-def test_le_lr(config, lr_list):
-    config['loaders']['loaders_usl'] = load_data.get_CIFAR100(config)
-    config['loaders']['loaders_le'] = load_data.get_CIFAR10(config)
-    config = exp_config.reset_config_paths_colab(config)
-    if config['layerwise_training']:
-        rep_learning_model = networks.USL_Conv6_CIFAR_Sym(config).to(config['device'])
-        print(summary(rep_learning_model, (3, 32, 32), batch_size=256))
-    else:
-        rep_learning_model = networks.USL_Conv6_CIFAR1(config).to(config['device'])
-    usl_data, usl_model = run_representation_learning(config, rep_learning_model)
-    emb_train_loader = train.get_embedding_loader(usl_model, config, config['loaders']['loaders_le'][0])
-    emb_test_loader = train.get_embedding_loader(usl_model, config, config['loaders']['loaders_le'][1])
-    config['loaders']['loaders_embedded'] = (emb_train_loader, emb_test_loader)
-    for i in range(len(lr_list)):
-        print("\nTesting LE learning rate of", lr_list[i])
-        config['lr_le'] = lr_list[i]
-        le_data, le_model = run_linear_evaluation(config)
-'''
