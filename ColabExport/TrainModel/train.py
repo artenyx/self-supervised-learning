@@ -156,7 +156,7 @@ def get_embedding_loader(model, config, loader):
     embeddings = torch.cat(embeddings, dim=0).detach().cpu()
     targets = torch.cat(targets).detach().cpu()
     embedding_loader = torch.utils.data.DataLoader(list(zip(embeddings, targets)), batch_size=config['batch_size'],
-                                                   shuffle=False, num_workers=1)
+                                                   shuffle=False, num_workers=12)
     return embedding_loader
 
 
