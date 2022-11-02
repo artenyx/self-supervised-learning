@@ -1,0 +1,40 @@
+,model_type,width,height,channels,latent_dim,num_classes,representation_dim,device,denoising,alpha,usl_type,layerwise_training,loaders,batch_size,criterion_class,criterion_emb_recon,optimizer_type,optimizer,num_epochs_usl,num_epochs_le,lr_usl,lr_le,transform,transform_reduced,transform_dataloader,printloss_rate,save_path,num_embed_pts_plot,current_epoch,current_folder_name,save_images,print_loss_rate,save_embeddings,exp_type
+loaders_embedded,<class 'ColabExport.TrainModel.networks.USL_Conv6_CIFAR1'>,32,32,3,64,10,8192,cuda:0,True,0.001,ae_parallel,False,,512,<class 'torch.nn.modules.loss.CrossEntropyLoss'>,<class 'torch.nn.modules.loss.MSELoss'>,<class 'torch.optim.adam.Adam'>,,200,150,0.001,0.01,"Compose(
+    RandomCrop(size=(24, 24), padding=None)
+    Resize(size=32, interpolation=bilinear, max_size=None, antialias=None)
+    RandomHorizontalFlip(p=0.8)
+    ColorJitter(brightness=[0.8, 1.2], contrast=[0.8, 1.2], saturation=[0.8, 1.2], hue=[-0.05, 0.05])
+)","Compose(
+    RandomCrop(size=(30, 30), padding=None)
+    Resize(size=32, interpolation=bilinear, max_size=None, antialias=None)
+    RandomHorizontalFlip(p=0.4)
+    ColorJitter(brightness=None, contrast=None, saturation=None, hue=None)
+)","Compose(
+    ToTensor()
+)",1,,1000,0,,True,10,True,"('AE-P', 'D', 'NL')"
+loaders_le,<class 'ColabExport.TrainModel.networks.USL_Conv6_CIFAR1'>,32,32,3,64,10,8192,cuda:0,True,0.001,ae_parallel,False,"(<torch.utils.data.dataloader.DataLoader object at 0x7fd4ac5166d0>, <torch.utils.data.dataloader.DataLoader object at 0x7fd46b055b50>)",512,<class 'torch.nn.modules.loss.CrossEntropyLoss'>,<class 'torch.nn.modules.loss.MSELoss'>,<class 'torch.optim.adam.Adam'>,,200,150,0.001,0.01,"Compose(
+    RandomCrop(size=(24, 24), padding=None)
+    Resize(size=32, interpolation=bilinear, max_size=None, antialias=None)
+    RandomHorizontalFlip(p=0.8)
+    ColorJitter(brightness=[0.8, 1.2], contrast=[0.8, 1.2], saturation=[0.8, 1.2], hue=[-0.05, 0.05])
+)","Compose(
+    RandomCrop(size=(30, 30), padding=None)
+    Resize(size=32, interpolation=bilinear, max_size=None, antialias=None)
+    RandomHorizontalFlip(p=0.4)
+    ColorJitter(brightness=None, contrast=None, saturation=None, hue=None)
+)","Compose(
+    ToTensor()
+)",1,,1000,0,,True,10,True,"('AE-P', 'D', 'NL')"
+loaders_usl,<class 'ColabExport.TrainModel.networks.USL_Conv6_CIFAR1'>,32,32,3,64,10,8192,cuda:0,True,0.001,ae_parallel,False,"(<torch.utils.data.dataloader.DataLoader object at 0x7fd5ced42370>, <torch.utils.data.dataloader.DataLoader object at 0x7fd5ceca3970>)",512,<class 'torch.nn.modules.loss.CrossEntropyLoss'>,<class 'torch.nn.modules.loss.MSELoss'>,<class 'torch.optim.adam.Adam'>,,200,150,0.001,0.01,"Compose(
+    RandomCrop(size=(24, 24), padding=None)
+    Resize(size=32, interpolation=bilinear, max_size=None, antialias=None)
+    RandomHorizontalFlip(p=0.8)
+    ColorJitter(brightness=[0.8, 1.2], contrast=[0.8, 1.2], saturation=[0.8, 1.2], hue=[-0.05, 0.05])
+)","Compose(
+    RandomCrop(size=(30, 30), padding=None)
+    Resize(size=32, interpolation=bilinear, max_size=None, antialias=None)
+    RandomHorizontalFlip(p=0.4)
+    ColorJitter(brightness=None, contrast=None, saturation=None, hue=None)
+)","Compose(
+    ToTensor()
+)",1,,1000,0,,True,10,True,"('AE-P', 'D', 'NL')"
