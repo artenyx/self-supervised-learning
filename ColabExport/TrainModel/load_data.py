@@ -34,6 +34,6 @@ def get_cifar100_usl(config):
                              datasets.CIFAR100(root="data", train=False, download=True, transform=transform),
                              datasets.CIFAR100(root="data", train=False, download=True, transform=transform)]
 
-    train_loader = torch.utils.data.DataLoader(dataset_list_train, batch_size=batch_size, shuffle=True, num_workers=12)
-    test_loader = torch.utils.data.DataLoader(dataset_list_test, batch_size=batch_size, shuffle=True, num_workers=12)
+    train_loader = torch.utils.data.DataLoader(list(zip(*dataset_list_train)), batch_size=batch_size, shuffle=True, num_workers=12)
+    test_loader = torch.utils.data.DataLoader(list(zip(*dataset_list_test)), batch_size=batch_size, shuffle=True, num_workers=12)
     return train_loader, test_loader
