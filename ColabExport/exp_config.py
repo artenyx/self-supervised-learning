@@ -65,8 +65,8 @@ def get_ae_parallel_config(denoising):
 
     config['num_epochs_usl'] = 10
     config['num_epochs_le'] = 10
-    config['loaders']['loaders_usl'] = load_data.get_CIFAR100(config)
-    config['loaders']['loaders_le'] = load_data.get_CIFAR10(config)
+    config['loaders']['loaders_usl'] = load_data.get_cifar100_usl(config)
+    config['loaders']['loaders_le'] = load_data.get_cifar10_classif(config)
 
     return config
 

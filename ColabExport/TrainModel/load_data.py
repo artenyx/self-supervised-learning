@@ -2,7 +2,7 @@ import torch
 from torchvision import datasets, transforms as T
 
 
-def get_CIFAR10(config):
+def get_cifar10_classif(config):
     transform = config['transform']
     batch_size = config['batch_size']
 
@@ -14,14 +14,14 @@ def get_CIFAR10(config):
     return CIFAR10_train_loader, CIFAR10_test_loader
 
 
-def get_CIFAR100(config):
+def get_cifar100_usl(config):
     transform = config['transform']
     batch_size = config['batch_size']
 
-    if config['ssl_type'] == 'ae_single' and not config['denoising']:
+    if config['usl_type'] == 'ae_single' and not config['denoising']:
         dataset_list_train = [datasets.CIFAR100(root="data", train=True, download=True, transform=T.ToTensor())]
         dataset_list_test = [datasets.CIFAR100(root="data", train=False, download=True, transform=T.ToTensor())]
-    elif config['ssl_type'] == 'ae_single' and config['denoising']:
+    elif config['usl_type'] == 'ae_single' and config['denoising']:
         dataset_list_train = [datasets.CIFAR100(root="data", train=True, download=True, transform=T.ToTensor()),
                               datasets.CIFAR100(root="data", train=True, download=True, transform=transform)]
         dataset_list_test = [datasets.CIFAR100(root="data", train=False, download=True, transform=T.ToTensor()),

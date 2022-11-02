@@ -46,12 +46,12 @@ def usl_run_epoch(model, config, loader, epoch, grad):
         if first and (epoch == 0 or (epoch + 1) % config['print_loss_rate'] == 0):
             config['save_image_flag'] = True
             first = False
-        if config['ssl_type'] == "ae_single" and not config['denoising']:
+        if config['usl_type'] == "ae_single" and not config['denoising']:
             (img0, targ) = data
             img1 = img0
             img0.to(config['device'])
             img1.to(config['device'])
-        elif config['ssl_type'] == "ae_single" and config['denoising']:
+        elif config['usl_type'] == "ae_single" and config['denoising']:
             (img0, targ), (img1, __) = data
             img0.to(config['device'])
             img1.to(config['device'])

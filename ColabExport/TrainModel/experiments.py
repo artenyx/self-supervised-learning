@@ -105,8 +105,8 @@ def ssl_experiment_setup(model_type=networks.USL_Conv6_CIFAR1,
 
     config['num_epochs_usl'] = num_epochs_usl
     config['num_epochs_le'] = num_epochs_le
-    config['loaders']['loaders_usl'] = load_data.get_CIFAR100(config)
-    config['loaders']['loaders_le'] = load_data.get_CIFAR10(config)
+    config['loaders']['loaders_usl'] = load_data.get_cifar100_usl(config)
+    config['loaders']['loaders_le'] = load_data.get_cifar10_classif(config)
     config['save_images'] = save_images
     config['print_loss_rate'] = print_loss_rate
     config['save_embeddings'] = save_embeddings
