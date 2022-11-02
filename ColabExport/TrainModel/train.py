@@ -42,30 +42,31 @@ def usl_run_epoch(model, config, loader, epoch, grad):
 
     tot_loss_img1, tot_loss_img2, tot_loss_emb, tot_loss_total = np.zeros(4)
     first = True
-    for img, target in loader:
+    for data in loader:
         if first and (epoch == 0 or (epoch + 1) % config['print_loss_rate'] == 0):
             config['save_image_flag'] = True
             first = False
-
-        img = img.to(config['device'])
-        img0 = img
-
-        if not config['denoising'] and (config['usl_type'] == 'ae_single'):
-            img1 = img
-        elif config['denoising'] and config['usl_type'] == 'ae_single':
-            img1 = transforms.Lambda(lambda img: torch.stack([transform(img_) for img_ in img]))(img)
-        #elif config['denoising'] and config['usl_type'] == 'ae_parallel':
-        #    img1 = transforms.Lambda(lambda img: torch.stack([transform(img_) for img_ in img]))(img)
+        if config['ssl_type'] == "ae_single" and not config['denoising']:
+            (img0, targ) = data
+            img1 = img0
+            img0.to(config['device'])
+            img1.to(config['device'])
+        elif config['ssl_type'] == "ae_single" and config['denoising']:
+            (img0, targ), (img1, __) = data
+            img0.to(config['device'])
+            img1.to(config['device'])
         else:
-            img1 = transforms.Lambda(lambda img: torch.stack([transform(img_) for img_ in img]))(img)
-            img2 = transforms.Lambda(lambda img: torch.stack([transform(img_) for img_ in img]))(img)
+            (img0, targ), (img1, __), (img2, __) = data
+            img0.to(config['device'])
+            img1.to(config['device'])
+            img2.to(config['device'])
 
         optimizer.zero_grad()
         if config['usl_type'] == 'ae_single':
             loss_img1, loss_img2, loss_emb, loss_total = losses.ae_single_run_loss(model, config, epoch, img0, img1)
         elif config['usl_type'] == 'ae_parallel':
             loss_img1, loss_img2, loss_emb, loss_total = losses.ae_parallel_run_loss(model, config, epoch, img0, img1, img2)
-        elif config['usl_type'] == 'simclr':
+        else:
             loss_img1, loss_img2, loss_emb, loss_total = losses.simclr_run_loss(model, img1, img2)
         if grad:
             loss_total.backward()
