@@ -95,7 +95,7 @@ def usl_train_network(model, config):
         else:
             test_data.append(np.zeros(6))
     data = pd.concat([pd.DataFrame(train_data), pd.DataFrame(test_data)], axis=1)
-    data.set_axis(get_column_names(True), inplace=True, axis=1)
+    data = data.set_axis(get_column_names(True), axis=1)
     return data, model
 
 
@@ -137,7 +137,7 @@ def classifier_train_network(model, config):
         if epoch == 0 or (epoch + 1) % config['print_loss_rate'] == 0:
             print_epoch_data(False, config['num_epochs_le'], train_data[-1], test_data[-1])
     data = pd.concat([pd.DataFrame(train_data), pd.DataFrame(test_data)], axis=1)
-    data.set_axis(get_column_names(False), inplace=True, axis=1)
+    data = data.set_axis(get_column_names(False), axis=1)
     return data, model
 
 
