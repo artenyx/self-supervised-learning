@@ -119,8 +119,6 @@ def ssl_experiment_setup(model_type=networks.USL_Conv6_CIFAR1,
     config['model_type'] = model_type
     model = config['model_type'](config).to(config['device'])
     date_time = datetime.now().strftime("%m-%d-%Y_%H-%M-%S")
-    if config['alpha'] is not None:
-        add_exp_str = "alpha_"+str(alpha)
     exp_folder_name = "-".join(exp_type) + "_" + str(date_time) + add_exp_str
     usl_data, usl_model, le_data, le_model = run_ssl_experiment(config, exp_folder_name, rep_learning_model=model)
     if return_data:
@@ -136,7 +134,8 @@ def test_alpha_parallel(alpha_list=None):
                              num_epochs_usl=200,
                              num_epochs_le=150,
                              save_embeddings=True,
-                             alpha=alpha0)
+                             alpha=alpha0,
+                             add_exp_str = "alpha_"+str(alpha0))
     print("COMPLETE")
     return
 
@@ -150,7 +149,8 @@ def test_strength_single(strength_list=None):
                              num_epochs_usl=200,
                              num_epochs_le=150,
                              save_embeddings=True,
-                             strength=strength0)
+                             strength=strength0,
+                             add_exp_str='strength_'+str(strength0))
     print("COMPLETE")
     return
 
