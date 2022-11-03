@@ -130,8 +130,8 @@ def test_alpha_layerwise(alpha_list=None):
     for alpha0 in alpha_list:
         ssl_experiment_setup(model_type=networks.USL_Conv6_CIFAR1,
                              exp_type=("AE-P", "D", "NL"),
-                             num_epochs_usl=200,
-                             num_epochs_le=150,
+                             num_epochs_usl=1,
+                             num_epochs_le=1,
                              save_embeddings=True,
                              alpha=alpha0)
     print("COMPLETE")
