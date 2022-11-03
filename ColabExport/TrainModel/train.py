@@ -89,7 +89,7 @@ def usl_train_network(model, config):
     train_data, test_data = [np.zeros(6)], [np.zeros(6)]
     for epoch in range(config['num_epochs_usl']):
         train_data.append(usl_run_epoch(model, config, train_loader, epoch, True))
-        if epoch == 0 or (epoch + 1) % config['print_loss_rate'] == 0:
+        if epoch == 0 or (epoch + 1) % config['run_test_rate_usl'] == 0:
             test_data.append(usl_run_epoch(model, config, test_loader, epoch, False))
             print_epoch_data(True, config['num_epochs_usl'], train_data[-1], test_data[-1])
         else:
