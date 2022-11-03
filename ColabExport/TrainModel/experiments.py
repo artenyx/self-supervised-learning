@@ -74,9 +74,10 @@ def ssl_experiment_setup(model_type=networks.USL_Conv6_CIFAR1,
                          print_loss_rate=50,
                          save_images=True,
                          save_embeddings=False,
-                         return_data=False):
+                         return_data=False,
+                         strength=0.25):
     if config is None:
-        config = exp_config.get_exp_config()
+        config = exp_config.get_exp_config(s=strength)
 
     if exp_type[0] == "AE-S":
         config['usl_type'] = 'ae_single'
@@ -126,7 +127,7 @@ def ssl_experiment_setup(model_type=networks.USL_Conv6_CIFAR1,
         return usl_data, usl_model, le_data, le_model
 
 
-def test_alpha_layerwise(alpha_list=None):
+def test_alpha_parallel(alpha_list=None):
     if alpha_list is None:
         alpha_list = [0.0001, 0.001, 0.01]
     for alpha0 in alpha_list:
@@ -138,3 +139,19 @@ def test_alpha_layerwise(alpha_list=None):
                              alpha=alpha0)
     print("COMPLETE")
     return
+
+
+def test_strength_single(strength_list=None):
+    if strength_list is None:
+        strength_list = [0, 0.25, 0.5, 0.75, 1]
+    for strength0 in strength_list:
+        ssl_experiment_setup(model_type=networks.USL_Conv6_CIFAR1,
+                             exp_type=("AE-S", "D", "NL"),
+                             num_epochs_usl=200,
+                             num_epochs_le=150,
+                             save_embeddings=True,
+                             strength=strength0)
+    print("COMPLETE")
+    return
+
+

@@ -1,5 +1,9 @@
-Notes:
+Questions for Yali:
+> Transformations
+-> Currently using crop + resize, color jitter, hor flip
+-> BT paper crop + resize, color jitter, hor flip, grayscale, gaus blur, solarization
 
-Where to save files?
-Particularly embedding loader for plotting
-   > probably best to not save embedding loader since the file will be so big, can set it up so that it will if need be
+
+Ideas:
+> Code and compare SimSiam as another non-contrastive method
+> Recreate BYOL plot with removing transforms

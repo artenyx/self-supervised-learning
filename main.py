@@ -5,7 +5,10 @@ import torch
 print("========Running Network========")
 print(torch.device("cuda:0" if torch.cuda.is_available() else "cpu"))
 
-experiments.test_alpha_layerwise([0.0001, 0.001, 0.01, 0.1, 0.0, 0.1, 1.0, 10])
+experiments.test_strength_single()
+
+'''
+experiments.test_alpha_parallel([0.0001, 0.001, 0.01, 0.1, 0.0, 0.1, 1.0, 10])
 
 experiments.ssl_experiment_setup(model_type=networks.USL_Conv6_CIFAR1,
                                  exp_type=("AE-S", "D", "NL"),
@@ -30,4 +33,4 @@ experiments.ssl_experiment_setup(model_type=networks.USL_Conv6_CIFAR_Sym,
                                  num_epochs_usl=200,
                                  num_epochs_le=150,
                                  save_embeddings=True)
-
+'''

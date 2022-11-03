@@ -12,13 +12,13 @@ import ColabExport.TrainModel.losses as losses
 
 def print_epoch_data(usl, epochs, epoch_data_train, epoch_data_test):
     if usl:
-        print('Epoch {:02d}/{:02d} Train Time {:01f}'.format(epoch_data_train[0], epochs, epoch_data_train[5]))
+        print('Epoch {:02d}/{:02d} Time {:01f}/{:01f}'.format(epoch_data_train[0], epochs, epoch_data_train[5], epoch_data_test[5]))
         print('Image 1 Train: {:02f} || Test: {:02f}'.format(epoch_data_train[1], epoch_data_test[1]))
         print('Image 2 Train: {:02f} || Test: {:02f}'.format(epoch_data_train[2] or 0, epoch_data_test[2] or 0))
         print('Embedding Train: {:02f} || Test: {:02f}'.format(epoch_data_train[3] or 0, epoch_data_test[3] or 0))
         print('Total Train: {:02f} || Test: {:02f}'.format(epoch_data_train[4], epoch_data_test[4]))
     else:
-        print('Epoch {:02d}/{:02d} Train Time {:01f}'.format(epoch_data_train[0], epochs, epoch_data_train[3]))
+        print('Epoch {:02d}/{:02d} Train Time {:01f}/{:01f}'.format(epoch_data_train[0], epochs, epoch_data_train[3], epoch_data_test[3]))
         print('Train Error: {:02f} || Test Error: {:02f}'.format(epoch_data_train[1], epoch_data_test[1]))
         print('Train Loss: {:02f} || Test Loss: {:02f}'.format(epoch_data_train[2], epoch_data_test[2]))
 
