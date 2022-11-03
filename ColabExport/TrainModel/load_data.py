@@ -3,11 +3,10 @@ from torchvision import datasets, transforms as T
 
 
 def get_cifar10_classif(config):
-    transform = config['transform']
     batch_size = config['batch_size']
 
-    CIFAR10_train = datasets.CIFAR10(root="data", train=True, download=True, transform=transform)
-    CIFAR10_test = datasets.CIFAR10(root="data", train=False, download=True, transform=transform)
+    CIFAR10_train = datasets.CIFAR10(root="data", train=True, download=True, transform=T.ToTensor())
+    CIFAR10_test = datasets.CIFAR10(root="data", train=False, download=True, transform=T.ToTensor())
 
     CIFAR10_train_loader = torch.utils.data.DataLoader(CIFAR10_train, batch_size=batch_size, shuffle=True, num_workers=12)
     CIFAR10_test_loader = torch.utils.data.DataLoader(CIFAR10_test, batch_size=batch_size, shuffle=True, num_workers=12)
