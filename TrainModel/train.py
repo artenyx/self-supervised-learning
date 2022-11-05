@@ -4,8 +4,8 @@ import time
 import numpy as np
 import pandas as pd
 
-import ColabExport.TrainModel.networks as networks
-import ColabExport.TrainModel.losses as losses
+import TrainModel.networks as networks
+import TrainModel.losses as losses
 
 
 def print_epoch_data(usl, epochs, epoch_data_train, epoch_data_test):

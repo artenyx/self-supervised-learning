@@ -1,8 +1,8 @@
 import pandas as pd
 from datetime import datetime
 
-from ColabExport.TrainModel import train, networks, load_data
-from ColabExport import exp_config, plots
+from TrainModel import train, load_data, networks
+import exp_config
 
 
 def run_representation_learning(config, model):

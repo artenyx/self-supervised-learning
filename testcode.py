@@ -1,6 +1,7 @@
 import torch
 
-from ColabExport.TrainModel import experiments, networks
+from TrainModel import networks
+from Experiments import experiments
 
 print(torch.__version__)
 print(torch.cuda.get_arch_list())

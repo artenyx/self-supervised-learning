@@ -1,4 +1,4 @@
-from ColabExport.TrainModel import load_data, networks
+from TrainModel import load_data
 
 import torch
 import torch.nn as nn

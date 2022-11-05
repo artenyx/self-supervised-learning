@@ -1,4 +1,5 @@
-from ColabExport import exp_config, plots
+import plots
+import exp_config
 
 config = exp_config.get_exp_config()
 config["save_path"] = ""

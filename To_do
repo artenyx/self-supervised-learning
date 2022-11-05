@@ -5,6 +5,8 @@ Questions for Yali:
 
 To Do:
 > Implement k-NN
+> Change layerwise to have projection head
+> Code plotting function to take in multiple experiment files
 
 
 Ideas:

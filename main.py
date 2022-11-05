@@ -1,4 +1,5 @@
-from ColabExport.TrainModel import experiments, networks
+from TrainModel import networks
+from Experiments import experiments
 
 import torch
 

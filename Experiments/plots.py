@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 
-from ColabExport import exp_config
+import exp_config
 
 
 def plot_pca(config, dataset_array, print_string=''):
