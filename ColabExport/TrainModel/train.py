@@ -47,7 +47,7 @@ def usl_run_epoch(model, config, loader, epoch, grad):
             config['save_image_flag'] = True
             first = False
         if config['usl_type'] == "ae_single" and not config['denoising']:
-            (img0, targ) = data
+            img0, targ = data
             img0 = img0.to(config['device'])
             img1 = img0.to(config['device'])
         elif config['usl_type'] == "ae_single" and config['denoising']:

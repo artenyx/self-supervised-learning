@@ -18,7 +18,6 @@ def get_cifar100_usl(config):
     batch_size = config['batch_size']
 
     if config['usl_type'] == 'ae_single' and not config['denoising']:
-        print("Load branch correct.")
         dataset_list_train = [datasets.CIFAR100(root="data", train=True, download=True, transform=T.ToTensor())]
         dataset_list_test = [datasets.CIFAR100(root="data", train=False, download=True, transform=T.ToTensor())]
     elif config['usl_type'] == 'ae_single' and config['denoising']:
