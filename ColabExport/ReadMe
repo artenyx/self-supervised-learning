@@ -3,7 +3,12 @@ Questions for Yali:
 -> Currently using crop + resize, color jitter, hor flip
 -> BT paper crop + resize, color jitter, hor flip, grayscale, gaus blur, solarization
 
+To Do:
+> Implement k-NN
+
 
 Ideas:
 > Code and compare SimSiam as another non-contrastive method
 > Recreate BYOL plot with removing transforms
+> See how it works as a generative model (VQ-VAE, VAE)
+> SimCLR -> try maximizing agreement of each branch with original

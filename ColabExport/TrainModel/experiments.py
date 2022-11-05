@@ -135,7 +135,7 @@ def test_alpha_parallel(alpha_list=None):
                              num_epochs_le=150,
                              save_embeddings=True,
                              alpha=alpha0,
-                             add_exp_str = "alpha_"+str(alpha0))
+                             add_exp_str="alpha_"+str(alpha0))
     print("COMPLETE")
     return
 
