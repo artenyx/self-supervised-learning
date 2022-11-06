@@ -4,9 +4,7 @@ import time
 import numpy as np
 import pandas as pd
 
-import TrainModel.networks as networks
-import TrainModel.losses as losses
-
+from TrainModel import networks, losses
 
 def print_epoch_data(usl, epochs, epoch_data_train, epoch_data_test):
     if usl:

@@ -2,7 +2,7 @@ import pandas as pd
 from datetime import datetime
 
 from TrainModel import train, load_data, networks
-import exp_config
+from Experiments import exp_config
 
 
 def run_representation_learning(config, model):
