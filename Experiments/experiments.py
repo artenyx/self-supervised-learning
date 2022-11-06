@@ -85,7 +85,7 @@ def ssl_experiment_setup(model_type=networks.USL_Conv6_CIFAR1,
         config['usl_type'] = 'ae_parallel'
         config['alpha'] = alpha
     elif exp_type[0] == "SimCLR":
-        config['usl_type'] = 'ae_parallel'
+        config['usl_type'] = 'SimCLR'
     else:
         raise Exception("First element of exp_type must be AE-S, AE-P, or SimCLR.")
 
