@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sns
+import os
 
 import exp_config
 
@@ -144,3 +145,14 @@ def produce_usl_lineval_plots(config, usl_df=None, lineval_df=None, load_path=No
     plot_usl(config, usl_data)
     plot_lineval(config, le_data)
     return
+
+def plot_exp_set(config, folder_path):
+    files = os.listdir(folder_path)
+    for f in files:
+        subfiles = os.listdir(folder_path + "/" + f)
+        for s in subfiles:
+            if "usl_data" in s:
+                temp_usl_data = pd.read_csv(folder_path + "/" + f + "/" + s)
+
+
+
