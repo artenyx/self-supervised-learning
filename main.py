@@ -5,42 +5,28 @@ import torch
 import argparse
 
 
-print("========Running Network========")
-print(torch.device("cuda:0" if torch.cuda.is_available() else "cpu"))
+def main(args):
+    print("========Running Network========")
+    print(torch.device("cuda:0" if torch.cuda.is_available() else "cpu"))
+    if args.ssl_type is None:
+        experiments.ssl_experiment_setup(exp_type=args.exp_type)
+    else:
+        if args.exp_type == "alpha":
+            experiments.test_alpha_parallel([0.0001, 0.001, 0.01, 0.1, 0.0, 0.1, 1.0, 10])
+        elif args.exp_type == "strength":
+            experiments.test_strength_single([0.0, 0.1, 0.25, 0.5, 0.75, 0.9, 1.0])
+        elif args.exp_type == "class_from_path":
+            experiments.classif_from_load_model(load_path=args.usl_load_path)
+    return
 
 
-
-
-'''
-experiments.ssl_experiment_setup(model_type=networks.USL_Conv6_CIFAR1,
-                                 exp_type=("SimCLR", "ND", "NL"),
-                                 num_epochs_usl=200,
-                                 num_epochs_le=150,
-                                 save_embeddings=True)
-
-experiments.test_alpha_parallel([0.0001, 0.001, 0.01, 0.1, 0.0, 0.1, 1.0, 10])
-
-experiments.ssl_experiment_setup(model_type=networks.USL_Conv6_CIFAR1,
-                                 exp_type=("AE-S", "D", "NL"),
-                                 num_epochs_usl=200,
-                                 num_epochs_le=150,
-                                 save_embeddings=True)
-
-experiments.ssl_experiment_setup(model_type=networks.USL_Conv6_CIFAR1,
-                                 exp_type=("AE-S", "ND", "NL"),
-                                 num_epochs_usl=200,
-                                 num_epochs_le=150,
-                                 save_embeddings=True)
-
-experiments.ssl_experiment_setup(model_type=networks.USL_Conv6_CIFAR_Sym,
-                                 exp_type=("AE-S", "D", "L"),
-                                 num_epochs_usl=200,
-                                 num_epochs_le=150,
-                                 save_embeddings=True)
-
-experiments.ssl_experiment_setup(model_type=networks.USL_Conv6_CIFAR_Sym,
-                                 exp_type=("AE-S", "ND", "L"),
-                                 num_epochs_usl=200,
-                                 num_epochs_le=150,
-                                 save_embeddings=True)
-'''
+if __name__ == "main":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--exp_type", type=str, default=None, choices=["alpha", "strength", "class_from_path"])
+    parser.add_argument("--ssl_type", type=tuple, default=None, help="What kind of experiment to run, first argument "
+                                                                     "should be AE-S, AE-P, or SimCLR. Second "
+                                                                     "element should be D or ND, Third should be L "
+                                                                     "or NL.")
+    parser.add_argument("--usl_load_path", type=str, default=None)
+    args = parser.parse_args()
+    main(args)

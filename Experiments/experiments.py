@@ -64,8 +64,7 @@ def print_model_architecture(model_type, input_size=(3, 32, 32)):
     # summary(model, (3, 32, 32))
 
 
-def ssl_experiment_setup(model_type=networks.USL_Conv6_CIFAR1,
-                         exp_type=("AE-S", "D", "NL"),
+def ssl_experiment_setup(exp_type=("AE-S", "D", "NL"),
                          alpha=0.001,
                          config=None,
                          add_exp_str='',
@@ -74,7 +73,7 @@ def ssl_experiment_setup(model_type=networks.USL_Conv6_CIFAR1,
                          run_test_rate_usl=1,
                          print_loss_rate=50,
                          save_images=True,
-                         save_embeddings=False,
+                         save_embeddings=True,
                          return_data=False,
                          strength=0.25):
     if config is None:
@@ -100,8 +99,10 @@ def ssl_experiment_setup(model_type=networks.USL_Conv6_CIFAR1,
 
     if exp_type[2] == "L":
         config['layerwise_training'] = True
+        model_type = networks.USL_Conv6_CIFAR_Sym
     elif exp_type[2] == "NL":
         config['layerwise_training'] = False
+        model_type = networks.USL_Conv6_CIFAR1
     else:
         raise Exception(
             "Third element of exp_type must be L or NL, representing layerwise training or non-layerwise training.")
@@ -130,11 +131,7 @@ def test_alpha_parallel(alpha_list=None):
     if alpha_list is None:
         alpha_list = [0.0001, 0.001, 0.01]
     for alpha0 in alpha_list:
-        ssl_experiment_setup(model_type=networks.USL_Conv6_CIFAR1,
-                             exp_type=("AE-P", "D", "NL"),
-                             num_epochs_usl=200,
-                             num_epochs_le=150,
-                             save_embeddings=True,
+        ssl_experiment_setup(exp_type=("AE-P", "D", "NL"),
                              alpha=alpha0,
                              add_exp_str="alpha_"+str(alpha0))
     print("COMPLETE")
@@ -145,11 +142,7 @@ def test_strength_single(strength_list=None):
     if strength_list is None:
         strength_list = [0, 0.25, 0.5, 0.75, 1]
     for strength0 in strength_list:
-        ssl_experiment_setup(model_type=networks.USL_Conv6_CIFAR1,
-                             exp_type=("AE-S", "D", "NL"),
-                             num_epochs_usl=200,
-                             num_epochs_le=150,
-                             save_embeddings=True,
+        ssl_experiment_setup(exp_type=("AE-S", "D", "NL"),
                              strength=strength0,
                              add_exp_str='strength_'+str(strength0))
     print("COMPLETE")
