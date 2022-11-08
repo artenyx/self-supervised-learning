@@ -1,3 +1,4 @@
+import torch
 import pandas as pd
 from datetime import datetime
 
@@ -155,3 +156,14 @@ def test_strength_single(strength_list=None):
     return
 
 
+def classif_from_load_model(load_path, usl_model=None, num_epochs=150):
+    if usl_model is None:
+        usl_model = torch.load(load_path)
+    config = exp_config.get_exp_config()
+    config['num_epochs_le'] = num_epochs
+    config['loaders']['loaders_le'] = load_data.get_cifar10_classif(config)
+    emb_train_loader = train.get_embedding_loader(usl_model, config, config['loaders']['loaders_le'][0])
+    emb_test_loader = train.get_embedding_loader(usl_model, config, config['loaders']['loaders_le'][1])
+    config['loaders']['loaders_embedded'] = emb_train_loader, emb_test_loader
+
+    le_data, le_model = run_linear_evaluation(config)
