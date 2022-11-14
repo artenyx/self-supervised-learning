@@ -1,5 +1,4 @@
-from TrainModel import networks
-from Experiments import experiments
+from src.Experiments import experiments
 
 import torch
 import argparse

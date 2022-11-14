@@ -2,8 +2,8 @@ import torch
 import pandas as pd
 from datetime import datetime
 
-from TrainModel import train, load_data, networks
-from Experiments import exp_config
+from src.TrainModel import train, networks, load_data
+from src.Experiments import exp_config
 
 
 def run_representation_learning(config, model):

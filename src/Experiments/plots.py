@@ -7,7 +7,7 @@ import pandas as pd
 import seaborn as sns
 import os
 
-from Experiments import exp_config
+from src.Experiments import exp_config
 
 
 def plot_pca(config, dataset_array, print_string=''):
