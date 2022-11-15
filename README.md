@@ -43,28 +43,43 @@ by learning what how the augmentations warp the input space and reversing it.
 
 To run this experiment, use the following code:
 ```markdown
-python --ssl_type ("AE-S", "D", "NL") 
+python main.py --ssl_type ("AE-S", "D", "NL") 
 ```
 
 ## Parallel Autoencoder Architecture
 
 To run this experiment, use the following code:
 ```markdown
-python --ssl_type ("AE-P", "ND", "NL") 
+python main.py --ssl_type ("AE-P", "ND", "NL") 
 ```
 
 ## Parallel Denoising Autoencoder
 
 To run this experiment, use the following code:
 ```markdown
-python --ssl_type ("AE-P", "D", "NL") 
+python main.py --ssl_type ("AE-P", "D", "NL") 
 ```
 
 ## SimCLR
 
 To run this experiment, use the following code:
 ```markdown
-python --ssl_type ("SimCLR", "ND", "NL") 
+python main.py --ssl_type ("SimCLR", "ND", "NL") 
+```
+
+## Alpha Experiments
+
+To run this experiment, use the following code:
+```markdown
+python main.py --exp_type strength
+```
+
+
+## Augmentation Strength Experiments
+
+To run this experiment, use the following code:
+```markdown
+python main.py --exp_type alpha
 ```
 
 # Results
