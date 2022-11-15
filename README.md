@@ -24,6 +24,9 @@ All experiments consist of 2 stages:
 network towards a quality embedding space
 - Evaluation stage: New dataset is embedded and tested via Linear Evaluation or k-means clustering.
 
+By default, experiments are run with 200 epochs of representation learning, 150 epochs of linear evaluation with
+learning rates of 0.001 and 0.01, respectively.
+
 ## Denoising Autoencoder
 
 This experiment type is a single denoising autoencoder, meaning that if $x$ is input image, $\tilde{x} \sim D(x)$ where $D$ is
@@ -33,18 +36,36 @@ $$
 L(x) = \text{MSE}(x, \tilde{x}_{out})
 $$
 
+The idea behind this network architecture is that the network is forced to learn the "true" representation of the data
+by learning what how the augmentations warp the input space and reversing it. 
+
 (ADD FIGURE)
+
+To run this experiment, use the following code:
+```markdown
+python --ssl_type ("AE-S", "D", "NL") 
+```
 
 ## Parallel Autoencoder Architecture
 
-This 
-(ADD FIGURE)
+To run this experiment, use the following code:
+```markdown
+python --ssl_type ("AE-P", "ND", "NL") 
+```
 
 ## Parallel Denoising Autoencoder
 
-
+To run this experiment, use the following code:
+```markdown
+python --ssl_type ("AE-P", "D", "NL") 
+```
 
 ## SimCLR
+
+To run this experiment, use the following code:
+```markdown
+python --ssl_type ("SimCLR", "ND", "NL") 
+```
 
 # Results
 
