@@ -27,10 +27,10 @@ network towards a quality embedding space
 ## Denoising Autoencoder
 
 This experiment type is a single denoising autoencoder, meaning that if $x$ is input image, $\tilde{x} \sim D(x)$ where $D$ is
-an augmentation distribution over the input space. The let's call the output of the network $\tilde{x}_out$. The loss function of this type of autoencoder is as follows:
+an augmentation distribution over the input space. The let's call the output of the network $\tilde{x}_{out}$. The loss function of this type of autoencoder is as follows:
 
 $$
-L(x) = \text{MSE}(x, \tilde{x}_out)
+L(x) = \text{MSE}(x, \tilde{x}_{out})
 $$
 
 (ADD FIGURE)
