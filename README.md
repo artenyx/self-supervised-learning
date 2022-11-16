@@ -36,6 +36,10 @@ The loss function used for this autoencoder in the notebook is:
 
 $$
 L(x) = L_\text{rec} \\
+$$
+
+
+$$
 L(x) = ||x - p_\theta (\tilde{x})||_2
 $$
 
