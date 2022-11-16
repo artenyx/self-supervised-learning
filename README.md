@@ -25,7 +25,8 @@ network towards a quality embedding space
 - Evaluation stage: New dataset is embedded and tested via Linear Evaluation or k-means clustering.
 
 By default, experiments are run with 400 epochs of representation learning, 300 epochs of linear evaluation with
-learning rates of 0.0001 and 0.001, respectively.
+learning rates of 0.0001 and 0.001, respectively. Experiment conditions (usl epochs, le epochs, learning rates, etc.) 
+can be configured through command line parser on any experiment.
 
 ### Denoising Autoencoder
 
@@ -43,43 +44,42 @@ by learning what how the augmentations warp the input space and reversing it.
 
 To run this experiment, use the following code:
 ```markdown
-python main.py --usl_type "AE-S" --denoising "D" --layerwise "L"
+python main.py --usl_type ae_single --denoising True --layerwise False
 ```
 
 ### Parallel Autoencoder Architecture
 
 To run this experiment, use the following code:
 ```markdown
-python main.py --ssl_type ("AE-P", "ND", "NL") 
+python main.py --usl_type ae_parallel --denoising False --layerwise False
 ```
 
 ### Parallel Denoising Autoencoder
 
 To run this experiment, use the following code:
 ```markdown
-python main.py --ssl_type ("AE-P", "D", "NL") 
+python main.py --usl_type ae_parallel --denoising True --layerwise False
 ```
 
 ### SimCLR
 
 To run this experiment, use the following code:
 ```markdown
-python main.py --ssl_type ("SimCLR", "ND", "NL") 
+python main.py --usl_type simclr
 ```
 
 ### Alpha Experiments
 
 To run this experiment, use the following code:
 ```markdown
-python main.py --exp_type strength
+python main.py --exp_type alpha
 ```
-
 
 ### Augmentation Strength Experiments
 
 To run this experiment, use the following code:
 ```markdown
-python main.py --exp_type alpha
+python main.py --exp_type strength
 ```
 
 ## Results

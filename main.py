@@ -8,7 +8,9 @@ def main(args):
     print("========Running Network========")
     print(torch.device("cuda:0" if torch.cuda.is_available() else "cpu"))
     if args.exp_type is None:
-        experiments.ssl_experiment_setup(exp_type=(args.usl_type, args.denoising, args.layerwise),
+        experiments.ssl_experiment_setup(usl_type=args.usl_type,
+                                         denoising=args.denoising,
+                                         layerwise=args.layerwise,
                                          alpha=args.alpha,
                                          add_exp_str=args.add_exp_str,
                                          num_epochs_usl=args.epochs_usl,
@@ -39,9 +41,9 @@ def main(args):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--exp_type", type=str, default=None, choices=["alpha", "strength", "ae_s_simclr", "plot_folder", "class_from_path"])
-    parser.add_argument("--usl_type", type=str, default=None, choices=["SimCLR", "AE-S", "AE-P"])
-    parser.add_argument("--denoising", type=bool, default=None)
-    parser.add_argument("--layerwise", type=bool, default=None)
+    parser.add_argument("--usl_type", type=str, default=None, choices=["simclr", "ae_single", "ae_parallel"])
+    parser.add_argument("--denoising", type=bool, default=False)
+    parser.add_argument("--layerwise", type=bool, default=False)
     parser.add_argument("--usl_load_path", type=str, default=None)
     parser.add_argument("--lr_usl", type=float, default=0.0001)
     parser.add_argument("--lr_le", type=float, default=0.001)
