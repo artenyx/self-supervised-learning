@@ -217,6 +217,7 @@ def plot_exp_set(folder_path):
     plot_from_dicts(folder_path, usl_data_dict, True)
     plot_from_dicts(folder_path, le_data_dict, False)
 
+
 if __name__ == "__main__":
     path = "/Users/jerrywhite/Documents/01 - University of Chicago/05 - Thesis/Thesis Experiments/Others"
     plot_exp_set(path)

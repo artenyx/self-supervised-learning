@@ -24,11 +24,13 @@ def main(args):
                                          )
     else:
         if args.exp_type == "alpha":
-            experiments.test_alpha_parallel([0.0001, 0.001, 0.01, 0.1, 0.0, 0.1, 1.0, 10])
+            experiments.test_alpha_parallel(args)
         elif args.exp_type == "strength":
-            experiments.test_strength_single([0.0, 0.1, 0.25, 0.5, 0.75, 0.9, 1.0])
+            experiments.test_strength_single(args)
+        elif args.exp_type == "ae_s_simclr":
+            experiments.ae_s_simclr(args)
         elif args.exp_type == "class_from_path":
-            experiments.classif_from_load_model(load_path=args.usl_load_path)
+            experiments.classif_from_load_model(args)
         elif args.exp_type == "plot_folder":
             plots.plot_exp_set(args.path)
     return
@@ -36,15 +38,15 @@ def main(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--exp_type", type=str, default=None, choices=["alpha", "strength", "class_from_path"])
+    parser.add_argument("--exp_type", type=str, default=None, choices=["alpha", "strength", "ae_s_simclr", "plot_folder", "class_from_path"])
     parser.add_argument("--usl_type", type=str, default=None, choices=["SimCLR", "AE-S", "AE-P"])
     parser.add_argument("--denoising", type=str, default=None, choices=["D", "ND"])
     parser.add_argument("--layerwise", type=str, default=None, choices=["L", "NL"])
     parser.add_argument("--usl_load_path", type=str, default=None)
     parser.add_argument("--lr_usl", type=float, default=0.001)
     parser.add_argument("--lr_le", type=float, default=0.01)
-    parser.add_argument("--epochs_usl", type=int, default=200)
-    parser.add_argument("--epochs_le", type=int, default=150)
+    parser.add_argument("--epochs_usl", type=int, default=400)
+    parser.add_argument("--epochs_le", type=int, default=300)
     parser.add_argument("--alpha", type=float, default=None)
     parser.add_argument("--add_exp_str", type=str, default="")
     parser.add_argument("--run_test_rate_usl", type=int, default=1)

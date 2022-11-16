@@ -45,10 +45,10 @@ def run_ssl_experiment(config, exp_string, rep_learning_model=None, save=True):
     emb_train_loader = train.get_embedding_loader(usl_model, config, config['loaders']['loaders_le'][0])
     emb_test_loader = train.get_embedding_loader(usl_model, config, config['loaders']['loaders_le'][1])
     config['loaders']['loaders_embedded'] = emb_train_loader, emb_test_loader
-    #plots.produce_embedding_plots(samples_to_use=1000, config=config, get_loader_from_config=True, pca_or_tsne="tsne")
+    # plots.produce_embedding_plots(samples_to_use=1000, config=config, get_loader_from_config=True, pca_or_tsne="tsne")
 
     le_data, le_model = run_linear_evaluation(config)
-    #plots.produce_usl_lineval_plots(config, usl_df=usl_data, lineval_df=le_data)
+    # plots.produce_usl_lineval_plots(config, usl_df=usl_data, lineval_df=le_data)
 
     if save:
         exp_config.save_data_model(config, 'USL', usl_data, usl_model)
@@ -131,33 +131,112 @@ def ssl_experiment_setup(exp_type,
         return usl_data, usl_model, le_data, le_model
 
 
-def test_alpha_parallel(alpha_list=None):
-    if alpha_list is None:
-        alpha_list = [0.0001, 0.001, 0.01]
+def test_alpha_parallel(args):
+    alpha_list = [0.0001, 0.001, 0.01]
     for alpha0 in alpha_list:
         ssl_experiment_setup(exp_type=("AE-P", "D", "NL"),
                              alpha=alpha0,
-                             add_exp_str="alpha_"+str(alpha0))
-    print("COMPLETE")
+                             add_exp_str=args.add_exp_str,
+                             num_epochs_usl=args.epochs_usl,
+                             num_epochs_le=args.epochs_le,
+                             lr_usl=args.lr_usl,
+                             lr_le=args.lr_le,
+                             run_test_rate_usl=args.run_test_rate_usl,
+                             print_loss_rate=args.print_loss_rate,
+                             save_embeddings=args.save_embeddings,
+                             save_images=args.save_images,
+                             return_data=args.return_data,
+                             strength=args.strength
+                             )
     return
 
 
-def test_strength_single(strength_list=None):
-    if strength_list is None:
-        strength_list = [0, 0.25, 0.5, 0.75, 1]
+def test_strength_single(args):
+    strength_list = [0, 0.25, 0.5, 0.75, 1]
     for strength0 in strength_list:
         ssl_experiment_setup(exp_type=("AE-S", "D", "NL"),
-                             strength=strength0,
-                             add_exp_str='strength_'+str(strength0))
-    print("COMPLETE")
+                             alpha=args.alpha,
+                             add_exp_str=args.add_exp_str,
+                             num_epochs_usl=args.epochs_usl,
+                             num_epochs_le=args.epochs_le,
+                             lr_usl=args.lr_usl,
+                             lr_le=args.lr_le,
+                             run_test_rate_usl=args.run_test_rate_usl,
+                             print_loss_rate=args.print_loss_rate,
+                             save_embeddings=args.save_embeddings,
+                             save_images=args.save_images,
+                             return_data=args.return_data,
+                             strength=strength0
+                             )
     return
 
 
-def classif_from_load_model(load_path, usl_model=None, num_epochs=150):
+def ae_s_simclr(args):
+    ssl_experiment_setup(exp_type=("AE-S", "ND", "NL"),
+                         alpha=args.alpha,
+                         add_exp_str=args.add_exp_str,
+                         num_epochs_usl=args.epochs_usl,
+                         num_epochs_le=args.epochs_le,
+                         lr_usl=args.lr_usl,
+                         lr_le=args.lr_le,
+                         run_test_rate_usl=args.run_test_rate_usl,
+                         print_loss_rate=args.print_loss_rate,
+                         save_embeddings=args.save_embeddings,
+                         save_images=args.save_images,
+                         return_data=args.return_data,
+                         strength=args.strength
+                         )
+    ssl_experiment_setup(exp_type=("AE-S", "D", "NL"),
+                         alpha=args.alpha,
+                         add_exp_str=args.add_exp_str,
+                         num_epochs_usl=args.epochs_usl,
+                         num_epochs_le=args.epochs_le,
+                         lr_usl=args.lr_usl,
+                         lr_le=args.lr_le,
+                         run_test_rate_usl=args.run_test_rate_usl,
+                         print_loss_rate=args.print_loss_rate,
+                         save_embeddings=args.save_embeddings,
+                         save_images=args.save_images,
+                         return_data=args.return_data,
+                         strength=args.strength
+                         )
+    ssl_experiment_setup(exp_type=("AE-S", "D", "L"),
+                         alpha=args.alpha,
+                         add_exp_str=args.add_exp_str,
+                         num_epochs_usl=args.epochs_usl,
+                         num_epochs_le=args.epochs_le,
+                         lr_usl=args.lr_usl,
+                         lr_le=args.lr_le,
+                         run_test_rate_usl=args.run_test_rate_usl,
+                         print_loss_rate=args.print_loss_rate,
+                         save_embeddings=args.save_embeddings,
+                         save_images=args.save_images,
+                         return_data=args.return_data,
+                         strength=args.strength
+                         )
+    ssl_experiment_setup(exp_type=("SimCLR", "D", "L"),
+                         alpha=args.alpha,
+                         add_exp_str=args.add_exp_str,
+                         num_epochs_usl=args.epochs_usl,
+                         num_epochs_le=args.epochs_le,
+                         lr_usl=args.lr_usl,
+                         lr_le=args.lr_le,
+                         run_test_rate_usl=args.run_test_rate_usl,
+                         print_loss_rate=args.print_loss_rate,
+                         save_embeddings=args.save_embeddings,
+                         save_images=args.save_images,
+                         return_data=args.return_data,
+                         strength=args.strength
+                         )
+    return
+
+
+def classif_from_load_model(args, usl_model=None):
+    # NEEDS TO BE TESTED
     if usl_model is None:
-        usl_model = torch.load(load_path)
-    config = exp_config.get_exp_config()
-    config['num_epochs_le'] = num_epochs
+        usl_model = torch.load(args.path)
+    config = exp_config.get_exp_config(s=args.strength)
+    config['num_epochs_le'] = args.epochs_le
     config['loaders']['loaders_le'] = load_data.get_cifar10_classif(config)
     emb_train_loader = train.get_embedding_loader(usl_model, config, config['loaders']['loaders_le'][0])
     emb_test_loader = train.get_embedding_loader(usl_model, config, config['loaders']['loaders_le'][1])
