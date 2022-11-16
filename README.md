@@ -67,7 +67,8 @@ L(x) = L_\text{rec,1} + L_\text{rec,2} + \alpha L_\text{emb}
 $$
 
 
-$$ L(x) = ||x_ 1 - p_\theta (x_ 1)||_ 2 + ||x_2 - p_\theta (x_ 2)||_ 2 + \alpha ||p_\theta (x_ 1) - p_\theta (x_ 2)||_ 2
+$$ 
+L(x) = ||x_ 1 - f_\theta (x_ 1)||_ 2 + ||x_2 - f_\theta (x_ 2)||_ 2 + \alpha ||f_\theta (x_ 1) - f_\theta (x_ 2)||_ 2
 $$
 
 Alpha is run at orders of magnitude between 0.00001 and 10. Results are presented in the results section.
@@ -88,8 +89,9 @@ L(x) = L_\text{rec,1} + L_\text{rec,2} + \alpha L_\text{emb}
 $$
 
 
-$$ L(x) = ||x_ 1 - p_\theta (\tilde{x}_ 1)||_ 2 + ||x_2 - p_\theta (\tilde{x}_ 2)||_ 2 + \alpha ||p_\theta
-(\tilde{x}_ 1) - p_\theta (\tilde{x}_ 2)||_ 2
+$$ 
+L(x) = ||x_ 1 - f_\theta (\tilde{x}_ 1)||_ 2 + ||x_2 - f_\theta (\tilde{x}_ 2)||_ 2 + \alpha ||f_\theta
+(\tilde{x}_ 1) - f_\theta (\tilde{x}_ 2)||_ 2
 $$
 
 
