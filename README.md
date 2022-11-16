@@ -35,12 +35,12 @@ $D$ is an augmentation distribution over the input space. The let's call the out
 The loss function used for this autoencoder in the notebook is:
 
 $$
-L(x) = L_\text{rec} \\
+L(x, \tilde{x}) = L_\text{rec} \\
 $$
 
 
 $$
-L(x) = ||x - f_\theta (\tilde{x})||_2
+L(x, \tilde{x}) = ||x - f_\theta (\tilde{x})||_2
 $$
 
 The idea behind this network architecture is that the network is forced to learn the "true" representation of the data
@@ -63,12 +63,12 @@ the hyperparameter $\alpha$ which controls the weight that the embedding loss is
 losses. The loss function used notebook for this architecture is:
 
 $$ 
-L(x) = L_\text{rec,1} + L_\text{rec,2} + \alpha L_\text{emb}
+L(x_ 1, x_ 2) = L_\text{rec,1} + L_\text{rec,2} + \alpha L_\text{emb}
 $$
 
 
 $$ 
-L(x) = ||x_ 1 - f_\theta (x_ 1)||_ 2 + ||x_2 - f_\theta (x_ 2)||_ 2 + \alpha ||f_\theta (x_ 1) - f_\theta (x_ 2)||_ 2
+L(x_ 1, x_ 2) = ||x_ 1 - f_\theta (x_ 1)||_ 2 + ||x_2 - f_\theta (x_ 2)||_ 2 + \alpha ||f_\theta (x_ 1) - f_\theta (x_ 2)||_ 2
 $$
 
 Alpha is run at orders of magnitude between 0.00001 and 10. Results are presented in the results section.
@@ -85,13 +85,13 @@ This architecture combines the first two, running a denoising autoencoder with t
 on the embeddings. The loss used in the notebook for this architecture is as follows:
 
 $$ 
-L(x) = L_\text{rec,1} + L_\text{rec,2} + \alpha L_\text{emb}
+L(x_ 1, x_ 2, \tilde{x}_ 1, \tilde{x}_ 2) = L_\text{rec,1} + L_\text{rec,2} + \alpha L_\text{emb}
 $$
 
 
 $$ 
-L(x) = ||x_ 1 - f_\theta (\tilde{x}_ 1)||_ 2 + ||x_2 - f_\theta (\tilde{x}_ 2)||_ 2 + \alpha ||f_\theta
-(\tilde{x}_ 1) - f_\theta (\tilde{x}_ 2)||_ 2
+L(x_ 1, x_ 2, \tilde{x}_ 1, \tilde{x}_ 2) = ||x_ 1 - f_\theta (\tilde{x}_ 1)||_ 2 + ||x_2 - f_\theta (\tilde{x}_ 2)||_ 2 + \alpha ||f_\theta(\tilde{x}_ 1) - 
+f_\theta (\tilde{x}_ 2)||_ 2
 $$
 
 
@@ -101,6 +101,15 @@ python main.py --usl_type ae_parallel --denoising True
 ```
 
 ### SimCLR
+
+This experiment is conducted in accordance with (SIMCLR PAPER). Unlike the autoencoder experiments, here there is no
+decoder in the trained network, only an encoder and a projection layer. Like previously, two image augmentations are fed
+through the network, where "positives" are augmentations of the same image and "negatives" are augmentations of
+different images. The SimCLR loss function then incentivizes the network to embed positives "near" each other and
+negatives "far" from each other. Thus this loss function is as follows:
+
+$$
+L(x) = SimCLR()
 
 To run this experiment, use the following code:
 ```markdown
