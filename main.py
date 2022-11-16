@@ -42,7 +42,7 @@ if __name__ == "__main__":
     parser.add_argument("--epochs_usl", type=int, default=200)
     parser.add_argument("--epochs_le", type=int, default=150)
     parser.add_argument("--alpha", type=float, default=None)
-    parser.add_argument("--add_exp_str", type=float, default="")
+    parser.add_argument("--add_exp_str", type=str, default="")
     parser.add_argument("--run_test_rate_usl", type=int, default=1)
     parser.add_argument("--print_loss_rate", type=int, default=50)
     parser.add_argument("--save_embeddings", type=bool, default=False)
