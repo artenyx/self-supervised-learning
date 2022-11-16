@@ -64,7 +64,9 @@ def print_model_architecture(model_type, input_size=(3, 32, 32)):
     # summary(model, (3, 32, 32))
 
 
-def ssl_experiment_setup(exp_type,
+def ssl_experiment_setup(usl_type,
+                         denoising,
+                         layerwise,
                          alpha=None,
                          config=None,
                          add_exp_str='',
@@ -80,34 +82,17 @@ def ssl_experiment_setup(exp_type,
                          strength=0.25):
     if config is None:
         config = exp_config.get_exp_config(s=strength)
-
-    if exp_type[0] == "AE-S":
-        config['usl_type'] = 'ae_single'
-    elif exp_type[0] == "AE-P":
-        config['usl_type'] = 'ae_parallel'
+    usl_type = usl_type.lower()
+    config['usl_type'] = usl_type
+    assert usl_type == 'ae_single' or usl_type == 'ae_parallel' or usl_type == 'simclr', "Wrong USL type."
+    if config['usl_type'] == 'ae_parallel':
         config['alpha'] = alpha
-    elif exp_type[0] == "SimCLR":
-        config['usl_type'] = 'SimCLR'
-    else:
-        raise Exception("First element of exp_type must be AE-S, AE-P, or SimCLR.")
-
-    if exp_type[1] == "D":
-        config['denoising'] = True
-    elif exp_type[1] == "ND":
-        config['denoising'] = False
-    else:
-        raise Exception(
-            "Second element of exp_type must be D or ND, representing denoising or non-denoising autoencoder.")
-
-    if exp_type[2] == "L":
-        config['layerwise_training'] = True
+    config['denoising'] = denoising
+    config['layerwise'] = layerwise
+    if layerwise:
         model_type = networks.USL_Conv6_CIFAR_Sym
-    elif exp_type[2] == "NL":
-        config['layerwise_training'] = False
-        model_type = networks.USL_Conv6_CIFAR1
     else:
-        raise Exception(
-            "Third element of exp_type must be L or NL, representing layerwise training or non-layerwise training.")
+        model_type = networks.USL_Conv6_CIFAR1
 
     config['num_epochs_usl'] = num_epochs_usl
     config['num_epochs_le'] = num_epochs_le
@@ -117,7 +102,8 @@ def ssl_experiment_setup(exp_type,
     config['run_test_rate_usl'] = run_test_rate_usl
     config['print_loss_rate'] = print_loss_rate
     config['save_embeddings'] = save_embeddings
-    config['exp_type'] = str(exp_type)
+    exp_type = usl_type if usl_type == "simclr" else str((usl_type, denoising, layerwise))
+    config['exp_type'] = exp_type
     config['lr_usl'] = lr_usl
     config['lr_le'] = lr_le
 
@@ -134,7 +120,9 @@ def ssl_experiment_setup(exp_type,
 def test_alpha_parallel(args):
     alpha_list = [0.0001, 0.001, 0.01]
     for alpha0 in alpha_list:
-        ssl_experiment_setup(exp_type=("AE-P", "D", "NL"),
+        ssl_experiment_setup(usl_type=args.usl_type,
+                             denoising=args.denoising,
+                             layerwise=args.layerwise,
                              alpha=alpha0,
                              add_exp_str=args.add_exp_str,
                              num_epochs_usl=args.epochs_usl,
@@ -154,7 +142,9 @@ def test_alpha_parallel(args):
 def test_strength_single(args):
     strength_list = [0, 0.25, 0.5, 0.75, 1]
     for strength0 in strength_list:
-        ssl_experiment_setup(exp_type=("AE-S", "D", "NL"),
+        ssl_experiment_setup(usl_type="ae_single",
+                             denoising=True,
+                             layerwise=False,
                              alpha=args.alpha,
                              add_exp_str=args.add_exp_str,
                              num_epochs_usl=args.epochs_usl,
@@ -172,7 +162,9 @@ def test_strength_single(args):
 
 
 def ae_s_simclr(args):
-    ssl_experiment_setup(exp_type=("AE-S", "ND", "NL"),
+    ssl_experiment_setup(usl_type="ae_single",
+                         denoising=False,
+                         layerwise=False,
                          alpha=args.alpha,
                          add_exp_str=args.add_exp_str,
                          num_epochs_usl=args.epochs_usl,
@@ -186,7 +178,9 @@ def ae_s_simclr(args):
                          return_data=args.return_data,
                          strength=args.strength
                          )
-    ssl_experiment_setup(exp_type=("AE-S", "D", "NL"),
+    ssl_experiment_setup(usl_type="ae_single",
+                         denoising=True,
+                         layerwise=False,
                          alpha=args.alpha,
                          add_exp_str=args.add_exp_str,
                          num_epochs_usl=args.epochs_usl,
@@ -200,7 +194,9 @@ def ae_s_simclr(args):
                          return_data=args.return_data,
                          strength=args.strength
                          )
-    ssl_experiment_setup(exp_type=("AE-S", "D", "L"),
+    ssl_experiment_setup(usl_type="ae_single",
+                         denoising=True,
+                         layerwise=True,
                          alpha=args.alpha,
                          add_exp_str=args.add_exp_str,
                          num_epochs_usl=args.epochs_usl,
@@ -214,7 +210,9 @@ def ae_s_simclr(args):
                          return_data=args.return_data,
                          strength=args.strength
                          )
-    ssl_experiment_setup(exp_type=("SimCLR", "D", "L"),
+    ssl_experiment_setup(usl_type="simclr",
+                         denoising=False,
+                         layerwise=False,
                          alpha=args.alpha,
                          add_exp_str=args.add_exp_str,
                          num_epochs_usl=args.epochs_usl,

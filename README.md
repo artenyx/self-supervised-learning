@@ -24,8 +24,8 @@ All experiments consist of 2 stages:
 network towards a quality embedding space
 - Evaluation stage: New dataset is embedded and tested via Linear Evaluation or k-means clustering.
 
-By default, experiments are run with 200 epochs of representation learning, 150 epochs of linear evaluation with
-learning rates of 0.001 and 0.01, respectively.
+By default, experiments are run with 400 epochs of representation learning, 300 epochs of linear evaluation with
+learning rates of 0.0001 and 0.001, respectively.
 
 ### Denoising Autoencoder
 
@@ -43,7 +43,7 @@ by learning what how the augmentations warp the input space and reversing it.
 
 To run this experiment, use the following code:
 ```markdown
-python main.py --ssl_type ("AE-S", "D", "NL") 
+python main.py --usl_type "AE-S" --denoising "D" --layerwise "L"
 ```
 
 ### Parallel Autoencoder Architecture
