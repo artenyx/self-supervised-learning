@@ -40,7 +40,7 @@ $$
 
 
 $$
-L(x) = ||x - p_\theta (\tilde{x})||_2
+L(x) = ||x - f_\theta (\tilde{x})||_2
 $$
 
 The idea behind this network architecture is that the network is forced to learn the "true" representation of the data
