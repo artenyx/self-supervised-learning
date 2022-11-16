@@ -70,6 +70,8 @@ def ssl_experiment_setup(exp_type,
                          add_exp_str='',
                          num_epochs_usl=200,
                          num_epochs_le=150,
+                         lr_usl=0.001,
+                         lr_le=0.01,
                          run_test_rate_usl=1,
                          print_loss_rate=50,
                          save_images=True,
@@ -116,6 +118,8 @@ def ssl_experiment_setup(exp_type,
     config['print_loss_rate'] = print_loss_rate
     config['save_embeddings'] = save_embeddings
     config['exp_type'] = str(exp_type)
+    config['lr_usl'] = lr_usl
+    config['lr_le'] = lr_le
 
     print(config)
     config['model_type'] = model_type

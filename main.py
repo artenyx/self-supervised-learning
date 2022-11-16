@@ -13,6 +13,8 @@ def main(args):
                                          add_exp_str=args.add_exp_str,
                                          num_epochs_usl=args.epochs_usl,
                                          num_epochs_le=args.epochs_le,
+                                         lr_usl=args.lr_usl,
+                                         lr_le=args.lr_le,
                                          run_test_rate_usl=args.run_test_rate_usl,
                                          print_loss_rate=args.print_loss_rate,
                                          save_embeddings=args.save_embeddings,
