@@ -35,7 +35,7 @@ $D$ is an augmentation distribution over the input space. The let's call the out
 The loss function used for this autoencoder in the notebook is:
 
 $$
-L(x) = \text{MSE}(x, \tilde{x}_{out})
+L(x) = \text{MSE}(x, p_\theta (x))
 $$
 
 The idea behind this network architecture is that the network is forced to learn the "true" representation of the data
@@ -73,9 +73,12 @@ python main.py --usl_type ae_parallel --denoising False --alpha ALPHA
 
 This architecture combines the first two, running a denoising autoencoder with the parallel loss function and a penalty
 on the embeddings. The loss used in the notebook for this architecture is as follows:
+$$
+L(x) = \text{MSE}(x, \tilde{x}_{1, out}) + 
+$$
 
 $$
-L(x) = \text{MSE}(x, \tilde{x}_1,out) + \text{MSE}(x, \tilde{x}_{2,out}) + \alpha \text{MSE}(\tilde{x}_{1,out}, \tilde{x}_{2,out})
+L(x) = \text{MSE}(x, \tilde{x}_{out}) + \text{MSE}(x, \tilde{x}_{2,out}) + \alpha \text{MSE}(\tilde{x}_{1,out}, \tilde{x}_{2,out})
 $$
 
 
