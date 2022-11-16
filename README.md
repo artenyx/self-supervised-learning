@@ -60,10 +60,11 @@ each gradient step. After the two images are run through the autoencoder, the lo
 term that penalizes the distance between the two embeddings. Generally, this loss function is an MSE loss, though it can
 also be run as an L1 or even SimCLR or Barlow Twins loss on the image embeddings. This type of experiment introduces
 the hyperparameter $\alpha$ which controls the weight that the embedding loss is given compared to the reconstruction
-losses. The loss function used notebook for this architecture is:
+losses. Here, let $e_{\phi}$ represent the encoder such that $\phi \subseteq \theta$. Then the loss function can be written as:
 
 $$ 
-L(\tilde{x}_ 1, \tilde{x}_ 2) = L_\text{rec,1} + L_\text{rec,2} + \alpha L_\text{emb}
+L(\tilde{x}_ 1, \tilde{x}_ 2) = L_\text{rec,1}(\tilde{x}_ 1, f_\theta (\tilde{x}_ 1)) + L_\text{rec,2}(\tilde{x}_ 2, f_\theta (\tilde{x}_ 2)) + 
+\alpha L_\text{emb}(e_ \phi(\tilde{x}_ 1), e_ \phi(\tilde{x}_ 2))
 $$
 
 
