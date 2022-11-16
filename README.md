@@ -65,7 +65,7 @@ losses. The loss function used notebook for this architecture is:
 $$ 
 L(x) = L_\text{rec,1} + L_\text{rec,2} + \alpha L_\text{emb}
 $$
-<br />
+
 
 $$ 
 L(x) = \text{MSE}(x_1, p_\theta (x_1)) + \text{MSE}(x_2, p_\theta (x_2)) + \alpha \text{MSE}(p_\theta (x_1), 
@@ -84,12 +84,15 @@ python main.py --usl_type ae_parallel --denoising False --alpha ALPHA
 
 This architecture combines the first two, running a denoising autoencoder with the parallel loss function and a penalty
 on the embeddings. The loss used in the notebook for this architecture is as follows:
-$$
-L(x) = \text{MSE}(x, \tilde{x}_{1, out}) + 
+
+$$ 
+L(x) = L_\text{rec,1} + L_\text{rec,2} + \alpha L_\text{emb}
 $$
 
-$$
-L(x) = \text{MSE}(x, \tilde{x}_{out}) + \text{MSE}(x, \tilde{x}_{2,out}) + \alpha \text{MSE}(\tilde{x}_{1,out}, \tilde{x}_{2,out})
+
+$$ 
+L(x) = \text{MSE}(x_1, p_\theta (\tilde{x_1})) + \text{MSE}(x_2, p_\theta (\tilde{x_2}))) + \alpha \text{MSE}(p_\theta 
+(\tilde{x_1})), p_\theta (\tilde{x_2})))
 $$
 
 
