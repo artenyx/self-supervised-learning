@@ -55,20 +55,21 @@ python main.py --usl_type ae_single --denoising True
 
 ### Parallel Autoencoder Architecture
 
-In this type of self-supervised learning, two images are passed through the autoencoder between each gradient step.
-After the two images are run through the autoencoder, the loss function is the sum of the reconstruction losses plus a
+In this type of self-supervised learning, two augmentations of the same image are passed through the autoencoder between 
+each gradient step. After the two images are run through the autoencoder, the loss function is the sum of the reconstruction losses plus a
 term that penalizes the distance between the two embeddings. Generally, this loss function is an MSE loss, though it can
 also be run as an L1 or even SimCLR or Barlow Twins loss on the image embeddings. This type of experiment introduces
 the hyperparameter $\alpha$ which controls the weight that the embedding loss is given compared to the reconstruction
 losses. The loss function used notebook for this architecture is:
 
 $$ 
-L(x_ 1, x_ 2) = L_\text{rec,1} + L_\text{rec,2} + \alpha L_\text{emb}
+L(\tilde{x}_ 1, \tilde{x}_ 2) = L_\text{rec,1} + L_\text{rec,2} + \alpha L_\text{emb}
 $$
 
 
 $$ 
-L(x_ 1, x_ 2) = ||x_ 1 - f_\theta (x_ 1)||_ 2 + ||x_2 - f_\theta (x_ 2)||_ 2 + \alpha ||f_\theta (x_ 1) - f_\theta (x_ 2)||_ 2
+L(\tilde{x}_ 1, \tilde{x}_ 2) = ||\tilde{x}_ 1 - f_\theta (\tilde{x}_ 1)||_ 2 + ||\tilde{x}_ 2 - f_\theta (\tilde{x}_ 2)||_ 2 + \alpha ||f_\theta(\tilde{x}_ 1) - 
+f_\theta (\tilde{x}_ 2)||_ 2
 $$
 
 Alpha is run at orders of magnitude between 0.00001 and 10. Results are presented in the results section.
