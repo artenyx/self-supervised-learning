@@ -35,7 +35,7 @@ $D$ is an augmentation distribution over the input space. The let's call the out
 The loss function used for this autoencoder in the notebook is:
 
 $$
-L(x) = L_\text{recon}
+L(x) = L_\text{rec} \\
 L(x) = ||x - p_\theta (\tilde{x})||_2
 $$
 
@@ -59,7 +59,8 @@ the hyperparameter $\alpha$ which controls the weight that the embedding loss is
 losses. The loss function used notebook for this architecture is:
 
 $$
-L(x) = \text{MSE}(x_1, p_\theta (x_1)) + \text{MSE}(x_2, p_\theta (x_2)) + \alpha \text{MSE}(p_\theta (x_1), p_\theta (x_2))
+L(x) = L_\text{rec,1} + L_\text{rec,2} + \alpha \times L_\text{emb}
+\text{MSE}(x_1, p_\theta (x_1)) + \text{MSE}(x_2, p_\theta (x_2)) + \alpha \text{MSE}(p_\theta (x_1), p_\theta (x_2))
 $$
 
 Alpha is run at orders of magnitude between 0.00001 and 10. Results are presented in the results section.
