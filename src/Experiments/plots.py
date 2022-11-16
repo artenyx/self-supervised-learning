@@ -146,13 +146,79 @@ def produce_usl_lineval_plots(config, usl_df=None, lineval_df=None, load_path=No
     plot_lineval(config, le_data)
     return
 
-def plot_exp_set(config, folder_path):
-    files = os.listdir(folder_path)
-    for f in files:
-        subfiles = os.listdir(folder_path + "/" + f)
-        for s in subfiles:
-            if "usl_data" in s:
-                temp_usl_data = pd.read_csv(folder_path + "/" + f + "/" + s)
 
+def listdir_nohidden(folder_path, dir_only):
+    for f in os.listdir(folder_path):
+        if not f.startswith('.') and not f.startswith('000_'):
+            if dir_only and os.path.isdir(folder_path + "/" + f):
+                yield f
+            elif not dir_only:
+                yield f
+
+
+def pp_data(df, usl=True):
+    df_cp = df.copy()
+    if usl:
+        df_cp = df_cp.loc[(df_cp["Total Train Loss"] != 0) & (df_cp["Total Test Loss"] != 0)]
+    else:
+        df_cp = df_cp.loc[(df_cp["Train Error"] != 0) & (df_cp["Test Error"] != 0)]
+    return df_cp
+
+
+def plot_from_dicts(folder_path, data_dict, usl, ycols=None):
+    folder_path += "/000_plots/usl/" if usl else "/000_plots/le/"
+    print(folder_path)
+    if ycols is None:
+        ycols = ["Total Train Loss", "Total Test Loss"] if usl else ["Train Error", "Test Error"]
+    os.makedirs(folder_path, exist_ok=True)
+
+    epochs_list, tr_data_list, te_data_list = [], [], []
+    exp_list = list(data_dict.keys())
+    for exp in exp_list:
+        data = pp_data(data_dict[exp], usl)
+        plt.plot(data["Epoch Number"], data[ycols[0]])
+        plt.plot(data["Epoch Number"], data[ycols[1]])
+        plt.savefig(folder_path + exp + "_usl.png")
+        plt.close()
+        epochs_list.append(data["Epoch Number"])
+        tr_data_list.append(data[ycols[0]])
+        te_data_list.append(data[ycols[1]])
+
+    for i in range(len(exp_list)):
+        plt.plot(epochs_list[i], tr_data_list[i], label=exp_list[i])
+    plt.savefig(folder_path + "usl_tr_all.png" if usl else folder_path + "le_tr_all.png")
+    plt.legend()
+    plt.savefig(folder_path + "usl_tr_all_leg.png" if usl else folder_path + "le_tr_all_leg.png")
+    plt.close()
+    for i in range(len(exp_list)):
+        plt.plot(epochs_list[i], te_data_list[i], label=exp_list[i])
+    plt.savefig(folder_path + "usl_te_all.png" if usl else folder_path + "le_te_all.png")
+    plt.legend()
+    plt.savefig(folder_path + "usl_te_all_leg.png" if usl else folder_path + "le_te_all_leg.png")
+    plt.close()
+
+
+def plot_exp_set(folder_path):
+    usl_data_dict = {}
+    le_data_dict = {}
+    exp_files = list(listdir_nohidden(path, True))
+    print(exp_files)
+    for f in exp_files:
+        subpath = folder_path + "/" + f
+        subfiles = list(listdir_nohidden(subpath, False))
+        for s in subfiles:
+            if "USL_data" in s:
+                temp_usl_data = pd.read_csv(folder_path + "/" + f + "/" + s)
+                usl_data_dict[f] = temp_usl_data
+            elif "LE_data" in s:
+                temp_le_data = pd.read_csv(folder_path + "/" + f + "/" + s)
+                le_data_dict[f] = temp_le_data
+
+    plot_from_dicts(folder_path, usl_data_dict, True)
+    plot_from_dicts(folder_path, le_data_dict, False)
+
+if __name__ == "__main__":
+    path = "/Users/jerrywhite/Documents/01 - University of Chicago/05 - Thesis/Thesis Experiments/Others"
+    plot_exp_set(path)
 
 
