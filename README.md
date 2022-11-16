@@ -91,8 +91,8 @@ $$
 
 
 $$ 
-L(x) = \text{MSE}(x_1, p_\theta (\tilde{x_1})) + \text{MSE}(x_2, p_\theta (\tilde{x_2}))) + \alpha \text{MSE}(p_\theta 
-(\tilde{x_1})), p_\theta (\tilde{x_2})))
+L(x) = ||(x_1, p_\theta (\tilde{x_1}))||_2 + ||(x_2, p_\theta (\tilde{x_2})))||_2 + \alpha ||(p_\theta 
+(\tilde{x_1})), p_\theta (\tilde{x_2})))||_2
 $$
 
 
