@@ -35,7 +35,7 @@ $D$ is an augmentation distribution over the input space. The let's call the out
 The loss function used for this autoencoder in the notebook is:
 
 $$
-L(x) = ||(x, p_\theta (\tilde{x}))||_2
+L(x) = ||x - p_\theta (\tilde{x})||_2
 $$
 
 The idea behind this network architecture is that the network is forced to learn the "true" representation of the data
