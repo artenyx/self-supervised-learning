@@ -30,8 +30,9 @@ can be configured through command line parser on any experiment.
 
 ### Denoising Autoencoder
 
-This experiment type is a single denoising autoencoder, meaning that if $x$ is input image, $\tilde{x} \sim D(x)$ where $D$ is
-an augmentation distribution over the input space. The let's call the output of the network $\tilde{x}_{out}$. The loss function of this type of autoencoder is as follows:
+This experiment type is a single denoising autoencoder, meaning that if $x$ is input image, $\tilde{x} \sim D(x)$ where 
+$D$ is an augmentation distribution over the input space. The let's call the output of the network $\tilde{x}_{out}$. 
+The loss function used for this autoencoder in the notebook is:
 
 $$
 L(x) = \text{MSE}(x, \tilde{x}_{out})
@@ -44,21 +45,44 @@ by learning what how the augmentations warp the input space and reversing it.
 
 To run this experiment, use the following code:
 ```markdown
-python main.py --usl_type ae_single --denoising True --layerwise False
+python main.py --usl_type ae_single --denoising True
 ```
 
 ### Parallel Autoencoder Architecture
 
-To run this experiment, use the following code:
+In this type of self-supervised learning, two images are passed through the autoencoder between each gradient step.
+After the two images are run through the autoencoder, the loss function is the sum of the reconstruction losses plus a
+term that penalizes the distance between the two embeddings. Generally, this loss function is an MSE loss, though it can
+also be run as an L1 or even SimCLR or Barlow Twins loss on the image embeddings. This type of experiment introduces
+the hyperparameter $\alpha$ which controls the weight that the embedding loss is given compared to the reconstruction
+losses. The loss function used notebook for this architecture is:
+
+$$
+L(x) = \text{MSE}(x_1, x_{1,out}) + \text{MSE}(x_2, x_{2,out}) + \alpha \text{MSE}(x_2, x_{2,out})
+$$
+
+Alpha is run at orders of magnitude between 0.00001 and 10. Results are presented in the results section.
+
+
+To run this experiment at a specific alpha value, use the following code:
 ```markdown
-python main.py --usl_type ae_parallel --denoising False --layerwise False
+python main.py --usl_type ae_parallel --denoising False --alpha ALPHA
 ```
 
 ### Parallel Denoising Autoencoder
 
+This architecture combines the first two, running a denoising autoencoder with the parallel loss function and a penalty
+on the embeddings. The loss used in the notebook for this architecture is as follows:
+
+$$
+L(x) = \text{MSE}(x, \tilde{x}_{1,out}) + \text{MSE}(x, \tilde{x}_{2,out}) + \alpha \text{MSE}(\tilde{x}_{1,out}, 
+\tilde{x}_{2,out})
+$$
+
+
 To run this experiment, use the following code:
 ```markdown
-python main.py --usl_type ae_parallel --denoising True --layerwise False
+python main.py --usl_type ae_parallel --denoising True
 ```
 
 ### SimCLR
