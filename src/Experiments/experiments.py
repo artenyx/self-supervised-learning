@@ -64,8 +64,8 @@ def print_model_architecture(model_type, input_size=(3, 32, 32)):
     # summary(model, (3, 32, 32))
 
 
-def ssl_experiment_setup(exp_type=("AE-S", "D", "NL"),
-                         alpha=0.001,
+def ssl_experiment_setup(exp_type,
+                         alpha=None,
                          config=None,
                          add_exp_str='',
                          num_epochs_usl=200,
