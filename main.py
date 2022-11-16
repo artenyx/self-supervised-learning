@@ -8,8 +8,6 @@ def main(args):
     print("========Running Network========")
     print(torch.device("cuda:0" if torch.cuda.is_available() else "cpu"))
     if args.ssl_type is None:
-        exp = (args.usl_type, args.denoising, args.layerwise)
-        print(exp)
         experiments.ssl_experiment_setup(exp_type=(args.usl_type, args.denoising, args.layerwise))
     else:
         if args.exp_type == "alpha":
@@ -21,7 +19,7 @@ def main(args):
     return
 
 
-if __name__ == "main":
+if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--exp_type", type=str, default=None, choices=["alpha", "strength", "class_from_path"])
 
