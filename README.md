@@ -59,6 +59,7 @@ the hyperparameter $\alpha$ which controls the weight that the embedding loss is
 losses. The loss function used notebook for this architecture is:
 
 $$ L(x) = L_\text{rec,1} + L_\text{rec,2} + \alpha L_\text{emb}$$
+
 $$ L(x) = \text{MSE}(x_1, p_\theta (x_1)) + \text{MSE}(x_2, p_\theta (x_2)) + \alpha \text{MSE}(p_\theta (x_1), 
 p_\theta (x_2))$$
 
