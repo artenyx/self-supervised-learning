@@ -38,7 +38,7 @@ if __name__ == "__main__":
     parser.add_argument("--layerwise", type=str, default=None, choices=["L", "NL"])
     parser.add_argument("--usl_load_path", type=str, default=None)
     parser.add_argument("--lr_usl", type=float, default=0.001)
-    parser.add_argument("--lr_el", type=float, default=0.01)
+    parser.add_argument("--lr_le", type=float, default=0.01)
     parser.add_argument("--epochs_usl", type=int, default=200)
     parser.add_argument("--epochs_le", type=int, default=150)
     parser.add_argument("--alpha", type=float, default=None)
