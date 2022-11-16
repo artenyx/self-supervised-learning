@@ -35,6 +35,7 @@ $D$ is an augmentation distribution over the input space. The let's call the out
 The loss function used for this autoencoder in the notebook is:
 
 $$
+L(x) = L_\text{recon}
 L(x) = ||x - p_\theta (\tilde{x})||_2
 $$
 
