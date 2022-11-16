@@ -90,9 +90,8 @@ L(x) = L_\text{rec,1} + L_\text{rec,2} + \alpha L_\text{emb}
 $$
 
 
-$$ 
-L(x) = ||(x<sub>1</sub>, p_\theta (\tilde{x}<sub>1</sub>))||<sub>2</sub> + ||(x_2, p_\theta (\tilde{x}<sub>2</sub>)))||<sub>2</sub> + \alpha ||(p_\theta 
-(\tilde{x}<sub>1</sub>)), p_\theta (\tilde{x}<sub>2</sub>)))||<sub>2</sub>
+$$ L(x) = ||(x_1, p_\theta (\tilde{x_1}))||_ {2} + ||(x_2, p_\theta (\tilde{x_2})))||_2 + \alpha ||(p_\theta 
+(\tilde{x_1})), p_\theta (\tilde{x_2})))||_2
 $$
 
 
