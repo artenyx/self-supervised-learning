@@ -69,8 +69,8 @@ $$
 
 
 $$ 
-L(\tilde{x}_ 1, \tilde{x}_ 2) = ||\tilde{x}_ 1 - f_\theta (\tilde{x}_ 1)||_ 2 + ||\tilde{x}_ 2 - f_\theta (\tilde{x}_ 2)||_ 2 + \alpha ||f_\theta(\tilde{x}_ 1) - 
-f_\theta (\tilde{x}_ 2)||_ 2
+L(\tilde{x}_ 1, \tilde{x}_ 2) = ||\tilde{x}_ 1 - f_\theta (\tilde{x}_ 1)||_ 2 + ||\tilde{x}_ 2 - f_\theta (\tilde{x}_ 2)||_ 2 + \alpha ||e_ \phi(\tilde{x}_ 1) - 
+e_ \phi (\tilde{x}_ 2)||_ 2
 $$
 
 Alpha is run at orders of magnitude between 0.00001 and 10. Results are presented in the results section.
@@ -87,13 +87,14 @@ This architecture combines the first two, running a denoising autoencoder with t
 on the embeddings. The loss used in the notebook for this architecture is as follows:
 
 $$ 
-L(x_ 1, x_ 2, \tilde{x}_ 1, \tilde{x}_ 2) = L_\text{rec,1} + L_\text{rec,2} + \alpha L_\text{emb}
+L(x_ 1, x_ 2, \tilde{x}_ 1, \tilde{x}_ 2) = L_\text{rec,1}(x_ 1, f_\theta (\tilde{x_ 1)) + L_\text{rec,2}(x_ 2, f_\theta (\tilde{x}_ 2)) + 
+\alpha L_\text{emb}(e_ \phi(\tilde{x}_ 1), e_ \phi(\tilde{x}_ 2))
 $$
 
 
 $$ 
-L(x_ 1, x_ 2, \tilde{x}_ 1, \tilde{x}_ 2) = ||x_ 1 - f_\theta (\tilde{x}_ 1)||_ 2 + ||x_2 - f_\theta (\tilde{x}_ 2)||_ 2 + \alpha ||f_\theta(\tilde{x}_ 1) - 
-f_\theta (\tilde{x}_ 2)||_ 2
+L(\tilde{x}_ 1, \tilde{x}_ 2) = ||x_ 1 - f_\theta (\tilde{x}_ 1)||_ 2 + ||x_ 2 - f_\theta (\tilde{x}_ 2)||_ 2 + \alpha ||e_ \phi(\tilde{x}_ 1) - 
+e_ \phi (\tilde{x}_ 2)||_ 2
 $$
 
 
