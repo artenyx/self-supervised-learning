@@ -76,6 +76,7 @@ def ssl_experiment_setup(exp_type=("AE-S", "D", "NL"),
                          save_embeddings=True,
                          return_data=False,
                          strength=0.25):
+    print(exp_type)
     if config is None:
         config = exp_config.get_exp_config(s=strength)
 
