@@ -86,6 +86,7 @@ python main.py --usl_type ae_parallel --denoising False --alpha ALPHA
 This architecture combines the first two, running a denoising autoencoder with the parallel loss function and a penalty
 on the embeddings. The loss used in the notebook for this architecture is as follows:
 
+
 $$ 
 L(x_ 1, x_ 2, \tilde{x}_ 1, \tilde{x}_ 2) = L_\text{rec,1}(x_ 1, f_\theta (\tilde{x_ 1)) + L_\text{rec,2}(x_ 2, f_\theta (\tilde{x}_ 2)) + 
 \alpha L_\text{emb}(e_ \phi(\tilde{x}_ 1), e_ \phi(\tilde{x}_ 2))
