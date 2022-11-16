@@ -1,4 +1,4 @@
-from src.Experiments import experiments
+from src.Experiments import experiments, plots
 
 import torch
 import argparse
@@ -29,6 +29,8 @@ def main(args):
             experiments.test_strength_single([0.0, 0.1, 0.25, 0.5, 0.75, 0.9, 1.0])
         elif args.exp_type == "class_from_path":
             experiments.classif_from_load_model(load_path=args.usl_load_path)
+        elif args.exp_type == "plot_folder":
+            plots.plot_exp_set(args.path)
     return
 
 
@@ -51,5 +53,6 @@ if __name__ == "__main__":
     parser.add_argument("--save_images", type=bool, default=True)
     parser.add_argument("--return_data", type=bool, default=True)
     parser.add_argument("--strength", type=float, default=0.25)
+    parser.add_argument("--path", type=str, default=None)
     exp_args = parser.parse_args()
     main(exp_args)
