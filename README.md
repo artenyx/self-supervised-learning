@@ -35,7 +35,7 @@ $D$ is an augmentation distribution over the input space. The let's call the out
 The loss function used for this autoencoder in the notebook is:
 
 $$
-L(x) = \text{MSE}(x, p_\theta (x))
+L(x) = \text{MSE}(x, p_\theta (\tilde{x}))
 $$
 
 The idea behind this network architecture is that the network is forced to learn the "true" representation of the data
@@ -58,7 +58,7 @@ the hyperparameter $\alpha$ which controls the weight that the embedding loss is
 losses. The loss function used notebook for this architecture is:
 
 $$
-L(x) = \text{MSE}(x_1, x_{1,out}) + \text{MSE}(x_2, x_{2,out}) + \alpha \text{MSE}(x_2, x_{2,out})
+L(x) = \text{MSE}(x_1, p_\theta (x_1)) + \text{MSE}(x_2, p_\theta (x_2)) + \alpha \text{MSE}(p_\theta (x_1), p_\theta (x_2))
 $$
 
 Alpha is run at orders of magnitude between 0.00001 and 10. Results are presented in the results section.
