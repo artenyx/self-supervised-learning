@@ -109,10 +109,9 @@ This experiment is conducted in accordance with (SIMCLR PAPER). Unlike the autoe
 decoder in the trained network, only an encoder and a projection layer. Like previously, two image augmentations are fed
 through the network, where "positives" are augmentations of the same image and "negatives" are augmentations of
 different images. The SimCLR loss function then incentivizes the network to embed positives "near" each other and
-negatives "far" from each other. Thus this loss function is as follows:
+negatives "far" from each other. The loss function uses the Noise Contrastive Estimation loss across each batch. Its
+formulation can be seen in the paper.
 
-$$
-L(x) = SimCLR()
 
 To run this experiment, use the following code:
 ```markdown
