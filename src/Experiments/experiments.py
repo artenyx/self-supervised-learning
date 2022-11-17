@@ -119,7 +119,7 @@ def ssl_experiment_setup(usl_type,
 def test_alpha_parallel(args):
     alpha_list = [0.0001, 0.001, 0.01]
     for alpha0 in alpha_list:
-        ssl_experiment_setup(usl_type="ae_single",
+        ssl_experiment_setup(usl_type="ae_parallel",
                              denoising=True,
                              layerwise=False,
                              alpha=alpha0,
