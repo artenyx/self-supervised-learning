@@ -116,15 +116,37 @@ def ssl_experiment_setup(usl_type,
         return usl_data, usl_model, le_data, le_model
 
 
-def test_alpha_parallel(args):
+def ssl_exp_from_args(args):
+    ssl_experiment_setup(usl_type=args.usl_type,
+                         denoising=args.denoising,
+                         layerwise=args.layerwise,
+                         alpha=args.alpha,
+                         add_exp_str=args.add_exp_str,
+                         num_epochs_usl=args.epochs_usl,
+                         num_epochs_le=args.epochs_le,
+                         lr_usl=args.lr_usl,
+                         lr_le=args.lr_le,
+                         run_test_rate_usl=args.run_test_rate_usl,
+                         print_loss_rate=args.print_loss_rate,
+                         save_embeddings=args.save_embeddings,
+                         save_images=args.save_images,
+                         return_data=args.return_data,
+                         strength=args.strength
+                         )
+    return
+
+
+def alpha_exp_from_args(args):
+    if args.usl_type != "ae_parallel":
+        raise Warning("usl_type will be reset to \"ae_parallel\" for this experiment.")
     alpha_list = [0.0001, 0.001, 0.01, 0.1, 0.0, 1, 10]
     print("Alphas being tested: " + str(alpha_list))
     for alpha0 in alpha_list:
         ssl_experiment_setup(usl_type="ae_parallel",
-                             denoising=True,
-                             layerwise=False,
+                             denoising=args.denoising,
+                             layerwise=args.layerwise,
                              alpha=alpha0,
-                             add_exp_str="alpha-"+str(alpha0),
+                             add_exp_str=args.add_exp_str + "alpha-"+str(alpha0),
                              num_epochs_usl=args.epochs_usl,
                              num_epochs_le=args.epochs_le,
                              lr_usl=args.lr_usl,
@@ -138,15 +160,15 @@ def test_alpha_parallel(args):
                              )
     return
 
-
+'''
 def test_strength_single(args):
     strength_list = [0, 0.25, 0.5, 0.75, 1]
     for strength0 in strength_list:
-        ssl_experiment_setup(usl_type="ae_single",
-                             denoising=True,
-                             layerwise=False,
+        ssl_experiment_setup(usl_type=args.usl_type,
+                             denoising=args.denoising,
+                             layerwise=args.layerwise,
                              alpha=args.alpha,
-                             add_exp_str="strength-"+str(strength0),
+                             add_exp_str=args.add_exp_str + "strength-"+str(strength0),
                              num_epochs_usl=args.epochs_usl,
                              num_epochs_le=args.epochs_le,
                              lr_usl=args.lr_usl,
@@ -159,6 +181,7 @@ def test_strength_single(args):
                              strength=strength0
                              )
     return
+'''
 
 
 def ae_s_simclr(args):
@@ -227,6 +250,13 @@ def ae_s_simclr(args):
                          strength=args.strength
                          )
     return
+
+
+def strength_exp_wrapper(args, exp_func):
+    strength_list = [0, 0.25, 0.5, 0.75, 1]
+    for strength0 in strength_list:
+        args.strength = strength0
+        exp_func(args)
 
 
 def classif_from_load_model(args, usl_model=None):

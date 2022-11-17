@@ -3,44 +3,29 @@ from src.Experiments import experiments, plots
 import torch
 import argparse
 
+exp_funct_dict = {
+    "alpha": experiments.alpha_exp_from_args,
+    "ae_s_simclr": experiments.ae_s_simclr,
+    "class_from_path": experiments.classif_from_load_model,
+    "plot_folder": plots.plot_exp_set,
+    None: experiments.ssl_exp_from_args
+}
+
 
 def main(args):
     print("========Running Network========")
     print("Device: cuda" if torch.cuda.is_available() else "Device: cpu")
-    if args.exp_type is None:
-        experiments.ssl_experiment_setup(usl_type=args.usl_type,
-                                         denoising=args.denoising,
-                                         layerwise=args.layerwise,
-                                         alpha=args.alpha,
-                                         add_exp_str=args.add_exp_str,
-                                         num_epochs_usl=args.epochs_usl,
-                                         num_epochs_le=args.epochs_le,
-                                         lr_usl=args.lr_usl,
-                                         lr_le=args.lr_le,
-                                         run_test_rate_usl=args.run_test_rate_usl,
-                                         print_loss_rate=args.print_loss_rate,
-                                         save_embeddings=args.save_embeddings,
-                                         save_images=args.save_images,
-                                         return_data=args.return_data,
-                                         strength=args.strength
-                                         )
+    if args.strength_exp:
+        experiments.strength_exp_wrapper(args, exp_funct_dict[args.exp_type])
     else:
-        if args.exp_type == "alpha":
-            experiments.test_alpha_parallel(args)
-        elif args.exp_type == "strength":
-            experiments.test_strength_single(args)
-        elif args.exp_type == "ae_s_simclr":
-            experiments.ae_s_simclr(args)
-        elif args.exp_type == "class_from_path":
-            experiments.classif_from_load_model(args)
-        elif args.exp_type == "plot_folder":
-            plots.plot_exp_set(args.path)
+        exp_funct_dict[args.exp_type](args)
     return
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--exp_type", type=str, default=None, choices=["alpha", "strength", "ae_s_simclr", "plot_folder", "class_from_path"])
+    parser.add_argument("--exp_type", type=str, default=None, choices=list(exp_funct_dict.keys()))
+    parser.add_argument("--strength_exp", type=bool, default=False)
     parser.add_argument("--usl_type", type=str, default=None, choices=["simclr", "ae_single", "ae_parallel"])
     parser.add_argument("--denoising", type=bool, default=False)
     parser.add_argument("--layerwise", type=bool, default=False)

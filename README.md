@@ -122,14 +122,14 @@ python main.py --usl_type simclr
 
 To run this experiment, use the following code:
 ```markdown
-python main.py --exp_type alpha
+python main.py --exp_type alpha --usl_type ae_parallel --denoising True --layerwise False
 ```
 
 ### Augmentation Strength Experiments
 
 To run this experiment, use the following code:
 ```markdown
-python main.py --exp_type strength
+python main.py --exp_type strength --usl_type ae_parallel --denoising True --layerwise False
 ```
 
 ## Results
