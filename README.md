@@ -127,10 +127,16 @@ python main.py --exp_type alpha --usl_type ae_parallel --denoising True --layerw
 
 ### Augmentation Strength Experiments
 
-To run this experiment, use the following code:
+The effect of augmentation strength can be run in any of the aforementioned experiments. Thus the strength experiment 
+function is a function that wraps a separate experiment function. Thus any experiment can be run normally, and if the
+argument --strength_exp is set to True, the experiment will be completed 5 times at strengths [0, 0.25, 0.5, 0.75, 1].
+Here is an example call of this type of experiment:
+
 ```markdown
-python main.py --exp_type strength --usl_type ae_parallel --denoising True --layerwise False
+python main.py --strength_exp True --usl_type ae_parallel --denoising True --layerwise False --alpha 0.001
 ```
+
+This call will run a parallel denoising autoencoder 5 times at the various strengths.
 
 ## Results
 

@@ -81,6 +81,7 @@ def ssl_experiment_setup(usl_type,
                          return_data=False,
                          strength=0.25,
                          crit_emb="l2",
+                         crit_emb_lam=None,
                          crit_recon="l2"):
     if config is None:
         config = exp_config.get_exp_config(s=strength)
@@ -109,6 +110,10 @@ def ssl_experiment_setup(usl_type,
     config['lr_le'] = lr_le
     config['criterion_recon'] = crit_recon
     config['criterion_emb'] = crit_emb
+    if crit_emb == "bt":
+        config['criterion_emb_lam'] = 0.001
+    elif crit_emb == "simclr":
+        config['criterion_emb_lam'] = 0.5
 
     print(config)
     config['model_type'] = model_type

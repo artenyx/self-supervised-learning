@@ -62,7 +62,7 @@ def usl_run_epoch(model, config, loader, epoch, grad):
         elif config['usl_type'] == 'ae_parallel':
             loss_img1, loss_img2, loss_emb, loss_total = losses.ae_parallel_run_loss(model, config, epoch, img0, img1, img2)
         else:
-            loss_img1, loss_img2, loss_emb, loss_total = losses.simclr_run_loss(model, img1, img2)
+            loss_img1, loss_img2, loss_emb, loss_total = losses.simclr_run_loss(model, config, img1, img2)
         if grad:
             loss_total.backward()
             optimizer.step()

@@ -85,10 +85,10 @@ loss_dict = {
 }
 
 
-def simclr_run_loss(model, img1, img2):
+def simclr_run_loss(model, config, img1, img2):
     encoding1, __ = model(img1)
     encoding2, __ = model(img2)
-    loss_total = simclr_loss_func(encoding1, encoding2)
+    loss_total = simclr_loss_func(encoding1, encoding2, lam=config['criterion_emb_lam'])
 
     return None, None, None, loss_total
 
@@ -110,7 +110,11 @@ def ae_parallel_run_loss(model, config, epoch, img0, img1, img2):
         loss_img1 = criterion_recon(img1, decoding1)
         loss_img2 = criterion_recon(img2, decoding2)
 
-    loss_emb = criterion_emb(encoding1, encoding2)
+    if config['criterion_emb'] == "bt" or config['criterion_emb'] == "simclr":
+        loss_emb = criterion_emb(encoding1, encoding2, lam=config['criterion_emb_lam'])
+    else:
+        loss_emb = criterion_emb(encoding1, encoding2)
+
     loss_total = torch.sum(loss_img1 + loss_img2 + config['alpha'] * loss_emb / config['latent_dim'])
 
     return loss_img1, loss_img2, loss_emb, loss_total
