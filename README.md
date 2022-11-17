@@ -93,7 +93,7 @@ $$
 
 
 $$ 
-L(\tilde{x}_ 1, \tilde{x}_ 2) = ||x - f_\theta (\tilde{x}_ 1)||_ 2 + ||x - f_\theta (\tilde{x}_ 2)||_ 2 + \alpha ||e_ \phi(\tilde{x}_ 1) - 
+L(x, \tilde{x}_ 1, \tilde{x}_ 2) = ||x - f_\theta (\tilde{x}_ 1)||_ 2 + ||x - f_\theta (\tilde{x}_ 2)||_ 2 + \alpha ||e_ \phi(\tilde{x}_ 1) - 
 e_ \phi (\tilde{x}_ 2)||_ 2
 $$
 
