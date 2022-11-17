@@ -231,7 +231,7 @@ def ae_s_simclr(args):
 
 def strength_exp_wrapper(args, exp_func):
     strength_list = [0, 0.25, 0.5, 0.75, 1]
-    print("Running " + str(exp_func) + "at strengths: " + str(strength_list))
+    print("Running " + exp_func.__name__ + "at strengths: " + str(strength_list))
     for strength0 in strength_list:
         args.strength = strength0
         exp_func(args)
