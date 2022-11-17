@@ -90,7 +90,7 @@ def ssl_experiment_setup(usl_type,
     if config['usl_type'] == 'ae_parallel':
         config['alpha'] = alpha
     config['denoising'] = denoising
-    config['layerwise'] = layerwise
+    config['layerwise_training'] = layerwise
     if layerwise:
         model_type = networks.USL_Conv6_CIFAR_Sym
     else:
@@ -152,6 +152,7 @@ def alpha_exp_from_args(args):
         print("usl_type will be reset to \"ae_parallel\" for this experiment.")
     alpha_list = [0.0001, 0.001, 0.01, 0.1, 0.0, 1, 10]
     print("RUNNING AE_PARALLEL AT ALPHAS: " + str(alpha_list))
+    print(args.layerwise)
     exp_str_init = args.add_exp_str
     for alpha0 in alpha_list:
         args.usl_type, args.alpha, args.add_exp_str = "ae_parallel", alpha0, exp_str_init + "alpha-"+str(alpha0)
