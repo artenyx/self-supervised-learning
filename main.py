@@ -6,7 +6,7 @@ import argparse
 
 def main(args):
     print("========Running Network========")
-    print(torch.device("cuda:0" if torch.cuda.is_available() else "cpu"))
+    print("Device: cuda" if torch.cuda.is_available() else "Device: cpu")
     if args.exp_type is None:
         experiments.ssl_experiment_setup(usl_type=args.usl_type,
                                          denoising=args.denoising,
