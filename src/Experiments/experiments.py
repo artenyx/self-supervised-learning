@@ -110,9 +110,9 @@ def ssl_experiment_setup(usl_type,
     config['lr_le'] = lr_le
     config['criterion_recon'] = crit_recon
     config['criterion_emb'] = crit_emb
-    if crit_emb == "bt":
+    if crit_emb == "bt" and crit_emb_lam is None:
         config['criterion_emb_lam'] = 0.001
-    elif crit_emb == "simclr":
+    elif crit_emb == "simclr" and crit_emb_lam is None:
         config['criterion_emb_lam'] = 0.5
 
     print(config)
