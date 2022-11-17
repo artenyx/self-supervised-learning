@@ -35,7 +35,7 @@ $D$ is an augmentation distribution over the input space. Let $f_\theta$ be our 
 its output is $f_\theta(x)$ or $f_\theta(\tilde{x})$ depending on the context. The loss function used for this autoencoder in the notebook is:
 
 $$
-L(x, \tilde{x}) = L_\text{rec} \\
+L(x, \tilde{x}) = L_\text{rec}(x, f_\theta(\tilde{x})) \\
 $$
 
 
