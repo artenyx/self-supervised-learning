@@ -8,6 +8,7 @@ exp_funct_dict = {
     "ae_s_simclr": experiments.ae_s_simclr,
     "class_from_path": experiments.classif_from_load_model,
     "plot_folder": plots.plot_exp_set,
+    "usl_lr_exp": experiments.usl_lr_exp,
     None: experiments.ssl_exp_from_args
 }
 
@@ -32,8 +33,8 @@ if __name__ == "__main__":
     parser.add_argument("--usl_load_path", type=str, default=None)
     parser.add_argument("--lr_usl", type=float, default=0.0001)
     parser.add_argument("--lr_le", type=float, default=0.001)
-    parser.add_argument("--epochs_usl", type=int, default=400)
-    parser.add_argument("--epochs_le", type=int, default=300)
+    parser.add_argument("--epochs_usl", type=int, default=200)
+    parser.add_argument("--epochs_le", type=int, default=150)
     parser.add_argument("--alpha", type=float, default=None)
     parser.add_argument("--add_exp_str", type=str, default="")
     parser.add_argument("--run_test_rate_usl", type=int, default=1)

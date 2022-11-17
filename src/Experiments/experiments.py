@@ -141,91 +141,25 @@ def alpha_exp_from_args(args):
         print("usl_type will be reset to \"ae_parallel\" for this experiment.")
     alpha_list = [0.0001, 0.001, 0.01, 0.1, 0.0, 1, 10]
     print("RUNNING AE_PARALLEL AT ALPHAS: " + str(alpha_list))
+    exp_str_init = args.add_exp_str
     for alpha0 in alpha_list:
-        ssl_experiment_setup(usl_type="ae_parallel",
-                             denoising=args.denoising,
-                             layerwise=args.layerwise,
-                             alpha=alpha0,
-                             add_exp_str=args.add_exp_str + "alpha-"+str(alpha0),
-                             num_epochs_usl=args.epochs_usl,
-                             num_epochs_le=args.epochs_le,
-                             lr_usl=args.lr_usl,
-                             lr_le=args.lr_le,
-                             run_test_rate_usl=args.run_test_rate_usl,
-                             print_loss_rate=args.print_loss_rate,
-                             save_embeddings=args.save_embeddings,
-                             save_images=args.save_images,
-                             return_data=args.return_data,
-                             strength=args.strength,
-                             )
+        args.usl_type, args.alpha, args.add_exp_str = "ae_parallel", alpha0, exp_str_init + "alpha-"+str(alpha0)
+        ssl_exp_from_args(args)
     return
 
 
 def ae_s_simclr(args):
-    ssl_experiment_setup(usl_type="ae_single",
-                         denoising=False,
-                         layerwise=False,
-                         alpha=args.alpha,
-                         add_exp_str=args.add_exp_str,
-                         num_epochs_usl=args.epochs_usl,
-                         num_epochs_le=args.epochs_le,
-                         lr_usl=args.lr_usl,
-                         lr_le=args.lr_le,
-                         run_test_rate_usl=args.run_test_rate_usl,
-                         print_loss_rate=args.print_loss_rate,
-                         save_embeddings=args.save_embeddings,
-                         save_images=args.save_images,
-                         return_data=args.return_data,
-                         strength=args.strength
-                         )
-    ssl_experiment_setup(usl_type="ae_single",
-                         denoising=True,
-                         layerwise=False,
-                         alpha=args.alpha,
-                         add_exp_str=args.add_exp_str,
-                         num_epochs_usl=args.epochs_usl,
-                         num_epochs_le=args.epochs_le,
-                         lr_usl=args.lr_usl,
-                         lr_le=args.lr_le,
-                         run_test_rate_usl=args.run_test_rate_usl,
-                         print_loss_rate=args.print_loss_rate,
-                         save_embeddings=args.save_embeddings,
-                         save_images=args.save_images,
-                         return_data=args.return_data,
-                         strength=args.strength
-                         )
-    ssl_experiment_setup(usl_type="ae_single",
-                         denoising=True,
-                         layerwise=True,
-                         alpha=args.alpha,
-                         add_exp_str=args.add_exp_str,
-                         num_epochs_usl=args.epochs_usl,
-                         num_epochs_le=args.epochs_le,
-                         lr_usl=args.lr_usl,
-                         lr_le=args.lr_le,
-                         run_test_rate_usl=args.run_test_rate_usl,
-                         print_loss_rate=args.print_loss_rate,
-                         save_embeddings=args.save_embeddings,
-                         save_images=args.save_images,
-                         return_data=args.return_data,
-                         strength=args.strength
-                         )
-    ssl_experiment_setup(usl_type="simclr",
-                         denoising=False,
-                         layerwise=False,
-                         alpha=args.alpha,
-                         add_exp_str=args.add_exp_str,
-                         num_epochs_usl=args.epochs_usl,
-                         num_epochs_le=args.epochs_le,
-                         lr_usl=args.lr_usl,
-                         lr_le=args.lr_le,
-                         run_test_rate_usl=args.run_test_rate_usl,
-                         print_loss_rate=args.print_loss_rate,
-                         save_embeddings=args.save_embeddings,
-                         save_images=args.save_images,
-                         return_data=args.return_data,
-                         strength=args.strength
-                         )
+    args.usl_type, args.denoising, args.layerwise = "ae_single", False, False
+    ssl_exp_from_args(args)
+
+    args.usl_type, args.denoising, args.layerwise = "ae_single", True, False
+    ssl_exp_from_args(args)
+
+    args.usl_type, args.denoising, args.layerwise = "ae_single", True, True
+    ssl_exp_from_args(args)
+
+    args.usl_type, args.denoising, args.layerwise = "simclr", False, False
+    ssl_exp_from_args(args)
     return
 
 
@@ -236,6 +170,17 @@ def strength_exp_wrapper(args, exp_func):
         args.add_exp_str = "strength-" + str(strength0)
         args.strength = strength0
         exp_func(args)
+
+
+def usl_lr_exp(args):
+    lr_list = [0.000001, 0.00001, 0.0001, 0.001, 0.01]
+    print("TESTING LEARNING RATES: " + str(lr_list))
+    exp_str_init = args.add_exp_str
+    for lr0 in lr_list:
+        args.lr_usl = lr0
+        args.add_exp_str = exp_str_init + "lr-" + str(lr0)
+        ssl_exp_from_args(args)
+    return
 
 
 def classif_from_load_model(args, usl_model=None):
