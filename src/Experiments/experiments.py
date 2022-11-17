@@ -138,7 +138,7 @@ def ssl_exp_from_args(args):
 
 def alpha_exp_from_args(args):
     if args.usl_type != "ae_parallel":
-        raise Warning("usl_type will be reset to \"ae_parallel\" for this experiment.")
+        print("usl_type will be reset to \"ae_parallel\" for this experiment.")
     alpha_list = [0.0001, 0.001, 0.01, 0.1, 0.0, 1, 10]
     print("RUNNING AE_PARALLEL AT ALPHAS: " + str(alpha_list))
     for alpha0 in alpha_list:
