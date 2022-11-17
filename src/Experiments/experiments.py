@@ -153,6 +153,7 @@ def alpha_exp_from_args(args):
     alpha_list = [0.0001, 0.001, 0.01, 0.1, 0.0, 1, 10]
     print("RUNNING AE_PARALLEL AT ALPHAS: " + str(alpha_list))
     print(args.layerwise)
+    print(args.denoising)
     exp_str_init = args.add_exp_str
     for alpha0 in alpha_list:
         args.usl_type, args.alpha, args.add_exp_str = "ae_parallel", alpha0, exp_str_init + "alpha-"+str(alpha0)
