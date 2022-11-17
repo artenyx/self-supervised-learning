@@ -79,7 +79,9 @@ def ssl_experiment_setup(usl_type,
                          save_images=True,
                          save_embeddings=True,
                          return_data=False,
-                         strength=0.25):
+                         strength=0.25,
+                         crit_emb="l2",
+                         crit_recon="l2"):
     if config is None:
         config = exp_config.get_exp_config(s=strength)
     config['usl_type'] = usl_type
@@ -105,6 +107,8 @@ def ssl_experiment_setup(usl_type,
     config['exp_type'] = "-".join(exp_type)
     config['lr_usl'] = lr_usl
     config['lr_le'] = lr_le
+    config['criterion_recon'] = crit_recon
+    config['criterion_emb'] = crit_emb
 
     print(config)
     config['model_type'] = model_type
@@ -131,7 +135,9 @@ def ssl_exp_from_args(args):
                          save_embeddings=args.save_embeddings,
                          save_images=args.save_images,
                          return_data=args.return_data,
-                         strength=args.strength
+                         strength=args.strength,
+                         crit_emb=args.crit_emb,
+                         crit_recon=args.crit_recon
                          )
     return
 

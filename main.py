@@ -44,5 +44,7 @@ if __name__ == "__main__":
     parser.add_argument("--return_data", type=bool, default=True)
     parser.add_argument("--strength", type=float, default=0.25)
     parser.add_argument("--path", type=str, default=None)
+    parser.add_argument("--crit_emb", type=str, default="l2", choices=["l1", "l2", "bt", "simclr"])
+    parser.add_argument("--crit_recon", type=str, default="l2", choices=["l1", "l2", "bt", "simclr"])
     exp_args = parser.parse_args()
     main(exp_args)

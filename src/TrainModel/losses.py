@@ -1,5 +1,7 @@
 import torch
+import torch.nn as nn
 from torchvision.utils import save_image
+from torch.nn.functional import normalize
 
 
 def standardize(tensor):
@@ -10,7 +12,7 @@ def standardize(tensor):
     return tensor
 
 
-def simclr_loss_fun(embedding1, embedding2, lam=0.5):
+def simclr_loss_func(embedding1, embedding2, lam=0.5):
     assert embedding1.shape == embedding2.shape
     batch_size = embedding1.shape[0]
 
@@ -35,30 +37,66 @@ def simclr_loss_fun(embedding1, embedding2, lam=0.5):
     loss = torch.mean(lecov)
 
     '''
-  # Accuracy
-  if torch.cuda.is_available():
-    ID = 2. * torch.eye(batch_size).to('cuda') - 1.
-  else:
-    ID = 2. *torch.eye(batch_size) - 1
-  icov=ID*cov12
-  acc=torch.sum((icov>0).type(torch.float))/ batch_size
-  '''
+    # Accuracy
+      if torch.cuda.is_available():
+        ID = 2. * torch.eye(batch_size).to('cuda') - 1.
+      else:
+        ID = 2. *torch.eye(batch_size) - 1
+      icov=ID*cov12
+      acc=torch.sum((icov>0).type(torch.float))/ batch_size
+      '''
 
     return loss
+
+
+def barlow_twins_loss_func(embedding1, embedding2, lam):
+    # normalizing embeddings
+    embedding1 = normalize(embedding1)
+    embedding2 = normalize(embedding2)
+
+    # embedding should be shape [batchsize,latent_dim]
+    batchsize = embedding1.shape[0]
+    latent_dim = embedding1.shape[1]
+
+    # latent_dim square matrix
+    c = torch.mm(embedding1.T, embedding2) / batchsize
+
+    # creating cross correlation matrix and squaring entries
+    if torch.cuda.is_available():
+        eye = torch.eye(latent_dim, device="cuda")
+    else:
+        eye = torch.eye(latent_dim)
+    c_diff = torch.pow(c - eye, 2)
+
+    # multiplying off diagonal entries by alpha parameter
+    # torch.off_diagonal(c_diff).mul_(alpha)
+    c_diff_copy = lam * c_diff
+    c_diff_copy.diag = c_diff.diag
+
+    loss = torch.sum(c_diff_copy)
+    return loss
+
+
+loss_dict = {
+    "l2": nn.MSELoss(),
+    "l1": nn.L1Loss(),
+    "bt": barlow_twins_loss_func,
+    "simclr": simclr_loss_func
+}
 
 
 def simclr_run_loss(model, img1, img2):
     encoding1, __ = model(img1)
     encoding2, __ = model(img2)
-    loss_total = simclr_loss_fun(encoding1, encoding2)
+    loss_total = simclr_loss_func(encoding1, encoding2)
 
     return None, None, None, loss_total
 
 
 def ae_parallel_run_loss(model, config, epoch, img0, img1, img2):
 
-    criterion_recon = config['criterion_emb_recon']()
-    criterion_emb = config['criterion_emb_recon']()
+    criterion_recon = loss_dict[config['criterion_recon']]
+    criterion_emb = loss_dict[config['criterion_emb']]
 
     encoding1, decoding1 = model(img1)
     encoding2, decoding2 = model(img2)
@@ -80,7 +118,7 @@ def ae_parallel_run_loss(model, config, epoch, img0, img1, img2):
 
 def ae_single_run_loss(model, config, epoch, img0, img1):
 
-    criterion_recon = config['criterion_emb_recon']()
+    criterion_recon = loss_dict[config['criterion_recon']]
 
     encoding1, decoding1 = model(img1)
     if config['save_image_flag'] and config['save_images']:
