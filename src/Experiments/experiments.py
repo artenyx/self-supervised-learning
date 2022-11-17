@@ -233,6 +233,7 @@ def strength_exp_wrapper(args, exp_func):
     strength_list = [0, 0.25, 0.5, 0.75, 1]
     print("RUNNING FUNCTION " + exp_func.__name__ + " AT STRENGTHS: " + str(strength_list))
     for strength0 in strength_list:
+        args.add_exp_str = "strength-" + str(strength0)
         args.strength = strength0
         exp_func(args)
 
