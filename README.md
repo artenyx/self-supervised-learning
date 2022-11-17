@@ -31,7 +31,7 @@ can be configured through command line parser on any experiment.
 ### Denoising Autoencoder
 
 This experiment type is a single denoising autoencoder, meaning that if $x$ is input image, $\tilde{x} \sim D(x)$ where 
-$D$ is an augmentation distribution over the input space. Let $f_\theta be our unsupervised learning network and thus 
+$D$ is an augmentation distribution over the input space. Let $f_\theta$ be our unsupervised learning network and thus 
 its output is $f_\theta(x)$ or $f_\theta(\tilde{x})$ depending on the context. The loss function used for this autoencoder in the notebook is:
 
 $$
