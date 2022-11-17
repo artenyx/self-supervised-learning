@@ -140,7 +140,7 @@ def alpha_exp_from_args(args):
     if args.usl_type != "ae_parallel":
         raise Warning("usl_type will be reset to \"ae_parallel\" for this experiment.")
     alpha_list = [0.0001, 0.001, 0.01, 0.1, 0.0, 1, 10]
-    print("Alphas being tested: " + str(alpha_list))
+    print("RUNNING AE_PARALLEL AT ALPHAS: " + str(alpha_list))
     for alpha0 in alpha_list:
         ssl_experiment_setup(usl_type="ae_parallel",
                              denoising=args.denoising,
@@ -231,7 +231,7 @@ def ae_s_simclr(args):
 
 def strength_exp_wrapper(args, exp_func):
     strength_list = [0, 0.25, 0.5, 0.75, 1]
-    print("Running " + exp_func.__name__ + "at strengths: " + str(strength_list))
+    print("RUNNING FUNCTION " + exp_func.__name__ + " AT STRENGTHS: " + str(strength_list))
     for strength0 in strength_list:
         args.strength = strength0
         exp_func(args)
