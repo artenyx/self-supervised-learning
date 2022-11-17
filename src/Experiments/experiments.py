@@ -160,29 +160,6 @@ def alpha_exp_from_args(args):
                              )
     return
 
-'''
-def test_strength_single(args):
-    strength_list = [0, 0.25, 0.5, 0.75, 1]
-    for strength0 in strength_list:
-        ssl_experiment_setup(usl_type=args.usl_type,
-                             denoising=args.denoising,
-                             layerwise=args.layerwise,
-                             alpha=args.alpha,
-                             add_exp_str=args.add_exp_str + "strength-"+str(strength0),
-                             num_epochs_usl=args.epochs_usl,
-                             num_epochs_le=args.epochs_le,
-                             lr_usl=args.lr_usl,
-                             lr_le=args.lr_le,
-                             run_test_rate_usl=args.run_test_rate_usl,
-                             print_loss_rate=args.print_loss_rate,
-                             save_embeddings=args.save_embeddings,
-                             save_images=args.save_images,
-                             return_data=args.return_data,
-                             strength=strength0
-                             )
-    return
-'''
-
 
 def ae_s_simclr(args):
     ssl_experiment_setup(usl_type="ae_single",
@@ -254,6 +231,7 @@ def ae_s_simclr(args):
 
 def strength_exp_wrapper(args, exp_func):
     strength_list = [0, 0.25, 0.5, 0.75, 1]
+    print("Running " + str(exp_func) + "at strengths: " + str(strength_list))
     for strength0 in strength_list:
         args.strength = strength0
         exp_func(args)
