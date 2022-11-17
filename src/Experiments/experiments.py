@@ -102,7 +102,7 @@ def ssl_experiment_setup(usl_type,
     config['run_test_rate_usl'] = run_test_rate_usl
     config['print_loss_rate'] = print_loss_rate
     config['save_embeddings'] = save_embeddings
-    exp_type = usl_type if usl_type == "simclr" else str((usl_type, denoising, layerwise))
+    exp_type = usl_type if usl_type == "simclr" else (usl_type, denoising, layerwise)
     config['exp_type'] = exp_type
     config['lr_usl'] = lr_usl
     config['lr_le'] = lr_le
