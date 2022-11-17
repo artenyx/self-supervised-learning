@@ -87,7 +87,7 @@ This architecture combines the first two, running a denoising autoencoder with t
 on the embeddings. The loss used in the notebook for this architecture is as follows:
 
 $$ 
-L(x, \tilde{x}_ 1, \tilde{x}_ 2) = L_\text{rec,1}(x_ 1, f_\theta (\tilde{x}_ 1)) + L_\text{rec,2}(x_ 2, f_\theta (\tilde{x}_ 2)) + 
+L(x, \tilde{x}_ 1, \tilde{x}_ 2) = L_\text{rec,1}(x, f_\theta (\tilde{x}_ 1)) + L_\text{rec,2}(x, f_\theta (\tilde{x}_ 2)) + 
 \alpha L_\text{emb}(e_ \phi(\tilde{x}_ 1), e_ \phi(\tilde{x}_ 2))
 $$
 
