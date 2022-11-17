@@ -82,7 +82,6 @@ def ssl_experiment_setup(usl_type,
                          strength=0.25):
     if config is None:
         config = exp_config.get_exp_config(s=strength)
-    usl_type = usl_type.lower()
     config['usl_type'] = usl_type
     assert usl_type == 'ae_single' or usl_type == 'ae_parallel' or usl_type == 'simclr', "Wrong USL type."
     if config['usl_type'] == 'ae_parallel':
