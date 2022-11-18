@@ -165,9 +165,11 @@ def pp_data(df, usl=True):
     return df_cp
 
 
-def plot_from_dicts(folder_path, data_dict, usl, ycols=None):
+def plot_from_dicts(folder_path, data_dict, usl, xcol=None, ycols=None, pp=True):
     folder_path += "/000_plots/usl/" if usl else "/000_plots/le/"
     print(folder_path)
+    if xcol is None:
+        xcol = "Epoch Number"
     if ycols is None:
         ycols = ["Total Train Loss", "Total Test Loss"] if usl else ["Train Error", "Test Error"]
     os.makedirs(folder_path, exist_ok=True)
@@ -175,23 +177,29 @@ def plot_from_dicts(folder_path, data_dict, usl, ycols=None):
     epochs_list, tr_data_list, te_data_list = [], [], []
     exp_list = list(data_dict.keys())
     for exp in exp_list:
-        data = pp_data(data_dict[exp], usl)
-        plt.plot(data["Epoch Number"], data[ycols[0]])
-        plt.plot(data["Epoch Number"], data[ycols[1]])
+        data = pp_data(data_dict[exp], usl) if pp else data_dict[exp]
+        plt.plot(data[xcol], data[ycols[0]])
+        plt.plot(data[xcol], data[ycols[1]])
+        plt.xlabel(xcol)
+        plt.ylabel("Loss" if usl else "Error")
         plt.savefig(folder_path + exp + "_usl.png")
         plt.close()
-        epochs_list.append(data["Epoch Number"])
+        epochs_list.append(data[xcol])
         tr_data_list.append(data[ycols[0]])
         te_data_list.append(data[ycols[1]])
 
     for i in range(len(exp_list)):
         plt.plot(epochs_list[i], tr_data_list[i], label=exp_list[i])
+    plt.xlabel(xcol)
+    plt.ylabel("Loss" if usl else "Error")
     plt.savefig(folder_path + "usl_tr_all.png" if usl else folder_path + "le_tr_all.png")
     plt.legend()
     plt.savefig(folder_path + "usl_tr_all_leg.png" if usl else folder_path + "le_tr_all_leg.png")
     plt.close()
     for i in range(len(exp_list)):
         plt.plot(epochs_list[i], te_data_list[i], label=exp_list[i])
+    plt.xlabel(xcol)
+    plt.ylabel("Loss" if usl else "Error")
     plt.savefig(folder_path + "usl_te_all.png" if usl else folder_path + "le_te_all.png")
     plt.legend()
     plt.savefig(folder_path + "usl_te_all_leg.png" if usl else folder_path + "le_te_all_leg.png")
