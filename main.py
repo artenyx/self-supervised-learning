@@ -9,6 +9,7 @@ exp_funct_dict = {
     "class_from_path": experiments.classif_from_load_model,
     "plot_folder": plots.plot_exp_set,
     "usl_lr_exp": experiments.usl_lr_exp,
+    "usl_epoch_exp": experiments.usl_epoch_exp,
     None: experiments.ssl_exp_from_args
 }
 

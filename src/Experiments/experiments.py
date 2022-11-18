@@ -196,6 +196,17 @@ def usl_lr_exp(args):
     return
 
 
+def usl_epoch_exp(args):
+    epoch_list = [10, 50, 100, 150, 200, 300, 400]
+    print("TESTING USL N_EPOCHS: " + str(epoch_list))
+    exp_str_init = args.add_exp_str
+    for epochs0 in epoch_list:
+        args.epochs_usl = epochs0
+        args.add_exp_str = exp_str_init + "epochs-" + str(epochs0)
+        ssl_exp_from_args(args)
+    return
+
+
 def classif_from_load_model(args, usl_model=None):
     # NEEDS TO BE TESTED
     if usl_model is None:
