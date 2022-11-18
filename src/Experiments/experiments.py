@@ -114,6 +114,8 @@ def ssl_experiment_setup(usl_type,
         config['criterion_emb_lam'] = 0.001
     elif crit_emb == "simclr" and crit_emb_lam is None:
         config['criterion_emb_lam'] = 0.5
+    elif usl_type == "simclr":
+        config['criterion_emb_lam'] = 0.5
 
     print(config)
     config['model_type'] = model_type
