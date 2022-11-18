@@ -157,7 +157,8 @@ def ssl_exp_from_args(args):
                          return_data=args.return_data,
                          strength=args.strength,
                          crit_emb=args.crit_emb,
-                         crit_recon=args.crit_recon
+                         crit_recon=args.crit_recon,
+                         args=args
                          )
     return
 
