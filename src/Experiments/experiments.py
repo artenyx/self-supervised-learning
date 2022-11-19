@@ -100,19 +100,6 @@ def ssl_experiment_setup(usl_type,
     config['num_epochs_usl'] = num_epochs_usl
     config['num_epochs_le'] = num_epochs_le
 
-    if args is not None:
-        if args.loaders_usl is None or args.loaders_le is None:
-            config['loaders']['loaders_usl'] = load_data.get_cifar100_usl(config)
-            config['loaders']['loaders_le'] = load_data.get_cifar100_usl(config)
-            args.loaders_usl = config['loaders']['loaders_usl']
-            args.loaders_le = config['loaders']['loaders_le']
-        else:
-            config['loaders']['loaders_usl'] = args.loaders_usl
-            config['loaders']['loaders_le'] = args.loaders_le
-    else:
-        config['loaders']['loaders_usl'] = load_data.get_cifar100_usl(config)
-        config['loaders']['loaders_le'] = load_data.get_cifar100_usl(config)
-
     config['save_images'] = save_images
     config['run_test_rate_usl'] = run_test_rate_usl
     config['print_loss_rate'] = print_loss_rate
@@ -129,6 +116,20 @@ def ssl_experiment_setup(usl_type,
         config['criterion_emb_lam'] = 0.5
     elif usl_type == "simclr":
         config['criterion_emb_lam'] = 0.5
+
+    if args is not None:
+        if args.loaders_usl is None or args.loaders_le is None:
+            config['loaders']['loaders_usl'] = load_data.get_cifar100_usl(config)
+            config['loaders']['loaders_le'] = load_data.get_cifar10_classif(config)
+            args.loaders_usl = config['loaders']['loaders_usl']
+            args.loaders_le = config['loaders']['loaders_le']
+        else:
+            config['loaders']['loaders_usl'] = args.loaders_usl
+            config['loaders']['loaders_le'] = args.loaders_le
+    else:
+        config['loaders']['loaders_usl'] = load_data.get_cifar100_usl(config)
+        config['loaders']['loaders_le'] = load_data.get_cifar10_classif(config)
+
 
     print(config)
     config['model_type'] = model_type
