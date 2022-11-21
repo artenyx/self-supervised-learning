@@ -120,19 +120,8 @@ def ssl_experiment_setup(usl_type,
     elif usl_type == "simclr":
         config['criterion_emb_lam'] = 0.5
 
-    if args is not None and not args.strength_exp:
-        if args.loaders_usl is None or args.loaders_le is None:
-            config['loaders']['loaders_usl'] = load_data.get_cifar100_usl(config)
-            config['loaders']['loaders_le'] = load_data.get_cifar10_classif(config)
-            args.loaders_usl = config['loaders']['loaders_usl']
-            args.loaders_le = config['loaders']['loaders_le']
-        else:
-            config['loaders']['loaders_usl'] = args.loaders_usl
-            config['loaders']['loaders_le'] = args.loaders_le
-    else:
-        config['loaders']['loaders_usl'] = load_data.get_cifar100_usl(config)
-        config['loaders']['loaders_le'] = load_data.get_cifar10_classif(config)
-
+    config['loaders']['loaders_usl'] = load_data.get_cifar100_usl(config)
+    config['loaders']['loaders_le'] = load_data.get_cifar10_classif(config)
 
     print(config)
     config['model_type'] = model_type
