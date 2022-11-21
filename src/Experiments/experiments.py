@@ -145,6 +145,7 @@ def ssl_experiment_setup(usl_type,
 
 
 def ssl_exp_from_args(args):
+    print(args.strength)
     ssl_experiment_setup(usl_type=args.usl_type,
                          denoising=args.denoising,
                          layerwise=args.layerwise,
