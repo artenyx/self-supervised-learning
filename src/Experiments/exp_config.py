@@ -44,7 +44,7 @@ def get_exp_config(s=0.25):
                                 T.RandomCrop(24),
                                 T.Resize(32),
                                 T.RandomHorizontalFlip(p=0.8),
-                                T.ColorJitter(brightness=0.8 * s, contrast=0.8 * s, saturation=0.8 * s, hue=10)]),
+                                T.ColorJitter(brightness=0.8 * s, contrast=0.8 * s, saturation=0.8 * s, hue=0.5)]),
         "run_test_rate_usl": 1,
         "print_loss_rate": 1,  # number of epochs in between printing loss/error and saving images (if USL)
         "save_path": None,
