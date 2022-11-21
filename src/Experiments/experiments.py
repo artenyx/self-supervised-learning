@@ -83,7 +83,10 @@ def ssl_experiment_setup(usl_type,
                          crit_emb="l2",
                          crit_emb_lam=None,
                          crit_recon="l2",
-                         args=None):
+                         args=None,
+                         seed=1234):
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed(seed)
     if config is None:
         config = exp_config.get_exp_config(s=strength)
     config['usl_type'] = usl_type
