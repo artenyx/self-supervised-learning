@@ -196,7 +196,7 @@ def strength_exp_wrapper(args, exp_func):
 
 
 def bs_exp_wrapper(args, exp_func):
-    bs_list = [4, 8, 64, 124, 256, 512, 1024]
+    bs_list = [1024, 512, 256, 124, 64, 8, 4]
     print("RUNNING FUNCTION " + exp_func.__name__ + " AT BATCH SIZES: " + str(bs_list))
     for bs0 in bs_list:
         args.add_exp_str = "bs-" + str(bs0)
