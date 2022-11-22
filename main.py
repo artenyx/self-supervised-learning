@@ -48,6 +48,7 @@ if __name__ == "__main__":
     parser.add_argument("--crit_emb", type=str, default="l2", choices=["l1", "l2", "bt", "simclr"])
     parser.add_argument("--crit_recon", type=str, default="l2", choices=["l1", "l2", "bt", "simclr"])
     parser.add_argument("--crit_emb_lam", type=float, default=None)
+    parser.add_argument("--batch_size", type=int, default=512)
     exp_args = parser.parse_args()
     exp_args.loaders_usl = None
     exp_args.loaders_le = None

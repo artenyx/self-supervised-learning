@@ -83,12 +83,13 @@ def ssl_experiment_setup(usl_type,
                          crit_emb="l2",
                          crit_emb_lam=None,
                          crit_recon="l2",
-                         args=None,
-                         seed=1234):
+                         seed=1234,
+                         batch_size=512):
     torch.manual_seed(seed)
     torch.cuda.manual_seed(seed)
     if config is None:
         config = exp_config.get_exp_config(s=strength)
+    config['batch_size'] = batch_size
     config['usl_type'] = usl_type
     assert usl_type == 'ae_single' or usl_type == 'ae_parallel' or usl_type == 'simclr', "Wrong USL type."
     if config['usl_type'] == 'ae_parallel':
@@ -152,7 +153,7 @@ def ssl_exp_from_args(args):
                          strength=args.strength,
                          crit_emb=args.crit_emb,
                          crit_recon=args.crit_recon,
-                         args=args
+                         batch_size=args.batch_size
                          )
     return
 
@@ -192,6 +193,15 @@ def strength_exp_wrapper(args, exp_func):
     for strength0 in strength_list:
         args.add_exp_str = "strength-" + str(strength0)
         args.strength = strength0
+        exp_func(args)
+
+
+def bs_exp_wrapper(args, exp_func):
+    bs_list = [4, 8, 64, 124, 256, 512, 1024]
+    print("RUNNING FUNCTION " + exp_func.__name__ + " AT BATCH SIZES: " + str(bs_list))
+    for bs0 in bs_list:
+        args.add_exp_str = "bs-" + str(bs0)
+        args.batch_size = bs0
         exp_func(args)
 
 
