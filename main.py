@@ -19,6 +19,8 @@ def main(args):
     print("Device: cuda" if torch.cuda.is_available() else "Device: cpu")
     if args.strength_exp:
         experiments.strength_exp_wrapper(args, exp_funct_dict[args.exp_type])
+    elif args.bs_exp:
+        experiments.bs_exp_wrapper(args, exp_funct_dict[args.exp_type])
     else:
         exp_funct_dict[args.exp_type](args)
     return
@@ -28,6 +30,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--exp_type", type=str, default=None, choices=list(exp_funct_dict.keys()))
     parser.add_argument("--strength_exp", action="store_true")
+    parser.add_argument("--bs_exp", action="store_true")
     parser.add_argument("--usl_type", type=str, default=None, choices=["simclr", "ae_single", "ae_parallel"])
     parser.add_argument("--denoising", action="store_true")
     parser.add_argument("--layerwise", action="store_true")
