@@ -33,7 +33,7 @@ def get_cifar100_usl(config):
                              datasets.CIFAR100(root="data", train=False, download=True, transform=transform),
                              datasets.CIFAR100(root="data", train=False, download=True, transform=transform)]
     if batch_size < 64:
-        nworkers = 8
+        nworkers = 6
     else:
         nworkers = 12
     train_loader = torch.utils.data.DataLoader(list(zip(*dataset_list_train)), batch_size=batch_size, shuffle=True, num_workers=nworkers)
