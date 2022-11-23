@@ -46,7 +46,7 @@ def run_ssl_experiment(config, exp_string, rep_learning_model=None, save=True):
     # plots.produce_embedding_plots(samples_to_use=1000, config=config, get_loader_from_config=True, pca_or_tsne="tsne")
 
     le_data, le_model = run_linear_evaluation(config)
-    with open('config.txt', 'w') as f:
+    with open(exp_path + "config.txt", "w") as f:
         f.write(str(config))
     if save:
         exp_config.save_data_model(config, 'USL', usl_data, usl_model)
