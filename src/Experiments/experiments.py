@@ -26,12 +26,10 @@ def run_linear_evaluation(config):
 
 
 def run_ssl_experiment(config, exp_string, rep_learning_model=None, save=True):
-    config_df = pd.DataFrame.from_dict(config)
     exp_config.make_dir("ExperimentFiles")
     exp_path = "ExperimentFiles/" + exp_string + "/"
     exp_config.make_dir(exp_path)
     config["save_path"] = exp_path
-    config_df.to_csv(config["save_path"] + "exp_config.csv")
 
     if rep_learning_model is None:
         if config['layerwise_training']:
@@ -49,7 +47,8 @@ def run_ssl_experiment(config, exp_string, rep_learning_model=None, save=True):
 
     le_data, le_model = run_linear_evaluation(config)
     # plots.produce_usl_lineval_plots(config, usl_df=usl_data, lineval_df=le_data)
-
+    with open('config.txt', 'w') as f:
+        f.write(config)
     if save:
         exp_config.save_data_model(config, 'USL', usl_data, usl_model)
         exp_config.save_data_model(config, 'LE', le_data, le_model)
@@ -124,7 +123,7 @@ def ssl_experiment_setup(usl_type,
     config['loaders']['loaders_usl'] = load_data.get_cifar100_usl(config)
     config['loaders']['loaders_le'] = load_data.get_cifar10_classif(config)
 
-    #print(config)
+    print(config)
     config['model_type'] = model_type
     model = config['model_type'](config).to(config['device'])
     date_time = datetime.now().strftime("%m-%d-%Y_%H-%M-%S")
