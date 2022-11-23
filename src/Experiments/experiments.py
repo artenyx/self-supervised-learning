@@ -124,7 +124,7 @@ def ssl_experiment_setup(usl_type,
     config['loaders']['loaders_usl'] = load_data.get_cifar100_usl(config)
     config['loaders']['loaders_le'] = load_data.get_cifar10_classif(config)
 
-    print(config)
+    #print(config)
     config['model_type'] = model_type
     model = config['model_type'](config).to(config['device'])
     date_time = datetime.now().strftime("%m-%d-%Y_%H-%M-%S")
