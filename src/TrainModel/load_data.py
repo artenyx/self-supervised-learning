@@ -14,7 +14,8 @@ def get_cifar10_classif(config):
 
 
 def get_cifar100_usl(config):
-    transform = config['transform']
+    transforms = T.Compose([config['transforms_dict'][key] for key in config['transforms_active']])
+    print(transforms)
     batch_size = config['batch_size']
 
     if config['usl_type'] == 'ae_single' and not config['denoising']:
@@ -22,16 +23,16 @@ def get_cifar100_usl(config):
         dataset_list_test = [datasets.CIFAR100(root="data", train=False, download=True, transform=T.ToTensor())]
     elif config['usl_type'] == 'ae_single' and config['denoising']:
         dataset_list_train = [datasets.CIFAR100(root="data", train=True, download=True, transform=T.ToTensor()),
-                              datasets.CIFAR100(root="data", train=True, download=True, transform=transform)]
+                              datasets.CIFAR100(root="data", train=True, download=True, transform=transforms)]
         dataset_list_test = [datasets.CIFAR100(root="data", train=False, download=True, transform=T.ToTensor()),
-                             datasets.CIFAR100(root="data", train=False, download=True, transform=transform)]
+                             datasets.CIFAR100(root="data", train=False, download=True, transform=transforms)]
     else:
         dataset_list_train = [datasets.CIFAR100(root="data", train=True, download=True, transform=T.ToTensor()),
-                              datasets.CIFAR100(root="data", train=True, download=True, transform=transform),
-                              datasets.CIFAR100(root="data", train=True, download=True, transform=transform)]
+                              datasets.CIFAR100(root="data", train=True, download=True, transform=transforms),
+                              datasets.CIFAR100(root="data", train=True, download=True, transform=transforms)]
         dataset_list_test = [datasets.CIFAR100(root="data", train=False, download=True, transform=T.ToTensor()),
-                             datasets.CIFAR100(root="data", train=False, download=True, transform=transform),
-                             datasets.CIFAR100(root="data", train=False, download=True, transform=transform)]
+                             datasets.CIFAR100(root="data", train=False, download=True, transform=transforms),
+                             datasets.CIFAR100(root="data", train=False, download=True, transform=transforms)]
     if batch_size < 64:
         nworkers = 6
     else:

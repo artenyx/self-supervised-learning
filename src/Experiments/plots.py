@@ -167,7 +167,7 @@ def pp_data(df, usl=True):
 
 def plot_from_dicts(folder_path, data_dict, usl, xcol=None, ycols=None, pp=True):
     folder_path += "/000_plots/usl/" if usl else "/000_plots/le/"
-    min_dict = {}
+    min_data = []
     if xcol is None:
         xcol = "Epoch Number"
     if ycols is None:
@@ -179,9 +179,8 @@ def plot_from_dicts(folder_path, data_dict, usl, xcol=None, ycols=None, pp=True)
     for exp in exp_list:
         data = pp_data(data_dict[exp], usl) if pp else data_dict[exp]
         plt.plot(data[xcol], data[ycols[0]])
-        min_dict[ycols[0] + ':' + exp] = (np.argmin(data[xcol]), np.min(data[xcol]))
         plt.plot(data[xcol], data[ycols[1]])
-        min_dict[ycols[1] + ':' + exp] = (np.argmin(data[xcol]), np.min(data[xcol]))
+        min_data.append((exp, np.argmin(data[ycols[0]]), np.min(data[ycols[0]]),  np.argmin(data[ycols[1]]), np.min(data[ycols[1]])))
         plt.xlabel(xcol)
         plt.ylabel("Loss" if usl else "Error")
         plt.savefig(folder_path + exp + "_usl.png")
@@ -189,7 +188,9 @@ def plot_from_dicts(folder_path, data_dict, usl, xcol=None, ycols=None, pp=True)
         epochs_list.append(data[xcol])
         tr_data_list.append(data[ycols[0]])
         te_data_list.append(data[ycols[1]])
-    pd.DataFrame(min_dict).to_csv(folder_path + "min.csv")
+    min_data = pd.DataFrame(min_data)
+    min_data = min_data.set_axis(["Exp", "Min Train Idx", "Min Train Val", "Min Test Idx", "Min Test Val"], axis=1)
+    min_data.to_csv(folder_path + "min.csv")
 
     for i in range(len(exp_list)):
         plt.plot(epochs_list[i], tr_data_list[i], label=exp_list[i])
@@ -198,6 +199,10 @@ def plot_from_dicts(folder_path, data_dict, usl, xcol=None, ycols=None, pp=True)
     plt.savefig(folder_path + "usl_tr_all.png" if usl else folder_path + "le_tr_all.png")
     plt.legend()
     plt.savefig(folder_path + "usl_tr_all_leg.png" if usl else folder_path + "le_tr_all_leg.png")
+    min_val = np.min(min_data['Min Train Val'])
+    plt.ylim(0.9*min_val, 1.1*min_val)
+    plt.legend()
+    plt.savefig(folder_path + "usl_tr_all_zoom.png" if usl else folder_path + "le_tr_all_zoom.png")
     plt.close()
     for i in range(len(exp_list)):
         plt.plot(epochs_list[i], te_data_list[i], label=exp_list[i])
@@ -206,6 +211,10 @@ def plot_from_dicts(folder_path, data_dict, usl, xcol=None, ycols=None, pp=True)
     plt.savefig(folder_path + "usl_te_all.png" if usl else folder_path + "le_te_all.png")
     plt.legend()
     plt.savefig(folder_path + "usl_te_all_leg.png" if usl else folder_path + "le_te_all_leg.png")
+    min_val = np.min(min_data['Min Test Val'])
+    plt.ylim(0.9*min_val, 1.1*min_val)
+    plt.legend()
+    plt.savefig(folder_path + "usl_te_all_zoom.png" if usl else folder_path + "le_te_all_zoom.png")
     plt.close()
 
 
@@ -229,7 +238,6 @@ def plot_exp_set(folder_path):
 
 
 if __name__ == "__main__":
-    path = "/Users/jerrywhite/Documents/01 - University of Chicago/05 - Thesis/01 - Thesis Experiments/200E/BS-simclr"
+    path = "/Users/jerrywhite/Documents/01 - University of Chicago/05 - Thesis/01 - Thesis Experiments/200E/"
+    path += "Alpha"
     plot_exp_set(path)
-
-

@@ -7,10 +7,20 @@ import os
 
 
 def get_exp_config(s=0.25):
+
     loaders_dict = {
         "loaders_usl": None,
         "loaders_le": None,
         "loaders_embedded": None
+    }
+
+    transforms_dict = {
+        "ToTens": T.ToTensor(),
+        "Crop": T.Compose([T.RandomCrop(24), T.Resize(32)]),
+        "HorFlip": T.RandomHorizontalFlip(p=0.8),
+        "ColJit": T.ColorJitter(brightness=0.8 * s, contrast=0.8 * s, saturation=0.8 * s, hue=0.2 * s),
+        "GausBlur": T.GaussianBlur(kernel_size=3),
+        "Solar": T.RandomSolarize(p=0.2)
     }
 
     exp_config = {
@@ -45,6 +55,8 @@ def get_exp_config(s=0.25):
                                 T.Resize(32),
                                 T.RandomHorizontalFlip(p=0.8),
                                 T.ColorJitter(brightness=0.8 * s, contrast=0.8 * s, saturation=0.8 * s, hue=0.2 * s)]),
+        "transforms_dict": transforms_dict,
+        "transforms_active": ['ToTens', 'Crop', 'HorFlip', 'ColJit'],
         "run_test_rate_usl": 1,
         "print_loss_rate": 1,  # number of epochs in between printing loss/error and saving images (if USL)
         "save_path": None,
