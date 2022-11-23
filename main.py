@@ -10,6 +10,7 @@ exp_funct_dict = {
     "lr_usl": experiments.usl_lr_exp,
     "transforms": experiments.transforms_exp,
     "bs": experiments.bs_exp,
+    "epochs_usl": experiments.usl_epoch_exp,
     "ae_s_simclr": experiments.ae_s_simclr,
     "class_from_path": experiments.classif_from_load_model,
     "plot_folder": plots.plot_exp_set,
