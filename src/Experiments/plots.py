@@ -167,7 +167,7 @@ def pp_data(df, usl=True):
 
 def plot_from_dicts(folder_path, data_dict, usl, xcol=None, ycols=None, pp=True):
     folder_path += "/000_plots/usl/" if usl else "/000_plots/le/"
-    print(folder_path)
+    min_dict = {}
     if xcol is None:
         xcol = "Epoch Number"
     if ycols is None:
@@ -179,7 +179,9 @@ def plot_from_dicts(folder_path, data_dict, usl, xcol=None, ycols=None, pp=True)
     for exp in exp_list:
         data = pp_data(data_dict[exp], usl) if pp else data_dict[exp]
         plt.plot(data[xcol], data[ycols[0]])
+        min_dict[ycols[0] + ':' + exp] = (np.argmin(data[xcol]), np.min(data[xcol]))
         plt.plot(data[xcol], data[ycols[1]])
+        min_dict[ycols[1] + ':' + exp] = (np.argmin(data[xcol]), np.min(data[xcol]))
         plt.xlabel(xcol)
         plt.ylabel("Loss" if usl else "Error")
         plt.savefig(folder_path + exp + "_usl.png")
@@ -187,6 +189,7 @@ def plot_from_dicts(folder_path, data_dict, usl, xcol=None, ycols=None, pp=True)
         epochs_list.append(data[xcol])
         tr_data_list.append(data[ycols[0]])
         te_data_list.append(data[ycols[1]])
+    pd.DataFrame(min_dict).to_csv(folder_path + "min.csv")
 
     for i in range(len(exp_list)):
         plt.plot(epochs_list[i], tr_data_list[i], label=exp_list[i])
@@ -210,7 +213,6 @@ def plot_exp_set(folder_path):
     usl_data_dict = {}
     le_data_dict = {}
     exp_files = list(listdir_nohidden(path, True))
-    print(exp_files)
     for f in exp_files:
         subpath = folder_path + "/" + f
         subfiles = list(listdir_nohidden(subpath, False))
@@ -227,7 +229,7 @@ def plot_exp_set(folder_path):
 
 
 if __name__ == "__main__":
-    path = "/Users/jerrywhite/Documents/01 - University of Chicago/05 - Thesis/Thesis Experiments/200E/Strength"
+    path = "/Users/jerrywhite/Documents/01 - University of Chicago/05 - Thesis/01 - Thesis Experiments/200E/BS"
     plot_exp_set(path)
 
 
