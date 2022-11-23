@@ -47,7 +47,7 @@ def run_ssl_experiment(config, exp_string, rep_learning_model=None, save=True):
 
     le_data, le_model = run_linear_evaluation(config)
     with open('config.txt', 'w') as f:
-        f.write(config)
+        f.write(str(config))
     if save:
         exp_config.save_data_model(config, 'USL', usl_data, usl_model)
         exp_config.save_data_model(config, 'LE', le_data, le_model)
