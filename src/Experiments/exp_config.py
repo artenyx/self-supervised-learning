@@ -20,7 +20,7 @@ def get_exp_config(s=0.25):
         "HorFlip": T.RandomHorizontalFlip(p=0.8),
         "ColJit": T.ColorJitter(brightness=0.8 * s, contrast=0.8 * s, saturation=0.8 * s, hue=0.2 * s),
         "GausBlur": T.GaussianBlur(kernel_size=3),
-        "Solar": T.RandomSolarize(p=0.2)
+        "Solar": T.RandomSolarize(0.75, p=0.2)
     }
 
     exp_config = {
