@@ -152,10 +152,9 @@ def ssl_exp_from_args(args):
                          crit_recon=args.crit_recon,
                          batch_size=args.batch_size
                          )
-    return
 
 
-def alpha_exp_from_args(args):
+def alpha_exp(args):
     if args.usl_type != "ae_parallel":
         print("usl_type will be reset to \"ae_parallel\" for this experiment.")
     alpha_list = [0.0001, 0.001, 0.01, 0.1, 0.0, 1, 10]
@@ -167,7 +166,6 @@ def alpha_exp_from_args(args):
     for alpha0 in alpha_list:
         args.usl_type, args.alpha, args.add_exp_str = "ae_parallel", alpha0, exp_str_init + "alpha-"+str(alpha0)
         ssl_exp_from_args(args)
-    return
 
 
 def ae_s_simclr(args):
@@ -182,25 +180,33 @@ def ae_s_simclr(args):
 
     args.usl_type, args.denoising, args.layerwise = "simclr", False, False
     ssl_exp_from_args(args)
-    return
 
 
-def strength_exp_wrapper(args, exp_func):
+def transforms_exp(args):
+    transforms_list_full = ["ToTens", "Crop", "HorFlip", "ColJit", "GausBlur", "Solar"]
+    trans_test_list = [range(2), range(3), range(4), range(5), range(6), [0, 1, 2, 4], [0, 1, 2, 5]]
+    for i in range(len(trans_test_list)):
+        args.add_exp_str = "trans-" + str(i)
+        args.trans_active = transforms_list_full[trans_test_list[i]]
+        ssl_exp_from_args(args)
+
+
+def strength_exp(args):
     strength_list = [0.0, 0.25, 0.5, 0.75, 1.0, 1.25, 1.5]
-    print("RUNNING FUNCTION " + exp_func.__name__ + " AT STRENGTHS: " + str(strength_list))
+    print("RUNNING AT STRENGTHS: " + str(strength_list))
     for strength0 in strength_list:
         args.add_exp_str = "strength-" + str(strength0)
         args.strength = strength0
-        exp_func(args)
+        ssl_exp_from_args(args)
 
 
-def bs_exp_wrapper(args, exp_func):
+def bs_exp(args):
     bs_list = [1024, 512, 256, 124, 64, 8, 4]
-    print("RUNNING FUNCTION " + exp_func.__name__ + " AT BATCH SIZES: " + str(bs_list))
+    print("RUNNING AT BATCH SIZES: " + str(bs_list))
     for bs0 in bs_list:
         args.add_exp_str = "bs-" + str(bs0)
         args.batch_size = bs0
-        exp_func(args)
+        ssl_exp_from_args(args)
 
 
 def usl_lr_exp(args):
@@ -211,7 +217,6 @@ def usl_lr_exp(args):
         args.lr_usl = lr0
         args.add_exp_str = exp_str_init + "lr-" + str(lr0)
         ssl_exp_from_args(args)
-    return
 
 
 def usl_epoch_exp(args):
@@ -222,7 +227,6 @@ def usl_epoch_exp(args):
         args.epochs_usl = epochs0
         args.add_exp_str = exp_str_init + "epochs-" + str(epochs0)
         ssl_exp_from_args(args)
-    return
 
 
 def classif_from_load_model(args, usl_model=None):

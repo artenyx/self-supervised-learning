@@ -50,21 +50,13 @@ def get_exp_config(s=0.25):
         "num_epochs_le": 150,
         "lr_usl": 0.001,  # verified best lr for doc 5
         "lr_le": 0.01,  # verified best lr for doc 5
-        "transform": T.Compose([T.ToTensor(),
-                                T.RandomCrop(24),
-                                T.Resize(32),
-                                T.RandomHorizontalFlip(p=0.8),
-                                T.ColorJitter(brightness=0.8 * s, contrast=0.8 * s, saturation=0.8 * s, hue=0.2 * s)]),
         "transforms_dict": transforms_dict,
         "transforms_active": ['ToTens', 'Crop', 'HorFlip', 'ColJit'],
+        "transforms_list_full": list(transforms_dict.keys()),
         "run_test_rate_usl": 1,
         "print_loss_rate": 1,  # number of epochs in between printing loss/error and saving images (if USL)
         "save_path": None,
         "num_embed_pts_plot": 1000,
-
-        # Check point keys
-        "current_epoch": 0,
-        "current_folder_name": None
     }
     return exp_config
 

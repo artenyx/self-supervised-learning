@@ -3,13 +3,16 @@ from src.Experiments import experiments, plots
 import torch
 import argparse
 
+
 exp_funct_dict = {
-    "alpha": experiments.alpha_exp_from_args,
+    "alpha": experiments.alpha_exp,
+    "strength": experiments.strength_exp,
+    "lr_usl": experiments.usl_lr_exp,
+    "transforms": experiments.transforms_exp,
+    "bs": experiments.bs_exp,
     "ae_s_simclr": experiments.ae_s_simclr,
     "class_from_path": experiments.classif_from_load_model,
     "plot_folder": plots.plot_exp_set,
-    "usl_lr_exp": experiments.usl_lr_exp,
-    "usl_epoch_exp": experiments.usl_epoch_exp,
     None: experiments.ssl_exp_from_args
 }
 
@@ -17,20 +20,13 @@ exp_funct_dict = {
 def main(args):
     print("========Running Network========")
     print("Device: cuda" if torch.cuda.is_available() else "Device: cpu")
-    if args.strength_exp:
-        experiments.strength_exp_wrapper(args, exp_funct_dict[args.exp_type])
-    elif args.bs_exp:
-        experiments.bs_exp_wrapper(args, exp_funct_dict[args.exp_type])
-    else:
-        exp_funct_dict[args.exp_type](args)
+    exp_funct_dict[args.exp_type](args)
     return
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--exp_type", type=str, default=None, choices=list(exp_funct_dict.keys()))
-    parser.add_argument("--strength_exp", action="store_true")
-    parser.add_argument("--bs_exp", action="store_true")
     parser.add_argument("--usl_type", type=str, default=None, choices=["simclr", "ae_single", "ae_parallel"])
     parser.add_argument("--denoising", action="store_true")
     parser.add_argument("--layerwise", action="store_true")
@@ -53,6 +49,5 @@ if __name__ == "__main__":
     parser.add_argument("--crit_emb_lam", type=float, default=None)
     parser.add_argument("--batch_size", type=int, default=512)
     exp_args = parser.parse_args()
-    exp_args.loaders_usl = None
-    exp_args.loaders_le = None
+    exp_args.trans_active = None
     main(exp_args)
