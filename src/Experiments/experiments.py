@@ -1,3 +1,4 @@
+import numpy as np
 import torch
 import pandas as pd
 from datetime import datetime
@@ -186,7 +187,7 @@ def ae_s_simclr(args):
 
 def transforms_exp(args):
     transforms_list_full = ["ToTens", "Crop", "HorFlip", "ColJit", "GausBlur", "Solar"]
-    trans_test_list = [range(2), range(3), range(4), range(5), range(6), [0, 1, 2, 4], [0, 1, 2, 5]]
+    trans_test_list = [np.arange(2), range(3), range(4), range(5), range(6), [0, 1, 2, 4], [0, 1, 2, 5]]
     for i in range(len(trans_test_list)):
         args.add_exp_str = "trans-" + str(i)
         args.trans_active = transforms_list_full[trans_test_list[i]]
