@@ -190,8 +190,7 @@ def transforms_exp(args):
     trans_test_list = [range(2), range(3), range(4), range(5), range(6), [0, 1, 2, 4], [0, 1, 2, 5]]
     for i, trans_idx in enumerate(trans_test_list):
         args.add_exp_str = "trans-" + str(i)
-        sl = slice(trans_idx)
-        args.trans_active = transforms_list_full[sl]
+        args.trans_active = [transforms_list_full[j] for j in trans_idx]
         ssl_exp_from_args(args)
 
 
