@@ -159,6 +159,8 @@ def alpha_exp(args):
         print("usl_type will be reset to \"ae_parallel\" for this experiment.")
     alpha_list = [0.0001, 0.001, 0.01, 0.1, 0.0, 1, 10]
     #alpha_list = [0.05, 0.1, 0.15, 0.2, 0.3, 0.4, 0.6, 0.8]
+    alpha_list = [0.07, 0.08, 0.09, 0.1, 0.11, 0.12, 0.13]
+    #alpha_list = [0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.3]
     print("RUNNING AE_PARALLEL AT ALPHAS: " + str(alpha_list))
     print(args.layerwise)
     print(args.denoising)

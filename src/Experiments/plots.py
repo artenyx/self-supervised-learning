@@ -238,6 +238,5 @@ def plot_exp_set(folder_path):
 
 
 if __name__ == "__main__":
-    path = "/Users/jerrywhite/Documents/01 - University of Chicago/05 - Thesis/01 - Thesis Experiments/200E/"
-    path += "Alpha"
+    path = "/Users/jerrywhite/Documents/01 - University of Chicago/05 - Thesis/01 - Thesis Experiments/200E/Alpha_critemb-bt"
     plot_exp_set(path)
