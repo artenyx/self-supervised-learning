@@ -123,7 +123,7 @@ def ssl_experiment_setup(usl_type,
 
     if trans_active is not None:
         print("correct loop")
-        config['trans_active'] = trans_active
+        config['transforms_active'] = trans_active
     config['loaders']['loaders_usl'] = load_data.get_cifar100_usl(config)
     config['loaders']['loaders_le'] = load_data.get_cifar10_classif(config)
 
