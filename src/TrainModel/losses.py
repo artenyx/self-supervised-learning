@@ -161,8 +161,8 @@ def loss_add(loss_img1, loss_img2, loss_emb, loss_total, tot_loss_img1, tot_loss
 def save_inp_rec_images(config, epoch, orig_img, img_list, rec_list):
     orig_img = orig_img.view(orig_img.shape).cpu().data
     save_image(orig_img, '{}epoch{:03d}_orig.png'.format(config['save_path'], epoch+1))
-    for i in range(len(img_list)):
-        img = img_list[i].view(orig_img.shape).cpu().data
+    for i, img in enumerate(img_list):
+        img = img.view(orig_img.shape).cpu().data
         rec = rec_list[i].view(orig_img.shape).cpu().data
         save_image(img, '{}epoch{:03d}_inp{}.png'.format(config['save_path'], epoch+1, i + 1))
         save_image(rec, '{}epoch{:03d}_rec{}.png'.format(config['save_path'], epoch+1, i + 1))

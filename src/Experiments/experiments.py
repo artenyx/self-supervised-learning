@@ -83,7 +83,8 @@ def ssl_experiment_setup(usl_type,
                          crit_emb_lam=None,
                          crit_recon="l2",
                          seed=1234,
-                         batch_size=512):
+                         batch_size=512,
+                         trans_active=None):
     torch.manual_seed(seed)
     torch.cuda.manual_seed(seed)
     if config is None:
@@ -120,6 +121,8 @@ def ssl_experiment_setup(usl_type,
     elif usl_type == "simclr":
         config['criterion_emb_lam'] = 0.5
 
+    if trans_active is not None:
+        config['trans_active'] = trans_active
     config['loaders']['loaders_usl'] = load_data.get_cifar100_usl(config)
     config['loaders']['loaders_le'] = load_data.get_cifar10_classif(config)
 
@@ -151,7 +154,8 @@ def ssl_exp_from_args(args):
                          strength=args.strength,
                          crit_emb=args.crit_emb,
                          crit_recon=args.crit_recon,
-                         batch_size=args.batch_size
+                         batch_size=args.batch_size,
+                         trans_active=args.trans_active
                          )
 
 
