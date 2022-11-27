@@ -15,7 +15,6 @@ def get_cifar10_classif(config):
 
 def get_cifar100_usl(config):
     transforms = T.Compose([config['transforms_dict'][key] for key in config['transforms_active']])
-    print(transforms)
     batch_size = config['batch_size']
 
     if config['usl_type'] == 'ae_single' and not config['denoising']:

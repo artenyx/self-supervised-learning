@@ -122,7 +122,6 @@ def ssl_experiment_setup(usl_type,
         config['criterion_emb_lam'] = 0.5
 
     if trans_active is not None:
-        print("correct loop")
         config['transforms_active'] = trans_active
     config['loaders']['loaders_usl'] = load_data.get_cifar100_usl(config)
     config['loaders']['loaders_le'] = load_data.get_cifar10_classif(config)
