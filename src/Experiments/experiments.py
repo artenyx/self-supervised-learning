@@ -190,8 +190,9 @@ def ae_s_simclr(args):
 
 
 def transforms_exp(args):
-    transforms_list_full = ["ToTens", "Crop", "HorFlip", "ColJit", "GausBlur", "Solar"]
-    trans_test_list = [range(2), range(3), range(4), range(5), range(6), [0, 1, 2, 4], [0, 1, 2, 5]]
+    #transforms_list_full = ["ToTens", "Crop", "HorFlip", "ColJit", "GausBlur", "Solar"]
+    transforms_list_full = ["ToTens", "HorFlip", "ColJit", "GausBlur", "Solar"]
+    trans_test_list = [range(2), range(3), range(4), range(5), [0, 1, 3], [0, 1, 4]]
     for i, trans_idx in enumerate(trans_test_list):
         args.add_exp_str = "trans-" + str(i)
         args.trans_active = [transforms_list_full[j] for j in trans_idx]
