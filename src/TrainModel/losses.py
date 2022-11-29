@@ -81,7 +81,8 @@ loss_dict = {
     "l2": nn.MSELoss(),
     "l1": nn.L1Loss(),
     "bt": barlow_twins_loss_func,
-    "simclr": simclr_loss_func
+    "simclr": simclr_loss_func,
+    "cos": nn.CosineEmbeddingLoss(),
 }
 
 
