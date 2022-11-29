@@ -209,6 +209,7 @@ def crop_size_exp(args):
         print(args.crop_size)
         ssl_exp_from_args(args)
 
+
 def strength_exp(args):
     strength_list = [0.0, 0.25, 0.5, 0.75, 1.0, 1.25, 1.5]
     print("RUNNING AT STRENGTHS: " + str(strength_list))
