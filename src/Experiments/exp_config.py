@@ -6,7 +6,7 @@ import torchvision.transforms as T
 import os
 
 
-def get_exp_config(s=0.25):
+def get_exp_config(s=0.25, crop_size=24):
 
     loaders_dict = {
         "loaders_usl": None,
@@ -16,7 +16,7 @@ def get_exp_config(s=0.25):
 
     transforms_dict = {
         "ToTens": T.ToTensor(),
-        "Crop": T.Compose([T.RandomCrop(24), T.Resize(32)]),
+        "Crop": T.Compose([T.RandomCrop(crop_size), T.Resize(32)]),
         "HorFlip": T.RandomHorizontalFlip(p=0.8),
         "ColJit": T.ColorJitter(brightness=0.8 * s, contrast=0.8 * s, saturation=0.8 * s, hue=0.2 * s),
         "GausBlur": T.GaussianBlur(kernel_size=3),

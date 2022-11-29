@@ -84,11 +84,12 @@ def ssl_experiment_setup(usl_type,
                          crit_recon="l2",
                          seed=1234,
                          batch_size=512,
-                         trans_active=None):
+                         trans_active=None,
+                         crop_size=24):
     torch.manual_seed(seed)
     torch.cuda.manual_seed(seed)
     if config is None:
-        config = exp_config.get_exp_config(s=strength)
+        config = exp_config.get_exp_config(s=strength, crop_size=crop_size)
     config['batch_size'] = batch_size
     config['usl_type'] = usl_type
     assert usl_type == 'ae_single' or usl_type == 'ae_parallel' or usl_type == 'simclr', "Wrong USL type."
@@ -196,9 +197,16 @@ def transforms_exp(args):
     for i, trans_idx in enumerate(trans_test_list):
         args.add_exp_str = "trans-" + str(i)
         args.trans_active = [transforms_list_full[j] for j in trans_idx]
-        print(args.trans_active)
         ssl_exp_from_args(args)
 
+
+def crop_size_exp(args):
+    crop_size_list = [4, 8, 12, 16, 20, 24, 28, 32]
+    for i, crop_sz in enumerate(crop_size_list):
+        args.add_exp_str = "cropsz-" + str(crop_sz)
+        args.crop_size = crop_sz
+        print(args.crop_size)
+        ssl_exp_from_args(args)
 
 def strength_exp(args):
     strength_list = [0.0, 0.25, 0.5, 0.75, 1.0, 1.25, 1.5]

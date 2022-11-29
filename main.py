@@ -9,6 +9,7 @@ exp_funct_dict = {
     "strength": experiments.strength_exp,
     "lr_usl": experiments.usl_lr_exp,
     "transforms": experiments.transforms_exp,
+    "crop_size": experiments.crop_size_exp,
     "bs": experiments.bs_exp,
     "epochs_usl": experiments.usl_epoch_exp,
     "ae_s_simclr": experiments.ae_s_simclr,
@@ -49,6 +50,7 @@ if __name__ == "__main__":
     parser.add_argument("--crit_recon", type=str, default="l2", choices=["l1", "l2", "bt", "simclr"])
     parser.add_argument("--crit_emb_lam", type=float, default=None)
     parser.add_argument("--batch_size", type=int, default=512)
+    parser.add_argument("--crop_size", type=int, default=24)
     exp_args = parser.parse_args()
     exp_args.trans_active = None
     main(exp_args)
