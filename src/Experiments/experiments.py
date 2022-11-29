@@ -156,7 +156,8 @@ def ssl_exp_from_args(args):
                          crit_emb=args.crit_emb,
                          crit_recon=args.crit_recon,
                          batch_size=args.batch_size,
-                         trans_active=args.trans_active
+                         trans_active=args.trans_active,
+                         crop_size=args.crop_size
                          )
 
 
