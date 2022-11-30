@@ -122,7 +122,9 @@ def ssl_experiment_setup(usl_type,
     elif usl_type == "simclr":
         config['criterion_emb_lam'] = 0.5
 
-    if trans_active is not None:
+    if trans_active == "full":
+        config['transforms_active'] = config['transforms_list_full']
+    elif trans_active is not None:
         config['transforms_active'] = trans_active
     config['loaders']['loaders_usl'] = load_data.get_cifar100_usl(config)
     config['loaders']['loaders_le'] = load_data.get_cifar10_classif(config)
@@ -192,9 +194,8 @@ def ae_s_simclr(args):
 
 
 def transforms_exp(args):
-    #transforms_list_full = ["ToTens", "Crop", "HorFlip", "ColJit", "GausBlur", "Solar"]
-    transforms_list_full = ["ToTens", "HorFlip", "ColJit", "GausBlur", "Solar"]
-    trans_test_list = [range(2), range(3), range(4), range(5), [0, 1, 3], [0, 1, 4]]
+    transforms_list_full = ["ToTens", "Crop", "HorFlip", "ColJit", "GausBlur", "Solar"]
+    trans_test_list = [range(2), range(3), range(4), range(5), range(6), [0, 1, 2, 3], [0, 1, 2, 4]]
     for i, trans_idx in enumerate(trans_test_list):
         args.add_exp_str = "trans-" + str(i)
         args.trans_active = [transforms_list_full[j] for j in trans_idx]

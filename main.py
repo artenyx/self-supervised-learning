@@ -51,6 +51,7 @@ if __name__ == "__main__":
     parser.add_argument("--crit_emb_lam", type=float, default=None)
     parser.add_argument("--batch_size", type=int, default=512)
     parser.add_argument("--crop_size", type=int, default=24)
+    parser.add_argument("--full_trans", action="store_true")
     exp_args = parser.parse_args()
-    exp_args.trans_active = None
+    exp_args.trans_active = "full" if exp_args.full_trans else None
     main(exp_args)
