@@ -253,7 +253,7 @@ def classif_from_load_model(args, usl_model=None):
     # NEEDS TO BE TESTED
     config = exp_config.get_exp_config()
     if usl_model is None:
-        usl_model = networks.USL_Conv6_CIFAR1(config=config)
+        usl_model = networks.USL_Conv6_CIFAR1(config=config).to(config['device'])
         usl_model.load_state_dict(torch.load(args.usl_load_path)['model.state.dict'])
     config['num_epochs_le'] = args.epochs_le
     config['loaders']['loaders_le'] = load_data.get_cifar10_classif(config)
