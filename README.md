@@ -50,7 +50,7 @@ by learning what how the augmentations warp the input space and reversing it.
 
 To run this experiment, use the following code:
 ```markdown
-python main.py --usl_type ae_single --denoising True
+python main.py --usl_type ae_single --denoising
 ```
 
 ### Parallel Autoencoder Architecture
@@ -78,7 +78,7 @@ Alpha is run at orders of magnitude between 0.00001 and 10. Results are presente
 
 To run this experiment at a specific alpha value, use the following code:
 ```markdown
-python main.py --usl_type ae_parallel --denoising False --alpha ALPHA
+python main.py --usl_type ae_parallel --denoising --alpha *ALPHA VALUE*
 ```
 
 ### Parallel Denoising Autoencoder
@@ -100,7 +100,7 @@ $$
 
 To run this experiment, use the following code:
 ```markdown
-python main.py --usl_type ae_parallel --denoising True
+python main.py --usl_type ae_parallel --denoising --alpha *ALPHA VALUE*
 ```
 
 ### SimCLR
@@ -122,7 +122,7 @@ python main.py --usl_type simclr
 
 To run this experiment, use the following code:
 ```markdown
-python main.py --exp_type alpha --usl_type ae_parallel --denoising True --layerwise False
+python main.py --exp_type alpha --usl_type ae_parallel --denoising
 ```
 
 ### Augmentation Strength Experiments
@@ -133,7 +133,7 @@ argument --strength_exp is set to True, the experiment will be completed 5 times
 Here is an example call of this type of experiment:
 
 ```markdown
-python main.py --strength_exp True --usl_type ae_parallel --denoising True --layerwise False --alpha 0.001
+python main.py --exp_type strength --usl_type ae_parallel --denoising --alpha 0.1
 ```
 
 This call will run a parallel denoising autoencoder 5 times at the various strengths.
