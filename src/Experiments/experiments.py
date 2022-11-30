@@ -252,8 +252,8 @@ def usl_epoch_exp(args):
 def classif_from_load_model(args, usl_model=None):
     # NEEDS TO BE TESTED
     if usl_model is None:
-        usl_model = torch.load(args.path)
-    config = exp_config.get_exp_config(s=args.strength)
+        usl_model = torch.load(args.usl_load_path)
+    config = exp_config.get_exp_config()
     config['num_epochs_le'] = args.epochs_le
     config['loaders']['loaders_le'] = load_data.get_cifar10_classif(config)
     emb_train_loader = train.get_embedding_loader(usl_model, config, config['loaders']['loaders_le'][0])
