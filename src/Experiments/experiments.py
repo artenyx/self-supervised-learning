@@ -262,5 +262,6 @@ def classif_from_load_model(args, usl_model=None):
     config['loaders']['loaders_embedded'] = emb_train_loader, emb_test_loader
 
     le_data, le_model = run_linear_evaluation(config)
+    le_data.to_csv("ExperimentFiles/classif_from_load.csv")
 
 
