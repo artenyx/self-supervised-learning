@@ -139,7 +139,7 @@ def classifier_train_network(model, config):
     return data, model
 
 
-def get_embedding_loader(model, config, loader):
+def get_embedding_loader(model, config, loader, return_as_list=False):
     model.eval()
     embeddings = []
     targets = []
@@ -153,8 +153,11 @@ def get_embedding_loader(model, config, loader):
             targets.append(targ)
     embeddings = torch.cat(embeddings, dim=0).detach().cpu()
     targets = torch.cat(targets).detach().cpu()
-    embedding_loader = torch.utils.data.DataLoader(list(zip(embeddings, targets)), batch_size=config['batch_size'],
-                                                   shuffle=False, num_workers=12)
+    if not return_as_list:
+        embedding_loader = torch.utils.data.DataLoader(list(zip(embeddings, targets)), batch_size=config['batch_size'],
+                                                       shuffle=False, num_workers=12)
+    else:
+        embedding_loader = [embeddings, targets]
     return embedding_loader
 
 
