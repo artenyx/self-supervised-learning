@@ -279,38 +279,6 @@ def kmeans_from_load_model(args=None, load_path=None, usl_model=None, n_clusters
     embs_test, __ = train.get_embedding_loader(usl_model, config, config['loaders']['loaders_le'][1], return_as_list=True)
     embs_test = pd.DataFrame(embs_test.numpy())
     kmeans_model_test = KMeans(n_clusters=n_clusters).fit(embs_test)
+    print(kmeans_model_train.inertia_/len(embs_train), kmeans_model_test.inertia_/len(embs_test))
     return kmeans_model_train.inertia_/len(embs_train), kmeans_model_test.inertia_/len(embs_test)
 
-
-
-'''
-def get_kmeans_from_embedding(config, model, loader, img_or_cap="img", cifar=True):
-    model.eval()
-    embeddings = []
-    captions = []
-    with torch.no_grad():
-        for data in loader:
-            if cifar:
-                img, __ = data
-                cap = None
-            else:
-                img, __, cap = data
-            img = img.cuda()
-            if img_or_cap == "img":
-                embed = model.encode_image(img)
-            else:
-                embed = model.encode_text(cap)
-            if len(embed.shape) != 1:
-                embed = nn.Flatten()(embed)
-            embeddings.append(embed)
-    embeddings = torch.cat(embeddings).detach().cpu()
-    embeddings = pd.DataFrame(embeddings)
-    kmeans_model = KMeans(n_clusters=10, random_state=32932).fit(embeddings)
-
-    kmeans = kmeans_embeddings(embeddings.numpy())
-    kmeans_labels = pd.DataFrame(kmeans.labels_)
-    kmeans_labels.to_csv(f"{config['exp_path']}/kmeans_labels.csv")
-    kmeans_inertia = pd.DataFrame([kmeans.inertia_])
-    kmeans_inertia.to_csv(f"{config['exp_path']}/kmeans_inertia.csv")
-    return kmeans
-'''
