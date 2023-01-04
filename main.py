@@ -23,7 +23,7 @@ def main(args):
     print("========Running Network========")
     print("Device: cuda" if torch.cuda.is_available() else "Device: cpu")
     #exp_funct_dict[args.exp_type](args)
-    path = "/Users/jerrywhite/Documents/01 - University of Chicago/05 - Thesis/01 - Thesis Experiments/200E/Epochs/ae_single-D-NL_11-18-2022_13-34-44epochs-10/.USL_model_.pt"
+    path = "USL_model_.pt"
     experiments.kmeans_from_load_model(load_path=path)
     return
 
