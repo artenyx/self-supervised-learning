@@ -117,9 +117,7 @@ def ssl_experiment_setup(usl_type,
     config['criterion_emb'] = crit_emb
     if crit_emb == "bt" and crit_emb_lam is None:
         config['criterion_emb_lam'] = 0.001
-    elif crit_emb == "simclr" and crit_emb_lam is None:
-        config['criterion_emb_lam'] = 0.5
-    elif usl_type == "simclr":
+    elif (crit_emb == "simclr" and crit_emb_lam is None) or usl_type == "simclr":
         config['criterion_emb_lam'] = 0.5
 
     if trans_active == "full":
@@ -250,7 +248,6 @@ def usl_epoch_exp(args):
 
 
 def classif_from_load_model(args, usl_model=None):
-    # NEEDS TO BE TESTED
     config = exp_config.get_exp_config()
     if usl_model is None:
         usl_model = networks.USL_Conv6_CIFAR1(config=config).to(config['device'])
