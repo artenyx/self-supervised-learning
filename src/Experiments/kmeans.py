@@ -14,6 +14,7 @@ def kmeans_embedding(emb_loader, clusters=10):
 
 
 def kmeans_run_dir(run_dir_path, clusters=10):
+    print(run_dir_path)
     files = list(plots.listdir_nohidden(run_dir_path, True))
     print(files)
     if "USL_model_.pt" not in files:
@@ -24,11 +25,11 @@ def kmeans_run_dir(run_dir_path, clusters=10):
 
 def kmeans_exp_dir(exp_dir_path, clusters=10, save=True):
     files = list(plots.listdir_nohidden(exp_dir_path, True))
-    print(files)
     kmeans_data_exp = []
     for f in files:
         inertia_run_train, inertia_run_test = kmeans_run_dir(exp_dir_path + "/" + f, clusters=clusters)
         kmeans_data_exp.append((f, inertia_run_train, inertia_run_test))
+        print(kmeans_data_exp)
 
     if save:
         kmeans_data_exp_df = pd.DataFrame(kmeans_data_exp)
