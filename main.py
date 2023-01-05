@@ -1,4 +1,4 @@
-from src.Experiments import experiments, plots
+from src.Experiments import experiments, plots, kmeans
 
 import torch
 import argparse
@@ -23,8 +23,8 @@ def main(args):
     print("========Running Network========")
     print("Device: cuda" if torch.cuda.is_available() else "Device: cpu")
     #exp_funct_dict[args.exp_type](args)
-    path = "USL_model_.pt"
-    experiments.kmeans_from_load_model(load_path=path)
+    path = "/home/geraldkwhite/SSLProject/200E/Alpha"
+    kmeans.kmeans_exp_dir(path)
     return
 
 
