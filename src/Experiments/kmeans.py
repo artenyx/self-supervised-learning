@@ -44,7 +44,7 @@ def kmeans_exp_dir(exp_dir_path, clusters=10, save=True):
 
     if save:
         kmeans_data_exp_df = pd.DataFrame(kmeans_data_exp)
-        kmeans_data_exp_df.to_csv(exp_dir_path + "/000_plots/kmeans.csv")
+        kmeans_data_exp_df.to_csv(exp_dir_path + "/000_plots/usl/kmeans.csv")
     return kmeans_data_exp
 
 
