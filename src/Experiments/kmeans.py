@@ -15,7 +15,7 @@ def kmeans_embedding(emb_loader, clusters=10):
 
 def kmeans_run_dir(run_dir_path, clusters=10):
     print(run_dir_path)
-    files = list(plots.listdir_nohidden(run_dir_path, True))
+    files = list(plots.listdir_nohidden(run_dir_path, False))
     print(files)
     if "USL_model_.pt" not in files:
         raise Exception("No trained model to create embedding dataset with.")
