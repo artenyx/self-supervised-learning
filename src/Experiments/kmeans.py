@@ -24,6 +24,7 @@ def kmeans_run_dir(run_dir_path, clusters=10):
 
 def kmeans_exp_dir(exp_dir_path, clusters=10, save=True):
     files = list(plots.listdir_nohidden(exp_dir_path, True))
+    print(files)
     kmeans_data_exp = []
     for f in files:
         inertia_run_train, inertia_run_test = kmeans_run_dir(exp_dir_path + "/" + f, clusters=clusters)
