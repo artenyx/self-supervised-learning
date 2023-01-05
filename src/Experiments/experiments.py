@@ -1,11 +1,8 @@
-import numpy as np
 import torch
-import pandas as pd
 from datetime import datetime
-from sklearn.cluster import KMeans
 
 from src.TrainModel import train, networks, load_data
-from src.Experiments import exp_config
+from src.Experiments import exp_config, kmeans, plots
 
 
 def run_representation_learning(config, model):
@@ -263,22 +260,7 @@ def classif_from_load_model(args, usl_model=None):
     le_data.to_csv("ExperimentFiles/classif_from_load.csv")
 
 
-def kmeans_from_load_model(args=None, load_path=None, usl_model=None, n_clusters=10):
-    config = exp_config.get_exp_config()
-    if usl_model is None:
-        usl_model = networks.USL_Conv6_CIFAR1(config=config).to(config['device'])
-        load_path = args.usl_load_path if args is not None else load_path
-        assert load_path is not None, "Trained USL Model load path not provided. Please provide either arg parser or direct path."
-        usl_model.load_state_dict(torch.load(load_path)['model.state.dict'])
-    config['loaders']['loaders_le'] = load_data.get_cifar10_classif(config)
-
-    embs_train, __ = train.get_embedding_loader(usl_model, config, config['loaders']['loaders_le'][0], return_as_list=True)
-    embs_train = pd.DataFrame(embs_train.numpy())
-    kmeans_model_train = KMeans(n_clusters=n_clusters).fit(embs_train)
-
-    embs_test, __ = train.get_embedding_loader(usl_model, config, config['loaders']['loaders_le'][1], return_as_list=True)
-    embs_test = pd.DataFrame(embs_test.numpy())
-    kmeans_model_test = KMeans(n_clusters=n_clusters).fit(embs_test)
-    print(kmeans_model_train.inertia_/len(embs_train), kmeans_model_test.inertia_/len(embs_test))
-    return kmeans_model_train.inertia_/len(embs_train), kmeans_model_test.inertia_/len(embs_test)
-
+def kmeans_all_exps(all_exp_dir_path, clusters=10):
+    files = list(plots.listdir_nohidden(all_exp_dir_path, True))
+    for f in files:
+        kmeans.kmeans_exp_dir(all_exp_dir_path + "/" + f, clusters=clusters, save=True)
