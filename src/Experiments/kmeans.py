@@ -31,6 +31,7 @@ def kmeans_run_dir(run_dir_path, clusters=10):
     files = list(plots.listdir_nohidden(run_dir_path, False))
     if "USL_model_.pt" not in files:
         raise Exception("No trained model to create embedding dataset with.")
+    print(run_dir_path + "/USL_model_.pt")
     kmeans_data = kmeans_from_load_model(load_path=run_dir_path + "/USL_model_.pt", n_clusters=clusters)
     return kmeans_data
 
