@@ -8,8 +8,10 @@ from src.Experiments import plots, experiments, exp_config
 from src.TrainModel import train, networks, load_data
 
 
-def kmeans_from_load_model(args=None, load_path=None, usl_model=None, n_clusters=10):
+def kmeans_from_load_model(args=None, load_path=None, usl_model=None, simclr=False, n_clusters=10):
     config = exp_config.get_exp_config()
+    if simclr:
+        config['usl_type'] = "simclr"
     if usl_model is None:
         usl_model = networks.USL_Conv6_CIFAR1(config=config).to(config['device'])
         load_path = args.usl_load_path if args is not None else load_path
@@ -29,10 +31,10 @@ def kmeans_from_load_model(args=None, load_path=None, usl_model=None, n_clusters
 
 def kmeans_run_dir(run_dir_path, clusters=10):
     files = list(plots.listdir_nohidden(run_dir_path, False))
-    if "USL_model_.pt" not in files:
-        raise Exception("No trained model to create embedding dataset with.")
+    assert "USL_model_.pt" in files, "No trained model to create embedding dataset with."
+    simclr = True if "simclr" in run_dir_path else False
     print(run_dir_path + "/USL_model_.pt")
-    kmeans_data = kmeans_from_load_model(load_path=run_dir_path + "/USL_model_.pt", n_clusters=clusters)
+    kmeans_data = kmeans_from_load_model(load_path=run_dir_path + "/USL_model_.pt", simclr=simclr, n_clusters=clusters)
     return kmeans_data
 
 
