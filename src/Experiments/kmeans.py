@@ -48,3 +48,7 @@ def kmeans_exp_dir(exp_dir_path, clusters=10, save=True):
     return kmeans_data_exp
 
 
+def kmeans_all_exps(all_exp_dir_path, clusters=10):
+    files = list(plots.listdir_nohidden(all_exp_dir_path, True))
+    for f in files:
+        kmeans_exp_dir(all_exp_dir_path + "/" + f, clusters=clusters, save=True)

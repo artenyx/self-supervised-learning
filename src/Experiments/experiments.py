@@ -2,7 +2,7 @@ import torch
 from datetime import datetime
 
 from src.TrainModel import train, networks, load_data
-from src.Experiments import exp_config, kmeans, plots
+from src.Experiments import exp_config
 
 
 def run_representation_learning(config, model):
@@ -260,7 +260,3 @@ def classif_from_load_model(args, usl_model=None):
     le_data.to_csv("ExperimentFiles/classif_from_load.csv")
 
 
-def kmeans_all_exps(all_exp_dir_path, clusters=10):
-    files = list(plots.listdir_nohidden(all_exp_dir_path, True))
-    for f in files:
-        kmeans.kmeans_exp_dir(all_exp_dir_path + "/" + f, clusters=clusters, save=True)
