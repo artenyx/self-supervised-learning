@@ -25,7 +25,7 @@ def main(args):
     #exp_funct_dict[args.exp_type](args)
     path = "/home/geraldkwhite/SSLProject/200E"
     #kmeans.kmeans_all_exps(path)
-    kmeans.kmeans_exp_dir(path + "/Lr_simclr") #
+    kmeans.kmeans_exp_dir(path + "/Lr") #
     print("All experiments completed.")
     return
 
