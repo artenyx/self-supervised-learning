@@ -24,7 +24,7 @@ def main(args):
     print("========Running Network========")
     print("Device: cuda" if torch.cuda.is_available() else "Device: cpu")
     #exp_funct_dict[args.exp_type](args)
-    kmeans.kmeans_run_dir("/home/geraldkwhite/SSLProject/200E/BS/ae_single-D-NL_11-22-2022_13-48-21bs-256")
+    kmeans.kmeans_run_dir("/home/geraldkwhite/SSLProject/200E/BS/ae_single-D-NL_11-22-2022_13-48-21bs-32")
     print("All experiments completed.")
     return
 
