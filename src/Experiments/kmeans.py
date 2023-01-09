@@ -30,10 +30,12 @@ def kmeans_from_load_model(args=None, load_path=None, usl_model=None, simclr=Fal
 
 
 def kmeans_run_dir(run_dir_path, clusters=10):
+    print(run_dir_path)
     files = list(plots.listdir_nohidden(run_dir_path, False))
-    assert "USL_model_.pt" in files, "No trained model to create embedding dataset with."
+    if "USL_model_.pt" not in files:
+        print(run_dir_path + "does not contain a trained model to create embedding dataset with. Skipping this run.")
+        return None, None
     simclr = True if "simclr" in run_dir_path else False
-    print(run_dir_path + "/USL_model_.pt")
     kmeans_data = kmeans_from_load_model(load_path=run_dir_path + "/USL_model_.pt", simclr=simclr, n_clusters=clusters)
     return kmeans_data
 
