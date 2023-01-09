@@ -40,8 +40,12 @@ def kmeans_run_dir(run_dir_path, clusters=10):
     return kmeans_data
 
 
-def kmeans_exp_dir(exp_dir_path, clusters=10, save=True):
-    files = list(plots.listdir_nohidden(exp_dir_path, True))
+def kmeans_exp_dir(exp_dir_path, clusters=10, save=True, overwrite=False):
+    plots_list = list(plots.listdir_nohidden(exp_dir_path + "/000_plots/usl", dir_only=False))
+    if "kmeans.csv" in plots_list:
+        print("kmeans.csv exists. Skip exp.")
+        return
+    files = list(plots.listdir_nohidden(exp_dir_path, dir_only=True))
     kmeans_data_exp = []
     for f in files:
         inertia_run_train, inertia_run_test = kmeans_run_dir(exp_dir_path + "/" + f, clusters=clusters)
@@ -50,7 +54,7 @@ def kmeans_exp_dir(exp_dir_path, clusters=10, save=True):
     if save:
         kmeans_data_exp_df = pd.DataFrame(kmeans_data_exp)
         kmeans_data_exp_df.to_csv(exp_dir_path + "/000_plots/usl/kmeans.csv")
-    return kmeans_data_exp
+    return
 
 
 def kmeans_all_exps(args, all_exp_dir_path="/home/geraldkwhite/SSLProject/200E", clusters=10):
