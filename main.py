@@ -15,6 +15,7 @@ exp_funct_dict = {
     "ae_s_simclr": experiments.ae_s_simclr,
     "class_from_path": experiments.classif_from_load_model,
     "plot_folder": plots.plot_exp_set,
+    "kmeans_all": kmeans.kmeans_all_exps,
     None: experiments.ssl_exp_from_args
 }
 
@@ -22,10 +23,7 @@ exp_funct_dict = {
 def main(args):
     print("========Running Network========")
     print("Device: cuda" if torch.cuda.is_available() else "Device: cpu")
-    #exp_funct_dict[args.exp_type](args)
-    path = "/home/geraldkwhite/SSLProject/200E"
-    kmeans.kmeans_all_exps(path)
-    #kmeans.kmeans_exp_dir(path + "/Lr") #
+    exp_funct_dict[args.exp_type](args)
     print("All experiments completed.")
     return
 
