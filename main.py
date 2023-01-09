@@ -23,8 +23,8 @@ exp_funct_dict = {
 def main(args):
     print("========Running Network========")
     print("Device: cuda" if torch.cuda.is_available() else "Device: cpu")
-    #exp_funct_dict[args.exp_type](args)
-    kmeans.kmeans_exp_dir("/home/geraldkwhite/SSLProject/200E/BS")
+    exp_funct_dict[args.exp_type](args)
+    #kmeans.kmeans_exp_dir("/home/geraldkwhite/SSLProject/200E/BS")
     print("All experiments completed.")
     return
 
