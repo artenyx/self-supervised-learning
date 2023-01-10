@@ -57,12 +57,14 @@ def usl_run_epoch(model, config, loader, epoch, grad):
             img2 = img2.to(config['device'])
 
         optimizer.zero_grad()
-        if config['usl_type'] == 'ae_single':
+        if config['usl_type'] == "ae_single":
             loss_img1, loss_img2, loss_emb, loss_total = losses.ae_single_run_loss(model, config, epoch, img0, img1)
-        elif config['usl_type'] == 'ae_parallel':
+        elif config['usl_type'] == "ae_parallel":
             loss_img1, loss_img2, loss_emb, loss_total = losses.ae_parallel_run_loss(model, config, epoch, img0, img1, img2)
-        else:
+        elif config['usl_type'] == "simclr":
             loss_img1, loss_img2, loss_emb, loss_total = losses.simclr_run_loss(model, config, img1, img2)
+        elif config['usl_type'] == "simsiam":
+            loss_img1, loss_img2, loss_emb, loss_total = losses.simsiam_run_loss(model, config, img1, img2)
         if grad:
             loss_total.backward()
             optimizer.step()
