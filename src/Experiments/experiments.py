@@ -90,7 +90,7 @@ def ssl_experiment_setup(usl_type,
         config = exp_config.get_exp_config(s=strength, crop_size=crop_size)
     config['batch_size'] = batch_size
     config['usl_type'] = usl_type
-    assert usl_type == 'ae_single' or usl_type == 'ae_parallel' or usl_type == 'simclr', "Wrong USL type."
+    assert usl_type == "ae_single" or usl_type == "ae_parallel" or usl_type == "simclr" or usl_type == "simsiam", "Wrong USL type."
     if config['usl_type'] == 'ae_parallel':
         config['alpha'] = alpha
     config['denoising'] = denoising
@@ -107,7 +107,7 @@ def ssl_experiment_setup(usl_type,
     config['run_test_rate_usl'] = run_test_rate_usl
     config['print_loss_rate'] = print_loss_rate
     config['save_embeddings'] = save_embeddings
-    exp_type = [usl_type] if usl_type == "simclr" else [usl_type, "D" if denoising else "ND", "L" if layerwise else "NL"]
+    exp_type = [usl_type] if "ae" not in usl_type else [usl_type, "D" if denoising else "ND", "L" if layerwise else "NL"]
     config['exp_type'] = "-".join(exp_type)
     config['lr_usl'] = lr_usl
     config['lr_le'] = lr_le

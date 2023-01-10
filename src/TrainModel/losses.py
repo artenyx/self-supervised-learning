@@ -77,13 +77,29 @@ def barlow_twins_loss_func(embedding1, embedding2, lam):
     return loss
 
 
+def simsiam_loss_func(enc1, enc2, pred1, pred2):
+    criterion = nn.CosineSimilarity()
+    enc1 = enc1.detach()
+    enc2 = enc2.detach()
+
+    loss = -1/2 * (criterion(pred1, enc2) + criterion(pred2, enc1))
+    return loss
+
+
 loss_dict = {
     "l2": nn.MSELoss(),
     "l1": nn.L1Loss(),
     "bt": barlow_twins_loss_func,
     "simclr": simclr_loss_func,
-    "cos": nn.CosineEmbeddingLoss(),
+    "cos": nn.CosineSimilarity(),
 }
+
+
+def simsiam_run_loss(model, config, img1, img2):
+    encoding1, prediction1 = model(img1)
+    encoding2, prediction2 = model(img2)
+    loss_total = simsiam_loss_func(encoding1, encoding2, prediction1, prediction2)
+    return None, None, None, loss_total
 
 
 def simclr_run_loss(model, config, img1, img2):
@@ -92,6 +108,12 @@ def simclr_run_loss(model, config, img1, img2):
     loss_total = simclr_loss_func(encoding1, encoding2, lam=config['criterion_emb_lam'])
 
     return None, None, None, loss_total
+
+
+def simsiam_run_loss(model, config, img1, img2):
+    encoding1, prediction1 = model(img1)
+    encoding2, __ = model(img2)
+    loss_total = simsiam_loss_func()
 
 
 def ae_parallel_run_loss(model, config, epoch, img0, img1, img2):

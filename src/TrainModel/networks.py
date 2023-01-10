@@ -113,7 +113,10 @@ class USL_Conv6_CIFAR1(nn.Module):
         # Projector Layers
         proj_layers = [nn.Linear(self.representation_dim, self.latent_dim)]
 
-        if config['usl_type'] != "simclr":
+        if config['usl_type'] == "simsiam":
+            dec_layers = [nn.Linear(self.latent_dim, self.latent_dim),
+                          nn.Sigmoid()]
+        elif config['usl_type'] != "simclr":
             # Decoder Layers
             dec_layers = [nn.Linear(self.latent_dim, self.representation_dim),
                           nn.Unflatten(1, (512, 4, 4)),

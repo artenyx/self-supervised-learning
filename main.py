@@ -32,7 +32,7 @@ def main(args):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--exp_type", type=str, default=None, choices=list(exp_funct_dict.keys()))
-    parser.add_argument("--usl_type", type=str, default=None, choices=["simclr", "ae_single", "ae_parallel"])
+    parser.add_argument("--usl_type", type=str, default=None, choices=["simclr", "ae_single", "ae_parallel", "simsiam"])
     parser.add_argument("--denoising", action="store_true")
     parser.add_argument("--layerwise", action="store_true")
     parser.add_argument("--usl_load_path", type=str, default=None)
