@@ -110,12 +110,6 @@ def simclr_run_loss(model, config, img1, img2):
     return None, None, None, loss_total
 
 
-def simsiam_run_loss(model, config, img1, img2):
-    encoding1, prediction1 = model(img1)
-    encoding2, __ = model(img2)
-    loss_total = simsiam_loss_func()
-
-
 def ae_parallel_run_loss(model, config, epoch, img0, img1, img2):
 
     criterion_recon = loss_dict[config['criterion_recon']]
