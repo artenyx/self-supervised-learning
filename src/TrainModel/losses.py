@@ -81,8 +81,7 @@ def simsiam_loss_func(enc1, enc2, pred1, pred2):
     criterion = nn.CosineSimilarity()
     enc1 = enc1.detach()
     enc2 = enc2.detach()
-
-    loss = torch.sum((-1/2)*criterion(pred1, enc2) + (-1/2)*criterion(pred2, enc1))
+    loss = -(criterion(pred1, enc2).mean() + criterion(pred2, enc1).mean()) * 0.5
     return loss
 
 
