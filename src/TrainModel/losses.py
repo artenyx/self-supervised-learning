@@ -82,7 +82,7 @@ def simsiam_loss_func(enc1, enc2, pred1, pred2):
     enc1 = enc1.detach()
     enc2 = enc2.detach()
 
-    loss = -1/2 * (criterion(pred1, enc2) + criterion(pred2, enc1))
+    loss = torch.sum((-1/2)*criterion(pred1, enc2) + (-1/2)*criterion(pred2, enc1))
     return loss
 
 
