@@ -85,12 +85,18 @@ def simsiam_loss_func(enc1, enc2, pred1, pred2):
     return loss
 
 
+def cosine_sim_loss_func(enc1, enc2):
+    criterion = nn.CosineSimilarity()
+    loss = criterion(enc1, enc2)
+    return loss.sum()
+
+
 loss_dict = {
     "l2": nn.MSELoss(),
     "l1": nn.L1Loss(),
     "bt": barlow_twins_loss_func,
     "simclr": simclr_loss_func,
-    "cos": nn.CosineSimilarity(),
+    "cos": cosine_sim_loss_func,
 }
 
 
