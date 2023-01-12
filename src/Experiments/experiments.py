@@ -210,18 +210,18 @@ def crop_size_exp(args):
 def strength_exp(args):
     strength_list = [0.0, 0.25, 0.5, 0.75, 1.0, 1.25, 1.5]
     print("RUNNING AT STRENGTHS: " + str(strength_list))
-    for strength0 in strength_list:
-        args.add_exp_str = "strength-" + str(strength0)
-        args.strength = strength0
+    for strength in strength_list:
+        args.add_exp_str = "strength-" + str(strength)
+        args.strength = strength
         ssl_exp_from_args(args)
 
 
 def bs_exp(args):
     bs_list = [1024, 512, 256, 124, 64, 8, 4]
     print("RUNNING AT BATCH SIZES: " + str(bs_list))
-    for bs0 in bs_list:
-        args.add_exp_str = "bs-" + str(bs0)
-        args.batch_size = bs0
+    for bs in bs_list:
+        args.add_exp_str = "bs-" + str(bs)
+        args.batch_size = bs
         ssl_exp_from_args(args)
 
 
@@ -229,20 +229,32 @@ def usl_lr_exp(args):
     lr_list = [0.000001, 0.00001, 0.0001, 0.001, 0.01]
     print("TESTING LEARNING RATES: " + str(lr_list))
     exp_str_init = args.add_exp_str
-    for lr0 in lr_list:
-        args.lr_usl = lr0
-        args.add_exp_str = exp_str_init + "lr-" + str(lr0)
+    for lr in lr_list:
+        args.lr_usl = lr
+        args.add_exp_str = exp_str_init + "lr-" + str(lr)
         ssl_exp_from_args(args)
 
 
 def usl_epoch_exp(args):
-    epoch_list = [10, 50, 100, 150, 200, 300, 400]
-    print("TESTING USL N_EPOCHS: " + str(epoch_list))
+    epochs_list = [10, 50, 100, 150, 200, 300, 400]
+    print("TESTING USL N_EPOCHS: " + str(epochs_list))
     exp_str_init = args.add_exp_str
-    for epochs0 in epoch_list:
-        args.epochs_usl = epochs0
-        args.add_exp_str = exp_str_init + "epochs-" + str(epochs0)
+    for epochs in epochs_list:
+        args.epochs_usl = epochs
+        args.add_exp_str = exp_str_init + "epochs-" + str(epochs)
         ssl_exp_from_args(args)
+
+
+def usl_lr_bs_exp(args):
+    lr_list = [0.000001, 0.00001, 0.0001, 0.001, 0.01]
+    bs_list = [1024, 512, 256, 124, 64]
+    print("RUNNING BS/LR EXP...")
+    exp_str_init = args.add_exp_str
+    for bs in bs_list:
+        for lr in lr_list:
+            args.lr_usl = lr
+            args.batch_size = bs
+            args.add_exp_str = exp_str_init + "lr-" + str(lr) + "-bs-" + str(bs)
 
 
 def classif_from_load_model(args, usl_model=None):
