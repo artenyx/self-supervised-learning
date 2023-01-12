@@ -35,6 +35,8 @@ def get_column_names(usl):
 def usl_run_epoch(model, config, loader, epoch, grad):
     t0 = time.time()
     optimizer = config['optimizer']
+    if config['scheduler'] is not None:
+        scheduler = config['scheduler']
 
     tot_loss_img1, tot_loss_img2, tot_loss_emb, tot_loss_total = np.zeros(4)
     first = True
@@ -68,6 +70,8 @@ def usl_run_epoch(model, config, loader, epoch, grad):
         if grad:
             loss_total.backward()
             optimizer.step()
+            if config['scheduler'] is not None:
+                scheduler.step()
         tot_loss_img1, tot_loss_img2, tot_loss_emb, tot_loss_total = losses.loss_add(loss_img1, loss_img2, loss_emb, loss_total, tot_loss_img1, tot_loss_img2, tot_loss_emb, tot_loss_total)
     avg_loss_img1 = (tot_loss_img1 or 0) / len(loader)
     avg_loss_img2 = (tot_loss_img2 or 0) / len(loader)
@@ -83,6 +87,8 @@ def usl_train_network(model, config):
                         "type settings are ae_single, ae_parallel, and simclr.")
 
     config['optimizer'] = config['optimizer_type'](model.parameters(), lr=config['lr_usl'])
+    if config['scheduler_type'] is not None:
+        config['scheduler'] = config['scheduler_type'](config['optimizer'], config['num_epochs_usl'], eta_min=0, last_epoch=-1)
     train_loader, test_loader = config['loaders']['loaders_usl']
     train_data, test_data = [np.zeros(6)], [np.zeros(6)]
     for epoch in range(config['num_epochs_usl']):

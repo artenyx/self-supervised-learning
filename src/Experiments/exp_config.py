@@ -46,6 +46,8 @@ def get_exp_config(s=0.25, crop_size=24):
         "criterion_recon": "l2",
         "optimizer_type": torch.optim.Adam,
         "optimizer": None,
+        "scheduler_type":  torch.optim.lr_scheduler.CosineAnnealingLR,
+        "scheduler": None,
         "num_epochs_usl": 200,
         "num_epochs_le": 150,
         "lr_usl": 0.001,  # verified best lr for doc 5
