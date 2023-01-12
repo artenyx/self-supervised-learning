@@ -255,6 +255,7 @@ def usl_lr_bs_exp(args):
             args.lr_usl = lr
             args.batch_size = bs
             args.add_exp_str = exp_str_init + "lr-" + str(lr) + "-bs-" + str(bs)
+            ssl_exp_from_args(args)
 
 
 def classif_from_load_model(args, usl_model=None):
