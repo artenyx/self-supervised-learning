@@ -11,6 +11,7 @@ exp_funct_dict = {
     "transforms": experiments.transforms_exp,
     "crop_size": experiments.crop_size_exp,
     "bs": experiments.bs_exp,
+    "lr_bs": experiments.usl_lr_bs_exp,
     "epochs_usl": experiments.usl_epoch_exp,
     "ae_s_simclr": experiments.ae_s_simclr,
     "class_from_path": experiments.classif_from_load_model,
