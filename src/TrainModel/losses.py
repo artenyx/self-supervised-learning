@@ -88,7 +88,7 @@ def simsiam_loss_func(enc1, enc2, pred1, pred2):
 def cosine_sim_loss_func(enc1, enc2):
     criterion = nn.CosineSimilarity()
     loss = criterion(enc1, enc2)
-    return loss.sum()
+    return -loss.mean()
 
 
 loss_dict = {
