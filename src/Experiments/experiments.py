@@ -246,8 +246,8 @@ def usl_epoch_exp(args):
 
 
 def usl_lr_bs_exp(args):
-    lr_list = [0.000001, 0.00001, 0.0001, 0.001, 0.01]
-    bs_list = [1024, 512, 256, 128, 64]
+    lr_list = [0.000001, 0.00001, 0.0001, 0.001]
+    bs_list = [4096, 1024, 512, 256, 128, 64]
     print("RUNNING BS/LR EXP...")
     exp_str_init = args.add_exp_str
     for bs in bs_list:
