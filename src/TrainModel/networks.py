@@ -111,8 +111,7 @@ class USL_Conv6_CIFAR1(nn.Module):
                       nn.Flatten()]
 
         # Projector Layers
-        proj_layers = [nn.Linear(self.representation_dim, self.latent_dim),
-                       nn.Hardtanh()]
+        proj_layers = [nn.Linear(self.representation_dim, self.latent_dim)]
 
         if config['usl_type'] == "simsiam":
             dec_layers = [nn.Linear(self.latent_dim, self.latent_dim),
