@@ -58,9 +58,9 @@ def emb_loader_to_array(emb_dataset_train, emb_dataset_test):
     return emb_dataset_array_train, emb_target_array_train, emb_dataset_array_test, emb_target_array_test
 
 
-def produce_embedding_plots(samples_to_use=1000, 
-                            config=None, 
-                            load_obj=None, 
+def produce_embedding_plots(samples_to_use=1000,
+                            config=None,
+                            load_obj=None,
                             get_loader_from_config=False,
                             pca_or_tsne="both"):
     if config is None and get_loader_from_config:
@@ -180,7 +180,8 @@ def plot_from_dicts(folder_path, data_dict, usl, xcol=None, ycols=None, pp=True)
         data = pp_data(data_dict[exp], usl) if pp else data_dict[exp]
         plt.plot(data[xcol], data[ycols[0]])
         plt.plot(data[xcol], data[ycols[1]])
-        min_data.append((exp, np.argmin(data[ycols[0]]), np.min(data[ycols[0]]),  np.argmin(data[ycols[1]]), np.min(data[ycols[1]])))
+        min_data.append(
+            (exp, np.argmin(data[ycols[0]]), np.min(data[ycols[0]]), np.argmin(data[ycols[1]]), np.min(data[ycols[1]])))
         plt.xlabel(xcol)
         plt.ylabel("Loss" if usl else "Error")
         plt.savefig(folder_path + exp + "_usl.png")
@@ -200,7 +201,7 @@ def plot_from_dicts(folder_path, data_dict, usl, xcol=None, ycols=None, pp=True)
     plt.legend()
     plt.savefig(folder_path + "usl_tr_all_leg.png" if usl else folder_path + "le_tr_all_leg.png")
     min_val = np.min(min_data['Min Train Val'])
-    plt.ylim(0.9*min_val, 1.1*min_val)
+    plt.ylim(0.9 * min_val, 1.1 * min_val)
     plt.legend()
     plt.savefig(folder_path + "usl_tr_all_zoom.png" if usl else folder_path + "le_tr_all_zoom.png")
     plt.close()
@@ -212,7 +213,7 @@ def plot_from_dicts(folder_path, data_dict, usl, xcol=None, ycols=None, pp=True)
     plt.legend()
     plt.savefig(folder_path + "usl_te_all_leg.png" if usl else folder_path + "le_te_all_leg.png")
     min_val = np.min(min_data['Min Test Val'])
-    plt.ylim(0.9*min_val, 1.1*min_val)
+    plt.ylim(0.9 * min_val, 1.1 * min_val)
     plt.legend()
     plt.savefig(folder_path + "usl_te_all_zoom.png" if usl else folder_path + "le_te_all_zoom.png")
     plt.close()
@@ -235,6 +236,16 @@ def plot_exp_set(folder_path):
 
     plot_from_dicts(folder_path, usl_data_dict, True)
     plot_from_dicts(folder_path, le_data_dict, False)
+
+
+def plot_all_exps(args, all_exp_dir_path="/home/geraldkwhite/SSLProject/200E"):
+    files = list(listdir_nohidden(all_exp_dir_path, True))
+    for f in files:
+        print(all_exp_dir_path + "/" + f)
+        try:
+            plot_exp_set(all_exp_dir_path + "/" + f)
+        except:
+            print("Issue with " + all_exp_dir_path + "/" + f)
 
 
 if __name__ == "__main__":

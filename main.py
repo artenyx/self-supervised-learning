@@ -16,6 +16,7 @@ exp_funct_dict = {
     "ae_s_simclr": experiments.ae_s_simclr,
     "class_from_path": experiments.classif_from_load_model,
     "plot_folder": plots.plot_exp_set,
+    "plot_all": plots.plot_all_exps,
     "kmeans_all": kmeans.kmeans_all_exps,
     None: experiments.ssl_exp_from_args
 }
