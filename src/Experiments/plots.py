@@ -238,7 +238,7 @@ def plot_exp_set(folder_path):
     plot_from_dicts(folder_path, le_data_dict, False)
 
 
-def plot_all_exps(args, all_exp_dir_path="/home/geraldkwhite/SSLProject/200E"):
+def plot_all_exps(args, all_exp_dir_path="/home/geraldkwhite/SSLProject/200E_Scheduler"):
     files = list(listdir_nohidden(all_exp_dir_path, True))
     for f in files:
         print(all_exp_dir_path + "/" + f)
