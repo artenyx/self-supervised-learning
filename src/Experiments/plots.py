@@ -165,6 +165,29 @@ def pp_data(df, usl=True):
     return df_cp
 
 
+
+def find_hyphen(string):
+    for i, char in enumerate(reversed(string)):
+        if char == "-":
+            if string[-(i+2)] != "e":
+                new_string = string[-(i):]
+                return new_string
+
+
+def sort_exp_list(exp_list, return_idx=True):
+    trunc_exp_list = []
+    for exp in exp_list:
+        trunc_exp_list.append(find_hyphen(exp))
+    trunc_exp_list = list(enumerate(trunc_exp_list))
+    trunc_exp_list = sorted(trunc_exp_list, key=lambda x: x[1], reverse=False)
+    new_idx_list = [x[0] for x in trunc_exp_list]
+    if return_idx:
+        return new_idx_list
+    else:
+        new_list = [exp_list[i] for i in new_idx_list]
+        return new_list
+
+
 def plot_from_dicts(folder_path, data_dict, usl, xcol=None, ycols=None, pp=True):
     folder_path += "/000_plots/usl/" if usl else "/000_plots/le/"
     min_data = []
@@ -176,12 +199,14 @@ def plot_from_dicts(folder_path, data_dict, usl, xcol=None, ycols=None, pp=True)
 
     epochs_list, tr_data_list, te_data_list = [], [], []
     exp_list = list(data_dict.keys())
+    exp_list = sort_exp_list(exp_list, return_idx=False)
+
     for exp in exp_list:
         data = pp_data(data_dict[exp], usl) if pp else data_dict[exp]
         plt.plot(data[xcol], data[ycols[0]])
         plt.plot(data[xcol], data[ycols[1]])
         min_data.append(
-            (exp, np.argmin(data[ycols[0]]), np.min(data[ycols[0]]), np.argmin(data[ycols[1]]), np.min(data[ycols[1]])))
+            (exp, np.argmin(data[ycols[0]]), np.min(data[ycols[0]]), len(data)-1, data[ycols[0]][len(data)-1], np.argmin(data[ycols[1]]), np.min(data[ycols[1]]), len(data)-1, data[ycols[1]][len(data)-1]))
         plt.xlabel(xcol)
         plt.ylabel("Loss" if usl else "Error")
         plt.savefig(folder_path + exp + "_usl.png")
@@ -190,7 +215,7 @@ def plot_from_dicts(folder_path, data_dict, usl, xcol=None, ycols=None, pp=True)
         tr_data_list.append(data[ycols[0]])
         te_data_list.append(data[ycols[1]])
     min_data = pd.DataFrame(min_data)
-    min_data = min_data.set_axis(["Exp", "Min Train Idx", "Min Train Val", "Min Test Idx", "Min Test Val"], axis=1)
+    min_data = min_data.set_axis(["Exp", "Min Train Idx", "Min Train Val", "Last Epoch Idx", "Last Epoch Train Val", "Min Test Idx", "Min Test Val", "Last Epoch Test Idx", "Last Epoch Test Val"], axis=1)
     min_data.to_csv(folder_path + "min.csv")
 
     for i, exp in enumerate(exp_list):
@@ -222,7 +247,7 @@ def plot_from_dicts(folder_path, data_dict, usl, xcol=None, ycols=None, pp=True)
 def plot_exp_set(folder_path):
     usl_data_dict = {}
     le_data_dict = {}
-    exp_files = list(listdir_nohidden(path, True))
+    exp_files = list(listdir_nohidden(folder_path, True))
     for f in exp_files:
         subpath = folder_path + "/" + f
         subfiles = list(listdir_nohidden(subpath, False))
@@ -238,10 +263,12 @@ def plot_exp_set(folder_path):
     plot_from_dicts(folder_path, le_data_dict, False)
 
 
-def plot_all_exps(args, all_exp_dir_path="/home/geraldkwhite/SSLProject/200E_Scheduler"):
+def plot_all_exps(args, all_exp_dir_path="/Users/jerrywhite/Documents/01 - University of Chicago/05 - Thesis/01 - Thesis Experiments/200E_Scheduler"):
     files = list(listdir_nohidden(all_exp_dir_path, True))
     for f in files:
         print(all_exp_dir_path + "/" + f)
+        plot_exp_set(all_exp_dir_path + "/" + f)
+
         try:
             plot_exp_set(all_exp_dir_path + "/" + f)
         except:
@@ -249,5 +276,4 @@ def plot_all_exps(args, all_exp_dir_path="/home/geraldkwhite/SSLProject/200E_Sch
 
 
 if __name__ == "__main__":
-    path = "/Users/jerrywhite/Documents/01 - University of Chicago/05 - Thesis/01 - Thesis Experiments/200E_Scheduler/ExperimentFiles_Sched_LinProj/lr_bs_ae-p_0.1/bs-512"
-    plot_exp_set(path)
+    plot_all_exps(None)
