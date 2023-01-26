@@ -1,5 +1,6 @@
 import torch
 from datetime import datetime
+from torchvision.utils import save_image
 
 from src.TrainModel import train, networks, load_data
 from src.Experiments import exp_config
@@ -269,5 +270,31 @@ def classif_from_load_model(args, usl_model=None):
 
     le_data, le_model = run_linear_evaluation(config)
     le_data.to_csv("ExperimentFiles/classif_from_load.csv")
+
+def compare_van_den_recons(args, van_model_path=None, den_model_path=None):
+    config = exp_config.get_exp_config()
+    save_path = "ExperimentFiles/vandencompare"
+
+    van_model = networks.USL_Conv6_CIFAR1(config=config).to(config['device'])
+    van_model.load_state_dict(torch.load(args.usl_load_path)['model.state.dict'])
+
+    den_model = networks.USL_Conv6_CIFAR1(config=config).to(config['device'])
+    den_model.load_state_dict(torch.load(args.usl_load_path)['model.state.dict'])
+
+    loader, __ = load_data.get_cifar100_usl(config)
+    for img, __ in loader:
+        output_van, __ = van_model(img)
+        output_den, __ = den_model(img)
+        img = img.view(img.shape).cpu().data
+        save_image(img, 'orig.png'.format(save_path))
+        output_van = output_van.view(img.shape).cpu().data
+        save_image(output_van, 'van_rec.png'.format(save_path))
+        output_den = output_den.view(img.shape).cpu().data
+        save_image(output_den, 'den_rec.png'.format(save_path))
+        break
+    return
+
+
+
 
 
