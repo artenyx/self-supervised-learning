@@ -162,7 +162,7 @@ def ssl_exp_from_args(args):
 def alpha_exp(args):
     if args.usl_type != "ae_parallel":
         print("usl_type will be reset to \"ae_parallel\" for this experiment.")
-    alpha_list = [0.0, 0.0001, 0.001, 0.01, 0.1, 1, 10, 100]
+    alpha_list = [0.0, 0.001, 0.01, 0.1, 1, 10, 100, 1000, 10000, 100000]
     #alpha_list = [1000, 10000, 100000]
     print("RUNNING AE_PARALLEL AT ALPHAS: " + str(alpha_list))
     print(args.layerwise)

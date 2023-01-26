@@ -162,6 +162,9 @@ def pp_data(df, usl=True):
         df_cp = df_cp.loc[(df_cp["Total Train Loss"] != 0) & (df_cp["Total Test Loss"] != 0)]
     else:
         df_cp = df_cp.loc[(df_cp["Train Error"] != 0) & (df_cp["Test Error"] != 0)]
+        df_cp["Train Classification Rate"] = 1 - df_cp["Train Error"]
+        df_cp["Test Classification Rate"] = 1 - df_cp["Test Error"]
+
     return df_cp
 
 
@@ -194,13 +197,15 @@ def plot_from_dicts(folder_path, data_dict, usl, xcol=None, ycols=None, pp=True)
     if xcol is None:
         xcol = "Epoch Number"
     if ycols is None:
-        ycols = ["Total Train Loss", "Total Test Loss"] if usl else ["Train Error", "Test Error"]
+        ycols = ["Total Train Loss", "Total Test Loss"] if usl else ["Train Classification Rate", "Test Classification Rate"]
     os.makedirs(folder_path, exist_ok=True)
 
     epochs_list, tr_data_list, te_data_list = [], [], []
     exp_list = list(data_dict.keys())
-    exp_list = sort_exp_list(exp_list, return_idx=False)
-
+    try:
+        exp_list = sort_exp_list(exp_list, return_idx=False)
+    except:
+        print("Sorting folders failed.")
     for exp in exp_list:
         data = pp_data(data_dict[exp], usl) if pp else data_dict[exp]
         plt.plot(data[xcol], data[ycols[0]])
@@ -208,7 +213,7 @@ def plot_from_dicts(folder_path, data_dict, usl, xcol=None, ycols=None, pp=True)
         min_data.append(
             (exp, np.argmin(data[ycols[0]]), np.min(data[ycols[0]]), len(data)-1, data[ycols[0]][len(data)-1], np.argmin(data[ycols[1]]), np.min(data[ycols[1]]), len(data)-1, data[ycols[1]][len(data)-1]))
         plt.xlabel(xcol)
-        plt.ylabel("Loss" if usl else "Error")
+        plt.ylabel("Loss" if usl else "Classification Rate")
         plt.savefig(folder_path + exp + "_usl.png")
         plt.close()
         epochs_list.append(data[xcol])
@@ -219,9 +224,9 @@ def plot_from_dicts(folder_path, data_dict, usl, xcol=None, ycols=None, pp=True)
     min_data.to_csv(folder_path + "min.csv")
 
     for i, exp in enumerate(exp_list):
-        plt.plot(epochs_list[i], tr_data_list[i], label=exp)
+        plt.plot(epochs_list[i], tr_data_list[i], label=exp) ### first 100 epochs
     plt.xlabel(xcol)
-    plt.ylabel("Loss" if usl else "Error")
+    plt.ylabel("Loss" if usl else "Classification Rate")
     plt.savefig(folder_path + "usl_tr_all.png" if usl else folder_path + "le_tr_all.png")
     plt.legend()
     plt.savefig(folder_path + "usl_tr_all_leg.png" if usl else folder_path + "le_tr_all_leg.png")
@@ -233,7 +238,7 @@ def plot_from_dicts(folder_path, data_dict, usl, xcol=None, ycols=None, pp=True)
     for i, exp in enumerate(exp_list):
         plt.plot(epochs_list[i], te_data_list[i], label=exp)
     plt.xlabel(xcol)
-    plt.ylabel("Loss" if usl else "Error")
+    plt.ylabel("Loss" if usl else "Classification Rate")
     plt.savefig(folder_path + "usl_te_all.png" if usl else folder_path + "le_te_all.png")
     plt.legend()
     plt.savefig(folder_path + "usl_te_all_leg.png" if usl else folder_path + "le_te_all_leg.png")
@@ -267,8 +272,6 @@ def plot_all_exps(args, all_exp_dir_path="/Users/jerrywhite/Documents/01 - Unive
     files = list(listdir_nohidden(all_exp_dir_path, True))
     for f in files:
         print(all_exp_dir_path + "/" + f)
-        plot_exp_set(all_exp_dir_path + "/" + f)
-
         try:
             plot_exp_set(all_exp_dir_path + "/" + f)
         except:
@@ -277,3 +280,4 @@ def plot_all_exps(args, all_exp_dir_path="/Users/jerrywhite/Documents/01 - Unive
 
 if __name__ == "__main__":
     plot_all_exps(None)
+    #plot_exp_set(folder_path="/Users/jerrywhite/Documents/01 - University of Chicago/05 - Thesis/01 - Thesis Experiments/200E/untitled folder")
