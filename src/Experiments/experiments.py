@@ -271,15 +271,18 @@ def classif_from_load_model(args, usl_model=None):
     le_data, le_model = run_linear_evaluation(config)
     le_data.to_csv("ExperimentFiles/classif_from_load.csv")
 
+
 def compare_van_den_recons(args, van_model_path=None, den_model_path=None):
+    van_model_path = "/Users/jerrywhite/Documents/01 - University of Chicago/05 - Thesis/01 - Thesis Experiments/200E_Scheduler/Alpha-vanl2/ae_parallel-ND-NL_01-24-2023_11-02-11vanl2alpha-0.0/USL_model_.pt"
+    den_model_path = "/Users/jerrywhite/Documents/01 - University of Chicago/05 - Thesis/01 - Thesis Experiments/200E_Scheduler/Alpha-l2/ae_parallel-D-NL_01-20-2023_18-57-57l2alpha-1/USL_model_.pt"
     config = exp_config.get_exp_config()
     save_path = "ExperimentFiles/vandencompare"
 
     van_model = networks.USL_Conv6_CIFAR1(config=config).to(config['device'])
-    van_model.load_state_dict(torch.load(args.usl_load_path)['model.state.dict'])
+    van_model.load_state_dict(torch.load(van_model_path)['model.state.dict'])
 
     den_model = networks.USL_Conv6_CIFAR1(config=config).to(config['device'])
-    den_model.load_state_dict(torch.load(args.usl_load_path)['model.state.dict'])
+    den_model.load_state_dict(torch.load(den_model_path)['model.state.dict'])
 
     loader, __ = load_data.get_cifar100_usl(config)
     for img, __ in loader:
