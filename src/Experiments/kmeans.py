@@ -61,4 +61,7 @@ def kmeans_all_exps(args, all_exp_dir_path="/Users/jerrywhite/Documents/01 - Uni
     files = list(plots.listdir_nohidden(all_exp_dir_path, True))
     for f in files:
         print(all_exp_dir_path + "/" + f)
-        kmeans_exp_dir(all_exp_dir_path + "/" + f, clusters=clusters, save=True)
+        try:
+            kmeans_exp_dir(all_exp_dir_path + "/" + f, clusters=clusters, save=True)
+        except:
+            print("Issue with file " + f)
