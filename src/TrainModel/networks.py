@@ -78,7 +78,7 @@ class USL_Conv6_CIFAR_OD(nn.Module):
 class Linear_Evaluation_Classifier(nn.Module):
     def __init__(self, in_dim, out_dim):
         super(Linear_Evaluation_Classifier, self).__init__()
-        layers = [nn.Linear(in_dim, out_dim)]
+        layers = [nn.Linear(in_dim, out_dim), nn.Softmax()]
         self.layers = nn.Sequential(*layers)
 
     def forward(self, inp):
