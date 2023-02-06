@@ -272,8 +272,6 @@ def plot_all_exps(args, all_exp_dir_path="/Users/jerrywhite/Documents/01-UChicag
     files = list(listdir_nohidden(all_exp_dir_path, True))
     for f in files:
         print(all_exp_dir_path + "/" + f)
-        plot_exp_set(all_exp_dir_path + "/" + f)
-
         try:
             plot_exp_set(all_exp_dir_path + "/" + f)
         except:
@@ -281,5 +279,5 @@ def plot_all_exps(args, all_exp_dir_path="/Users/jerrywhite/Documents/01-UChicag
 
 
 if __name__ == "__main__":
-    #plot_all_exps(None)
-    plot_exp_set(folder_path="/Users/jerrywhite/Documents/01-UChicago/05-Thesis/01-ThesisExperiments/200E_Scheduler/Epochs-simclr")
+    plot_all_exps(None)
+    #plot_exp_set(folder_path="/Users/jerrywhite/Documents/01-UChicago/05-Thesis/01-ThesisExperiments/200E_Scheduler/Epochs-simclr")
