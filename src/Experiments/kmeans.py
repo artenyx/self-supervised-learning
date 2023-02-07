@@ -34,6 +34,7 @@ def kmeans_from_load_model(args=None, load_path=None, usl_model=None, simclr=Fal
 def knn_from_load_model(args=None, load_path=None, usl_model=None, simclr=False, n_neighbors=10):
     config = exp_config.get_exp_config()
     if simclr:
+        print(simclr)
         config['usl_type'] = "simclr"
     if usl_model is None:
         usl_model = networks.USL_Conv6_CIFAR1(config=config).to(config['device'])
