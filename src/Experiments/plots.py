@@ -263,9 +263,14 @@ def plot_exp_set(folder_path):
             elif "LE_data" in s:
                 temp_le_data = pd.read_csv(folder_path + "/" + f + "/" + s)
                 le_data_dict[f] = temp_le_data
-
-    plot_from_dicts(folder_path, usl_data_dict, True)
-    plot_from_dicts(folder_path, le_data_dict, False)
+    try:
+        plot_from_dicts(folder_path, usl_data_dict, True)
+    except:
+        pass
+    try:
+        plot_from_dicts(folder_path, le_data_dict, False)
+    except:
+        pass
 
 
 def plot_all_exps(args, all_exp_dir_path="/Users/jerrywhite/Documents/01-UChicago/05-Thesis/01-ThesisExperiments/200E_Scheduler"):

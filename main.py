@@ -17,7 +17,7 @@ exp_funct_dict = {
     "class_from_path": experiments.classif_from_load_model,
     "plot_folder": plots.plot_exp_set,
     "plot_all": plots.plot_all_exps,
-    "kmeans_all": kmeans.kmeans_all_exps,
+    "kmeans_all": kmeans.kmeans_knn_all_exps,
     "van_den": experiments.compare_van_den_recons,
     None: experiments.ssl_exp_from_args
 }
