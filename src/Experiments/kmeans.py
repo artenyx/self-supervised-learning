@@ -43,8 +43,8 @@ def knn_from_load_model(args=None, load_path=None, usl_model=None, simclr=False,
     config['loaders']['loaders_le'] = load_data.get_cifar10_classif(config)
 
     embs_train, embs_train_targs = train.get_embedding_loader(usl_model, config, config['loaders']['loaders_le'][0], return_as_list=True)
-    embs_train = pd.DataFrame(embs_train.numpy())
-    embs_train_targs = pd.DataFrame(embs_train_targs.numpy())
+    embs_train = embs_train.numpy()
+    embs_train_targs = embs_train_targs.numpy()
 
     knn_train = KNeighborsClassifier(n_neighbors=n_neighbors)
     knn_train.fit(embs_train, embs_train_targs.ravel())
