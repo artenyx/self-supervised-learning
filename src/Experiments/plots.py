@@ -266,21 +266,19 @@ def plot_exp_set(folder_path):
     try:
         plot_from_dicts(folder_path, usl_data_dict, True)
     except:
+        print("Issue with USL" + folder_path)
         pass
     try:
         plot_from_dicts(folder_path, le_data_dict, False)
     except:
+        print("Issue with LE" + folder_path)
         pass
 
 
 def plot_all_exps(args, all_exp_dir_path="/Users/jerrywhite/Documents/01-UChicago/05-Thesis/01-ThesisExperiments/200E_Scheduler"):
     files = list(listdir_nohidden(all_exp_dir_path, True))
     for f in files:
-        print(all_exp_dir_path + "/" + f)
-        try:
-            plot_exp_set(all_exp_dir_path + "/" + f)
-        except:
-            print("Issue with " + all_exp_dir_path + "/" + f)
+        plot_exp_set(all_exp_dir_path + "/" + f)
 
 
 if __name__ == "__main__":

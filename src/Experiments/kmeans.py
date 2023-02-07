@@ -88,20 +88,15 @@ def kmeans_knn_exp_dir(exp_dir_path, clusters=10, save=True, overwrite=False, kn
     files = list(plots.listdir_nohidden(exp_dir_path, dir_only=True))
     data_exp = []
     for f in files:
-        if knn:
-            score_train, score_test = kmeans_knn_run_dir(exp_dir_path + "/" + f, clusters=clusters, knn=True)
-            data_exp.append((f, score_train, score_test))
-        else:
-            inertia_run_train, inertia_run_test = kmeans_knn_run_dir(exp_dir_path + "/" + f, clusters=clusters, knn=False)
-            data_exp.append((f, inertia_run_train, inertia_run_test))
-
+        score_train, score_test = kmeans_knn_run_dir(exp_dir_path + "/" + f, clusters=clusters, knn=knn)
+        data_exp.append((f, score_train, score_test))
     if save:
         kmeans_data_exp_df = pd.DataFrame(data_exp)
         kmeans_data_exp_df.to_csv(exp_dir_path + "/000_plots/usl/kmeans.csv" if not knn else "/000_plots/usl/knn.csv")
     return
 
 
-def kmeans_knn_all_exps(args, all_exp_dir_path="/home/geraldkwhite/SSLProject/Alphas", clusters=10, knn=False):
+def kmeans_knn_all_exps(args, all_exp_dir_path="/home/geraldkwhite/SSLProject/200E_Scheduler", clusters=10, knn=False):
     files = list(plots.listdir_nohidden(all_exp_dir_path, True))
     for f in files:
         print(all_exp_dir_path + "/" + f)
