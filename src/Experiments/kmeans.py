@@ -78,9 +78,13 @@ def kmeans_knn_run_dir(run_dir_path, clusters=10, knn=False):
 
 def kmeans_knn_exp_dir(exp_dir_path, clusters=10, save=True, overwrite=False, knn=False):
     plots_list = list(plots.listdir_nohidden(exp_dir_path + "/000_plots/usl", dir_only=False))
-    if "kmeans.csv" in plots_list:
+    if "kmeans.csv" in plots_list and not knn:
         print("kmeans.csv exists. Skip exp.")
         return
+    if "knn.csv" in plots_list and knn:
+        print("knn.csv exists. Skip exp.")
+        return
+
     files = list(plots.listdir_nohidden(exp_dir_path, dir_only=True))
     data_exp = []
     for f in files:
@@ -93,7 +97,7 @@ def kmeans_knn_exp_dir(exp_dir_path, clusters=10, save=True, overwrite=False, kn
 
     if save:
         kmeans_data_exp_df = pd.DataFrame(data_exp)
-        kmeans_data_exp_df.to_csv(exp_dir_path + "/000_plots/usl/kmeans.csv")
+        kmeans_data_exp_df.to_csv(exp_dir_path + "/000_plots/usl/kmeans.csv" if not knn else "/000_plots/usl/knn.csv")
     return
 
 
