@@ -96,7 +96,7 @@ def kmeans_knn_exp_dir(exp_dir_path, clusters=10, save=True, overwrite=False, kn
     return
 
 
-def kmeans_knn_all_exps(args, all_exp_dir_path="/home/geraldkwhite/SSLProject/200E_Scheduler", clusters=10, knn=False):
+def kmeans_knn_all_exps(args, all_exp_dir_path="/home/geraldkwhite/SSLProject/200E_Scheduler", clusters=10, knn=True):
     files = list(plots.listdir_nohidden(all_exp_dir_path, True))
     for f in files:
         print(all_exp_dir_path + "/" + f)
