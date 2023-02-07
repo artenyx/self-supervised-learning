@@ -47,7 +47,7 @@ def knn_from_load_model(args=None, load_path=None, usl_model=None, simclr=False,
     embs_train_targs = pd.DataFrame(embs_train_targs.numpy())
 
     knn_train = KNeighborsClassifier(n_neighbors=n_neighbors)
-    knn_train.fit(embs_train, embs_train_targs)
+    knn_train.fit(embs_train, embs_train_targs.ravel())
     embs_train_pred = knn_train.predict(embs_train)
     score_train = metrics.accuracy_score(embs_train_targs, embs_train_pred)
 
@@ -56,7 +56,7 @@ def knn_from_load_model(args=None, load_path=None, usl_model=None, simclr=False,
     embs_test_targs = pd.DataFrame(embs_test_targs.numpy())
 
     knn_test = KNeighborsClassifier(n_neighbors=n_neighbors)
-    knn_test.fit(embs_test, embs_test_targs)
+    knn_test.fit(embs_test, embs_test_targs.ravel())
     embs_test_pred = knn_test.predict(embs_test)
     score_test = metrics.accuracy_score(embs_test_targs, embs_test_pred)
     return score_train, score_test
