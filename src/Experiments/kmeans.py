@@ -69,7 +69,7 @@ def kmeans_knn_run_dir(run_dir_path, clusters=10, knn=False):
         print(run_dir_path + " does not contain a trained model to create embedding dataset with. Skipping this run.")
         return None, None
     simclr = True if "simclr" in run_dir_path else False
-    print("simclr" + run_dir_path)
+    print(simclr + run_dir_path)
     if knn:
         data = knn_from_load_model(load_path=run_dir_path + "/USL_model_.pt", simclr=simclr)
     else:
