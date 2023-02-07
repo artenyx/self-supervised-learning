@@ -40,6 +40,7 @@ def knn_from_load_model(args=None, load_path=None, usl_model=None, simclr=False,
         usl_model = networks.USL_Conv6_CIFAR1(config=config).to(config['device'])
         load_path = args.usl_load_path if args is not None else load_path
         assert load_path is not None, "Trained USL Model load path not provided. Please provide either arg parser or direct path."
+        print(load_path)
         usl_model.load_state_dict(torch.load(load_path)['model.state.dict'])
     config['loaders']['loaders_le'] = load_data.get_cifar10_classif(config)
 
