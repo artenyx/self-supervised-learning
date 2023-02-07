@@ -70,7 +70,7 @@ def kmeans_knn_run_dir(run_dir_path, clusters=10, knn=False):
     if "USL_model_.pt" not in files:
         print(run_dir_path + " does not contain a trained model to create embedding dataset with. Skipping this run.")
         return None, None
-    simclr = True if "simclr" in run_dir_path else False
+    simclr = True if "simclr_" in run_dir_path else False
     print(str(simclr) + run_dir_path)
     if knn:
         data = knn_from_load_model(load_path=run_dir_path + "/USL_model_.pt", simclr=simclr)
