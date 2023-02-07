@@ -34,13 +34,11 @@ def kmeans_from_load_model(args=None, load_path=None, usl_model=None, simclr=Fal
 def knn_from_load_model(args=None, load_path=None, usl_model=None, simclr=False, n_neighbors=10):
     config = exp_config.get_exp_config()
     if simclr:
-        print(simclr)
         config['usl_type'] = "simclr"
     if usl_model is None:
         usl_model = networks.USL_Conv6_CIFAR1(config=config).to(config['device'])
         load_path = args.usl_load_path if args is not None else load_path
         assert load_path is not None, "Trained USL Model load path not provided. Please provide either arg parser or direct path."
-        print(load_path)
         usl_model.load_state_dict(torch.load(load_path)['model.state.dict'])
     config['loaders']['loaders_le'] = load_data.get_cifar10_classif(config)
 
@@ -54,8 +52,8 @@ def knn_from_load_model(args=None, load_path=None, usl_model=None, simclr=False,
     score_train = metrics.accuracy_score(embs_train_targs, embs_train_pred)
 
     embs_test, embs_test_targs = train.get_embedding_loader(usl_model, config, config['loaders']['loaders_le'][1], return_as_list=True)
-    embs_test = pd.DataFrame(embs_test.numpy())
-    embs_test_targs = pd.DataFrame(embs_test_targs.numpy())
+    embs_test = embs_test.numpy()
+    embs_test_targs = embs_test_targs.numpy()
 
     knn_test = KNeighborsClassifier(n_neighbors=n_neighbors)
     knn_test.fit(embs_test, embs_test_targs.ravel())
@@ -71,7 +69,7 @@ def kmeans_knn_run_dir(run_dir_path, clusters=10, knn=False):
         print(run_dir_path + " does not contain a trained model to create embedding dataset with. Skipping this run.")
         return None, None
     simclr = True if "simclr_" in run_dir_path else False
-    print(str(simclr) + run_dir_path)
+    print(str(simclr) + " " + run_dir_path)
     if knn:
         data = knn_from_load_model(load_path=run_dir_path + "/USL_model_.pt", simclr=simclr)
     else:
