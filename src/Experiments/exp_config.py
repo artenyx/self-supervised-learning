@@ -31,7 +31,7 @@ def get_exp_config(s=0.25, crop_size=24):
         "channels": 3,
         "latent_dim": 64,  # size of AE bottleneck #plan to remove
         "num_classes": 10,
-        "representation_dim": 512,
+        "representation_dim": 8192,
 
         # Experiment Parameters'
         "device": torch.device("cuda:0" if torch.cuda.is_available() else "cpu"),
