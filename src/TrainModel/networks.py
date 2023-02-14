@@ -109,6 +109,8 @@ class USL_Conv6_CIFAR1(nn.Module):
                       nn.Conv2d(64, 512, kernel_size=kernel_enc, stride=1, padding=1),
                       nn.MaxPool2d(2, 2),
                       nn.Flatten()]
+        if self.representation_dim != 8192:
+            enc_layers.append(nn.Linear(8192, self.representation_dim))
 
         # Projector Layers
         proj_layers = [nn.Linear(self.representation_dim, self.latent_dim)]
@@ -118,14 +120,16 @@ class USL_Conv6_CIFAR1(nn.Module):
                           nn.Sigmoid()]
         elif config['usl_type'] != "simclr":
             # Decoder Layers
-            dec_layers = [nn.Linear(self.latent_dim, self.representation_dim),
-                          nn.Unflatten(1, (512, 4, 4)),
-                          nn.ConvTranspose2d(512, 32, kernel_size=kernel_dec, stride=2, padding=1),
-                          nn.Hardtanh(),
-                          nn.ConvTranspose2d(32, 32, kernel_size=kernel_dec, stride=2, padding=1),
-                          nn.Hardtanh(),
-                          nn.ConvTranspose2d(32, config['channels'], kernel_size=kernel_dec, stride=2, padding=1),
-                          nn.Sigmoid()]
+            dec_layers = [nn.Linear(self.latent_dim, self.representation_dim)]
+            if self.representation_dim != 8192:
+                dec_layers.append(nn.Linear(self.representation_dim, 8192))
+            dec_layers += [nn.Unflatten(1, (512, 4, 4)),
+                           nn.ConvTranspose2d(512, 32, kernel_size=kernel_dec, stride=2, padding=1),
+                           nn.Hardtanh(),
+                           nn.ConvTranspose2d(32, 32, kernel_size=kernel_dec, stride=2, padding=1),
+                           nn.Hardtanh(),
+                           nn.ConvTranspose2d(32, config['channels'], kernel_size=kernel_dec, stride=2, padding=1),
+                           nn.Sigmoid()]
 
         self.embed = nn.Sequential(*enc_layers)
         self.encode = nn.Sequential(*(enc_layers + proj_layers))
