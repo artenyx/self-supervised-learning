@@ -15,4 +15,5 @@ else
   echo FALSE
 fi
 
-echo copy complete.
+scp -r SOURCE_DIR TARGET_DIR
+echo 'copy complete.'
