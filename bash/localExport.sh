@@ -15,8 +15,4 @@ else
   echo FALSE
 fi
 
-spawn scp -r "$SOURCE_DIR" "$TARGET_DIR"
-expect "geraldkwhite@aoc.uchicago.edu's password:"
-sleep 1
-send "Bleu\$SamSam34889\r"
 echo copy complete.
