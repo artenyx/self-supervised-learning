@@ -4,6 +4,8 @@
 TYPE=$1
 SERVER_DIR='geraldkwhite@aoc.uchicago.edu:/home/geraldkwhite/SSLProject/ExperimentFile'
 LOCAL_DIR='/Users/jerrywhite/Documents/01-UChicago/05-Thesis/01-ThesisExperiments/02-Exports'
+
+STAT=NONE
 [ "$TYPE" = 'FROM_LOCAL' ] && scp -r $LOCAL_DIR $SERVER_DIR && STAT=$?
 echo $STAT
 [ "$TYPE" = 'TO_LOCAL' ] && scp -r $SERVER_DIR $LOCAL_DIR && STAT=$?
