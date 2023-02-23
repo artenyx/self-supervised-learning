@@ -2,7 +2,7 @@
 # Export ExperimentFiles to local downloads folder
 
 TYPE=$1
-AOC_DIR='geraldkwhite\@aoc.uchicago.edu:/home/geraldkwhite/SSLProject/ExperimentFiles'
+AOC_DIR='geraldkwhite@aoc.uchicago.edu:/home/geraldkwhite/SSLProject/ExperimentFiles'
 LOCAL_DIR='/Users/jerrywhite/Documents/01-UChicago/05-Thesis/01-ThesisExperiments/02-Exports'
 
 if [ "$TYPE" = 'TO_LOCAL' ]; then
@@ -15,5 +15,5 @@ else
   echo FALSE
 fi
 
-scp -r SOURCE_DIR TARGET_DIR
+scp -r SOURCE_DIR* TARGET_DIR
 echo 'copy complete.'
