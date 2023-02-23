@@ -152,7 +152,7 @@ def get_embedding_loader(model, config, loader, return_as_list=False):
     embeddings = []
     targets = []
     with torch.no_grad():
-        for (img, targ) in loader:
+        for [(img, targ)] in loader:
             img = img.to(config['device'])
             embed = model.embed(img)
             if len(embed.shape) != 1:
