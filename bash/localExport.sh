@@ -2,7 +2,7 @@
 # Export ExperimentFiles to local downloads folder
 
 TYPE=$1
-AOC_DIR='geraldkwhite@aoc.uchicago.edu:/home/geraldkwhite/SSLProject/'
+AOC_DIR='geraldkwhite\@aoc.uchicago.edu:/home/geraldkwhite/SSLProject/ExperimentFiles'
 LOCAL_DIR='/Users/jerrywhite/Documents/01-UChicago/05-Thesis/01-ThesisExperiments/02-Exports'
 
 if [ "$TYPE" = 'TO_LOCAL' ]; then
