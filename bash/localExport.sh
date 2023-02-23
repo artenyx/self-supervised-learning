@@ -1,5 +1,5 @@
 #!/bin/bash
-# Export ExperimentFiles to local downloads folder
+# Export ExperimentFiles to specified local path
 
 TYPE=$1
 SERVER_DIR='geraldkwhite@aoc.uchicago.edu:/home/geraldkwhite/SSLProject/ExperimentFiles'
