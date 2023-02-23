@@ -7,6 +7,6 @@ LOCAL_DIR='/Users/jerrywhite/Documents/01-UChicago/05-Thesis/01-ThesisExperiment
 
 [ "$TYPE" = 'TO_LOCAL' ] && scp -r $SERVER_DIR $LOCAL_DIR && STAT=$?
 [ "$TYPE" = 'FROM_LOCAL' ] && scp -r $LOCAL_DIR $SERVER_DIR && STAT=$?
-
+echo $STAT
 [ $STAT -eq 0 ] && echo 'copy complete.'
 [ $STAT -eq 1 ] && echo 'error with copy.'
