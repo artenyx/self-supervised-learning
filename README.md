@@ -137,8 +137,3 @@ python main.py --exp_type strength --usl_type ae_parallel --denoising --alpha 0.
 ```
 
 This call will run a parallel denoising autoencoder 5 times at the various strengths.
-
-## Results
-
-Still working on putting all of my experimental results together. This section will be updated soon!
-
