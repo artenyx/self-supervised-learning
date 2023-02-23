@@ -1,7 +1,7 @@
 # Repository for Gerald White's UChicago Master's Thesis Entitled:
 
 Exploring Denoising Autoencoder Architectures in Self-Supervised Learning
-link to paper: https://github.com/artenyx/SSLProj/Thesis_Paper.pdf
+link to paper: https://github.com/artenyx/SSLProject/blob/main/Thesis_Paper.pdf
 
 ## Overview
 
