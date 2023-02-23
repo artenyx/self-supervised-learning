@@ -8,7 +8,7 @@ LOCAL_DIR='/Users/jerrywhite/Documents/01-UChicago/05-Thesis/01-ThesisExperiment
 if [ "$TYPE" = 'EXPORT' ]; then
   SOURCE_DIR=AOC_DIR
   TARGET_DIR=LOCAL_DIR
-elif [ "$TYPE" = "IMPORT" ]; then
+elif [ "$TYPE" = 'IMPORT' ]; then
   SOURCE_DIR=LOCAL_DIR
   TARGET_DIR=AOC_DIR
 else
