@@ -1,4 +1,4 @@
-from src.TrainModel import load_data
+from src.trainModel import load_data
 
 import torch
 import torch.nn as nn

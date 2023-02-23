@@ -6,8 +6,8 @@ from sklearn.cluster import KMeans
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn import metrics
 
-from src.Experiments import plots, experiments, exp_config
-from src.TrainModel import train, networks, load_data
+from src.experiments import plots, experiments, exp_config
+from src.trainModel import train, networks, load_data
 
 
 def kmeans_from_load_model(args=None, load_path=None, usl_model=None, simclr=False, n_clusters=10):

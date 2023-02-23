@@ -1,4 +1,4 @@
-from src.Experiments import experiments, plots, kmeans
+from src.experiments import experiments, plots, kmeans
 
 import torch
 import argparse

@@ -2,8 +2,8 @@ import torch
 from datetime import datetime
 from torchvision.utils import save_image
 
-from src.TrainModel import train, networks, load_data
-from src.Experiments import exp_config
+from src.trainModel import train, networks, load_data
+from src.experiments import exp_config
 
 
 def run_representation_learning(config, model):
@@ -273,8 +273,8 @@ def classif_from_load_model(args, usl_model=None):
 
 
 def compare_van_den_recons(args, van_model_path=None, den_model_path=None):
-    van_model_path = "/Users/jerrywhite/Documents/01 - University of Chicago/05 - Thesis/01 - Thesis Experiments/200E_Scheduler/Alpha-vanl2/ae_parallel-ND-NL_01-24-2023_11-02-11vanl2alpha-0.0/USL_model_.pt"
-    den_model_path = "/Users/jerrywhite/Documents/01 - University of Chicago/05 - Thesis/01 - Thesis Experiments/200E_Scheduler/Alpha-l2/ae_parallel-D-NL_01-20-2023_18-57-57l2alpha-1/USL_model_.pt"
+    van_model_path = "/Users/jerrywhite/Documents/01 - University of Chicago/05 - Thesis/01 - Thesis experiments/200E_Scheduler/Alpha-vanl2/ae_parallel-ND-NL_01-24-2023_11-02-11vanl2alpha-0.0/USL_model_.pt"
+    den_model_path = "/Users/jerrywhite/Documents/01 - University of Chicago/05 - Thesis/01 - Thesis experiments/200E_Scheduler/Alpha-l2/ae_parallel-D-NL_01-20-2023_18-57-57l2alpha-1/USL_model_.pt"
     config = exp_config.get_exp_config()
     save_path = "ExperimentFiles/vandencompare"
 
