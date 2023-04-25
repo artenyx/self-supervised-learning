@@ -1,6 +1,6 @@
 # Exploring Denoising Autoencoder Architectures in Self-Supervised Learning:
 
-link to paper: https://github.com/artenyx/SSLProject/blob/main/Thesis_Paper.pdf
+link to paper: https://github.com/artenyx/self-supervised-learning/blob/main/Thesis_Paper.pdf
 
 ## Overview
 
