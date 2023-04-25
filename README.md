@@ -1,6 +1,6 @@
 # Exploring Denoising Autoencoder Architectures in Self-Supervised Learning:
 
-University of Chicago MS Statistics Thesis \\
+University of Chicago MS Statistics Thesis \newline
 link to paper: https://github.com/artenyx/SSLProject/blob/main/Thesis_Paper.pdf
 
 ## Overview
